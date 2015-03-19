@@ -1,4 +1,4 @@
 <?php 
 class Right extends AppModel {
-	public $hasOne = 'Member';
+	public $hasMany = 'Member';
 }

@@ -1,5 +1,5 @@
 <?php 
 class Task extends AppModel {
-	public $hasMany = 'CheckedBy';
+	public $hasMany = 'Checked';
 	public $belongsTo = 'List';
 }

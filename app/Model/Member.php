@@ -1,4 +1,4 @@
 <?php 
-class Memeber extends AppModel {
+class Member extends AppModel {
 	public $belongsTo = array('User', 'List', 'Right');
 }
