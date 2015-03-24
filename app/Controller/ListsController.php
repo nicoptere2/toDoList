@@ -13,7 +13,17 @@ class ListsController  extends AppController {
 		$lists = $this->Liste->find('all');
 
 		$this->set(array('lists' => $lists));
+	}
 
+	public function tasks($list_id = null) {
+		if($list_id == null)
+			$this->redirect('/Lists');
+
+		$list = $this->Liste->find('first', array('conditions' => array('lists.id' => $list_id)));
+		if($list == array()){
+			$this->Session->setFlash('Liste inconnu');
+			$this->redirect('/lists');
+		}
 	}
 
 

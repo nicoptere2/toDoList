@@ -54,11 +54,11 @@ CREATE TABLE IF NOT EXISTS `friends` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `lists`
+-- Structure de la table `listes`
 --
 
-DROP TABLE IF EXISTS `lists`;
-CREATE TABLE IF NOT EXISTS `lists` (
+DROP TABLE IF EXISTS `listes`;
+CREATE TABLE IF NOT EXISTS `listes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(256) NOT NULL,
   `description` text NOT NULL,
@@ -78,10 +78,10 @@ CREATE TABLE IF NOT EXISTS `lists` (
 DROP TABLE IF EXISTS `members`;
 CREATE TABLE IF NOT EXISTS `members` (
   `user_id` int(11) NOT NULL,
-  `list_id` int(11) NOT NULL,
+  `listes_id` int(11) NOT NULL,
   `right_id` int(11) NOT NULL,
-  PRIMARY KEY (`user_id`,`list_id`),
-  KEY `list_id` (`list_id`)
+  PRIMARY KEY (`user_id`,`listes_id`),
+  KEY `listes_id` (`listes_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -97,10 +97,10 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   `user_id` int(11) NOT NULL,
-  `list_id` int(11) NOT NULL,
+  `listes_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`,`list_id`),
-  KEY `list_id` (`list_id`)
+  KEY `user_id` (`user_id`,`listes_id`),
+  KEY `listes_id` (`listes_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -129,9 +129,9 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   `quantity` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
-  `list_id` int(11) NOT NULL,
+  `listes_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `list_id` (`list_id`)
+  KEY `listes_id` (`listes_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -165,21 +165,21 @@ ALTER TABLE `checkeds`
 -- Contraintes pour la table `members`
 --
 ALTER TABLE `members`
-  ADD CONSTRAINT `members_ibfk_2` FOREIGN KEY (`list_id`) REFERENCES `lists` (`id`),
+  ADD CONSTRAINT `members_ibfk_2` FOREIGN KEY (`listes_id`) REFERENCES `listes` (`id`),
   ADD CONSTRAINT `members_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Contraintes pour la table `messages`
 --
 ALTER TABLE `messages`
-  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`list_id`) REFERENCES `lists` (`id`),
+  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`listes_id`) REFERENCES `listes` (`id`),
   ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Contraintes pour la table `tasks`
 --
 ALTER TABLE `tasks`
-  ADD CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`list_id`) REFERENCES `lists` (`id`);
+  ADD CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`listes_id`) REFERENCES `listes` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
