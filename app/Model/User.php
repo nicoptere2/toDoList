@@ -18,7 +18,7 @@ class User extends AppModel {
                                             'message' => 'Entrer un mot de passe !'
                                              ),
                             'email'    => array(
-                                            'rule' => 'notEmpty',
+                                            'rule' => 'email',
                                             'message' => 'Entrer un email !'
                                              ),
                             'age'      => array(

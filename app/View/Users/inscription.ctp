@@ -6,3 +6,13 @@
     <?php echo $this->Form->input('email', array('label' => 'email', 'placeholder' => 'email')); ?>
     <?php echo $this->Form->input('age', array('label' => 'age','placeholder' => 'age')); ?>
     <?php echo $this->Form->end('s\'inscrire'); ?>
+
+<?php 
+      echo $this->Html->link('synchronisation Facebook', array('controller' => 'Users',
+                                                  'action' => 'inscrireFacebook'
+                                                  ));
+      echo "</br>";
+      echo $this->Html->link('synchronisation GooGle', array('controller' => 'Users',
+                                                  'action' => 'inscrireGoogle'
+                                                  ));
+      ?>

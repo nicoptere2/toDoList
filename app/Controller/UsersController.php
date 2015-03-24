@@ -9,14 +9,20 @@ class UsersController  extends AppController {
                                 'password' => $this->Auth->password('umut')
                           ));*/
        // debug($this->User->findByUsername('akkulak'));
-        if($this->Auth->login()){           //si l'utilisateur est logé
-            $this->Session->setFlash('<strong>Félicitation</strong> Vous vous etes Identifié avec succes', 'flash_success');
-            return $this->redirect('/');            
+        if(!empty($this->data)){
+            if($this->Auth->login()){           //si l'utilisateur est logé
+                $this->Session->setFlash('<strong>Félicitation</strong> Vous vous etes Identifié avec succes', 'flash_success');
+                return $this->redirect('/');            
+            }
+            else{
+               $this->Session->setFlash('<strong>Attention</strong> utisateur inexistant ou mot de passe incorecte', 'flash_warning');
+            }
         }
     }
     
     public function logout(){  
         if($this->Auth->logout()){ 
+            $this->Session->setFlash('<strong>Deconnecté</strong> En espérant vous revoir', 'flash_success');
             return $this->redirect('/');
         }
     }
