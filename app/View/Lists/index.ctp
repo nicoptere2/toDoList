@@ -1,9 +1,10 @@
 <div ng-app="Liste" ng-controller="ListeController">
 	<h1>c'est la liste des lists</h1>
 	<?php //debug($lists) ?>
-	 {{remaining}} 
 
-	<table class="table table-hover">
+	<table class="table table-hover" ng-model="lists" ng-init="
+			lists=<?php echo htmlentities(json_encode($lists)) ?>
+			">
 		<thead>
 			<th>name</th>
 			<th>description</th>
@@ -13,30 +14,19 @@
 			<th></th>
 		</thead>
 		<tbody>
-			<?php foreach ($lists as $key => $value): ?>
-				<tr>
-					<td><?php echo $value['Liste']['name'] ?></td>
-					<td><?php echo $value['Liste']['description'] ?></td>
-					<td><?php echo $value['Liste']['frequancy'] ?></td>
-					<td><?php echo $value['Liste']['expirationDate'] ?></td>
-					<td><?php echo $value['Liste']['created'] ?></td>
-					<td>
-						<?php echo $this->Html->link('voir',
-										array(
-											'controller' => 'Lists',
-											'action' => 'tasks',
-											$value['Liste']['id']
-											),
-										array(
-											'class' => 'btn btn-default'
-											)
-										)
-						?>
-					</td>
-				</tr>
-			<?php endforeach ?>
+			<tr ng-repeat="(key, value) in lists">
+				<td>{{value.Liste.name}}</td>
+				<td>{{value.Liste.description}}</td>
+				<td>{{value.Liste.frequancy}}</td>
+				<td>{{value.Liste.expirationDate}}</td>
+				<td>{{value.Liste.created}}</td>
+				<td><a href="lists/tasks/{{value.Liste.id}}" class="btn btn-default">Voir</a></td>
+			</tr>
 		</tbody>
 	</table>
 
 </div>
+<script type="text/javascript">
+	
+</script>
 <?php echo $this->Html->script('liste') ?>
