@@ -32,7 +32,11 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->Html->css('bootstrap.min');
 
 		echo $this->fetch('meta');
+
 		echo $this->fetch('css');
+		
+		echo $this->Html->script('angular');
+		
 		echo $this->fetch('script');
 	?>
 </head>
@@ -59,7 +63,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 			</p>
 		</div>
 	</div>
-	<?php echo $this->Html->script('jquery') ?>
+	<?php //echo $this->Html->script('jquery') ?>
 	<?php echo $this->Html->script('bootstrap') ?>
 </body>
 </html>
