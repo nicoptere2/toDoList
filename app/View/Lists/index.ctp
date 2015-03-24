@@ -1,7 +1,7 @@
 <div ng-controller="ListeController">
 	<h1>c'est la liste des lists</h1>
-	<?php debug($lists) ?>
-	{{remaining}}
+	<?php //debug($lists) ?>
+	<!-- {{remaining}} -->
 
 	<table class="table table-hover">
 		<thead>
@@ -20,7 +20,19 @@
 					<td><?php echo $value['Liste']['frequancy'] ?></td>
 					<td><?php echo $value['Liste']['expirationDate'] ?></td>
 					<td><?php echo $value['Liste']['created'] ?></td>
-					<td ng-model="remaining"></td>
+					<td>
+						<?php echo $this->Html->link('voir',
+										array(
+											'controller' => 'Lists',
+											'action' => 'tasks',
+											$value['Liste']['id']
+											),
+										array(
+											'class' => 'btn btn-default'
+											)
+										)
+						?>
+					</td>
 				</tr>
 			<?php endforeach ?>
 		</tbody>
