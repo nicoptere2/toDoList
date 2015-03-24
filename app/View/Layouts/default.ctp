@@ -33,6 +33,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->fetch('meta');
 
 		echo $this->fetch('css');
+
+		echo $this->Js->set('url',$this->request->base);
 		
 		echo $this->Html->script('angular');
 		?>
