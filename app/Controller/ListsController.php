@@ -19,7 +19,7 @@ class ListsController  extends AppController {
 		if($list_id == null)
 			$this->redirect('/Lists');
 
-		$list = $this->Liste->find('first', array('conditions' => array('listes.id' => $list_id)));
+		$list = $this->Liste->find('first', array('conditions' => array('Liste.id' => $list_id)));
 		if($list == array()){
 			$this->Session->setFlash('Liste inconnu');
 			$this->redirect('/lists');
