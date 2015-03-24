@@ -1,21 +1,22 @@
-<h1>la liste des tache d'une liste</h1>
+<h2><?php echo $list['Liste']['name'] ?> - <?php echo $list['Liste']['created'] ?></h2>
 
-<table class="table table-hover">
-	<thead>
-		<th>#</th>
-		<th>tache</th>
-		<th>quantité</th>
-		<th>date de création</th>
-	</thead>
-	<tbody>
-		<?php $i=1; ?>
-		<?php foreach ($list['Task'] as $key => $value): ?>
-			<tr>
-				<td><?php echo $i; $i++; ?></td>
-				<td><?php echo $value['name'] ?></td>
-				<td><?php echo $value['quantity'] ?></td>
-				<td><?php echo $value['created'] ?></td>
-			</tr>
-		<?php endforeach ?>
-	</tbody>
-</table>
+<?php debug($list) ?>
+
+<div ng-app="Tasks" ng-controller="tasksController">
+
+	<ul class="list-group" ng-model="tasks" ng-init="
+			list=<?php echo htmlentities(json_encode($list)) ?>
+			">
+
+		<li class="list-group-item" ng-repeat="(key, value) in list.Task">
+			<button class="list-group-item"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+			<ul>
+				<li>{{value.name}}</li>
+				<li>Utilisateur1</li>
+			</ul>
+		</li>
+	</ul>
+
+</div>
+
+<?php echo $this->Html->script('tasksCtrler') ?>

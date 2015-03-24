@@ -1,5 +1,5 @@
-<div ng-app="Liste" ng-controller="ListeController">
-	<h1>c'est la liste des lists</h1>
+<h2>c'est la liste des lists</h2>
+<div ng-app="Liste" ng-controller="listeController">
 
 	<div class="list-group lists" ng-model="lists" ng-init="
 			lists=<?php echo htmlentities(json_encode($lists)) ?>
@@ -18,4 +18,4 @@
 <script type="text/javascript">
 	
 </script>
-<?php echo $this->Html->script('liste') ?>
+<?php echo $this->Html->script('listeCtrler') ?>
