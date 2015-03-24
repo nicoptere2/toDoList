@@ -1,64 +1,87 @@
--- phpMyAdmin SQL Dump
--- version 4.1.14
--- http://www.phpmyadmin.net
+-- MySQL dump 10.13  Distrib 5.5.41, for debian-linux-gnu (x86_64)
 --
--- Client :  127.0.0.1
--- Généré le :  Jeu 19 Mars 2015 à 21:10
--- Version du serveur :  5.6.17
--- Version de PHP :  5.5.12
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
+-- Host: localhost    Database: todolist
+-- ------------------------------------------------------
+-- Server version	5.5.41-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Base de données :  `todolist`
+-- Current Database: `todolist`
 --
-CREATE DATABASE IF NOT EXISTS `todolist` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `todolist` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
 USE `todolist`;
 
--- --------------------------------------------------------
-
 --
--- Structure de la table `checkeds`
+-- Table structure for table `checkeds`
 --
 
 DROP TABLE IF EXISTS `checkeds`;
-CREATE TABLE IF NOT EXISTS `checkeds` (
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `checkeds` (
   `user_id` int(11) NOT NULL,
   `task_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`user_id`,`task_id`),
-  KEY `task_id` (`task_id`)
+  KEY `task_id` (`task_id`),
+  CONSTRAINT `checkeds_ibfk_2` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`),
+  CONSTRAINT `checkeds_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Structure de la table `friends`
+-- Dumping data for table `checkeds`
+--
+
+LOCK TABLES `checkeds` WRITE;
+/*!40000 ALTER TABLE `checkeds` DISABLE KEYS */;
+/*!40000 ALTER TABLE `checkeds` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `friends`
 --
 
 DROP TABLE IF EXISTS `friends`;
-CREATE TABLE IF NOT EXISTS `friends` (
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `friends` (
   `user_id` int(11) NOT NULL,
   `friend_id` int(11) NOT NULL,
   PRIMARY KEY (`user_id`,`friend_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Structure de la table `listes`
+-- Dumping data for table `friends`
+--
+
+LOCK TABLES `friends` WRITE;
+/*!40000 ALTER TABLE `friends` DISABLE KEYS */;
+/*!40000 ALTER TABLE `friends` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `listes`
 --
 
 DROP TABLE IF EXISTS `listes`;
-CREATE TABLE IF NOT EXISTS `listes` (
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `listes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(256) NOT NULL,
   `description` text NOT NULL,
@@ -67,120 +90,161 @@ CREATE TABLE IF NOT EXISTS `listes` (
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Structure de la table `members`
+-- Dumping data for table `listes`
+--
+
+LOCK TABLES `listes` WRITE;
+/*!40000 ALTER TABLE `listes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `listes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `members`
 --
 
 DROP TABLE IF EXISTS `members`;
-CREATE TABLE IF NOT EXISTS `members` (
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `members` (
   `user_id` int(11) NOT NULL,
-  `listes_id` int(11) NOT NULL,
+  `liste_id` int(11) NOT NULL,
   `right_id` int(11) NOT NULL,
-  PRIMARY KEY (`user_id`,`listes_id`),
-  KEY `listes_id` (`listes_id`)
+  PRIMARY KEY (`user_id`,`liste_id`),
+  KEY `liste_id` (`liste_id`),
+  CONSTRAINT `members_ibfk_2` FOREIGN KEY (`liste_id`) REFERENCES `listes` (`id`),
+  CONSTRAINT `members_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Structure de la table `messages`
+-- Dumping data for table `members`
+--
+
+LOCK TABLES `members` WRITE;
+/*!40000 ALTER TABLE `members` DISABLE KEYS */;
+/*!40000 ALTER TABLE `members` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `messages`
 --
 
 DROP TABLE IF EXISTS `messages`;
-CREATE TABLE IF NOT EXISTS `messages` (
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `messages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `message` text NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   `user_id` int(11) NOT NULL,
-  `listes_id` int(11) NOT NULL,
+  `liste_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`,`listes_id`),
-  KEY `listes_id` (`listes_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
+  KEY `user_id` (`user_id`,`liste_id`),
+  KEY `liste_id` (`liste_id`),
+  CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`liste_id`) REFERENCES `listes` (`id`),
+  CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Structure de la table `rights`
+-- Dumping data for table `messages`
+--
+
+LOCK TABLES `messages` WRITE;
+/*!40000 ALTER TABLE `messages` DISABLE KEYS */;
+/*!40000 ALTER TABLE `messages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rights`
 --
 
 DROP TABLE IF EXISTS `rights`;
-CREATE TABLE IF NOT EXISTS `rights` (
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rights` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Structure de la table `tasks`
+-- Dumping data for table `rights`
+--
+
+LOCK TABLES `rights` WRITE;
+/*!40000 ALTER TABLE `rights` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rights` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tasks`
 --
 
 DROP TABLE IF EXISTS `tasks`;
-CREATE TABLE IF NOT EXISTS `tasks` (
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tasks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(256) NOT NULL,
   `quantity` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
-  `listes_id` int(11) NOT NULL,
+  `liste_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `listes_id` (`listes_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
+  KEY `liste_id` (`liste_id`),
+  CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`liste_id`) REFERENCES `listes` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Structure de la table `users`
+-- Dumping data for table `tasks`
+--
+
+LOCK TABLES `tasks` WRITE;
+/*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
 --
 
 DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(256) NOT NULL,
   `password` varchar(256) NOT NULL,
   `email` varchar(256) NOT NULL,
   `age` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Contraintes pour les tables exportées
+-- Dumping data for table `users`
 --
 
---
--- Contraintes pour la table `checkeds`
---
-ALTER TABLE `checkeds`
-  ADD CONSTRAINT `checkeds_ibfk_2` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`),
-  ADD CONSTRAINT `checkeds_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
---
--- Contraintes pour la table `members`
---
-ALTER TABLE `members`
-  ADD CONSTRAINT `members_ibfk_2` FOREIGN KEY (`listes_id`) REFERENCES `listes` (`id`),
-  ADD CONSTRAINT `members_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
---
--- Contraintes pour la table `messages`
---
-ALTER TABLE `messages`
-  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`listes_id`) REFERENCES `listes` (`id`),
-  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
---
--- Contraintes pour la table `tasks`
---
-ALTER TABLE `tasks`
-  ADD CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`listes_id`) REFERENCES `listes` (`id`);
-
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2015-03-24 16:10:04
