@@ -40,7 +40,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		<script type="text/javascript">
 				var app = angular.module('myapp', ['ngRoute']);
 		</script>
-		
+
 		<?php
 		echo $this->fetch('script');
 	?>
@@ -68,7 +68,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 			</p>
 		</div>
 	</div>
-	<?php //echo $this->Html->script('jquery') ?>
+	<?php echo $this->Html->script('jquery') ?>
 	<?php echo $this->Html->script('bootstrap') ?>
 </body>
 </html>
