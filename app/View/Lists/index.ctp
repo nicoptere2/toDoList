@@ -1,7 +1,7 @@
-<div ng-controller="ListeController">
+<div ng-app="Liste" ng-controller="ListeController">
 	<h1>c'est la liste des lists</h1>
 	<?php //debug($lists) ?>
-	<!-- {{remaining}} -->
+	 {{remaining}} 
 
 	<table class="table table-hover">
 		<thead>

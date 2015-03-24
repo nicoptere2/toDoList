@@ -1,4 +1,6 @@
+var list = angular.module('Liste', []);
 
-function ListeController($scope){
+
+list.controller('ListeController', function ListeController($scope) {
 	$scope.remaining = 4;
-}
+});

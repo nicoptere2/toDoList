@@ -35,11 +35,17 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->fetch('css');
 		
 		echo $this->Html->script('angular');
+		?>
+
+		<script type="text/javascript">
+				var app = angular.module('myapp', ['ngRoute']);
+		</script>
 		
+		<?php
 		echo $this->fetch('script');
 	?>
 </head>
-<body ng-app>
+<body>
 	<div id="container">
 		<div id="header">
 			<h1><?php echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?></h1>
