@@ -28,15 +28,18 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	<?php
 		echo $this->Html->meta('icon');
 
-		//echo $this->Html->css('cake.generic');
 		echo $this->Html->css('bootstrap.min');
 
 		echo $this->fetch('meta');
+
 		echo $this->fetch('css');
+		
+		echo $this->Html->script('angular');
+		
 		echo $this->fetch('script');
 	?>
 </head>
-<body>
+<body ng-app>
 	<div id="container">
 		<div id="header">
 			<h1><?php echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?></h1>
@@ -59,7 +62,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 			</p>
 		</div>
 	</div>
-	<?php echo $this->Html->script('jquery') ?>
+	<?php //echo $this->Html->script('jquery') ?>
 	<?php echo $this->Html->script('bootstrap') ?>
 </body>
 </html>
