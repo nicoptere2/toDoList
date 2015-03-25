@@ -1,59 +1,59 @@
 <?php 
-class ListsController  extends AppController {
+class ToDosController  extends AppController {
 	public $scaffold;
 
-	public $uses = 'Liste';
+	//public $uses = 'ToDo';
 
 	public $components = array('RequestHandler');
 
 	public function index() {
-		$lists = $this->Liste->find('all');
+		$toDos = $this->ToDo->find('all');
 
 		$listView = array();
 
-		foreach ($lists as $key => $value) {
+		foreach ($toDos as $key => $value) {
 			$listView[$key] = array(
-				'id' => $value['Liste']['id'],
-				'name' => $value['Liste']['name'],
-				'created' => $value['Liste']['created']
+				'id' => $value['ToDo']['id'],
+				'name' => $value['ToDo']['name'],
+				'created' => $value['ToDo']['created']
 				);
 		}
 
-		$this->set(array('lists' => $listView));
+		$this->set(array('toDos' => $listView));
 	}
 
 	public function listAjax() {
 		$this->layout = 'ajax';
 
-		$lists = $this->Liste->find('all');
+		$toDos = $this->ToDo->find('all');
 
 		$listView = array();
 
-		foreach ($lists as $key => $value) {
+		foreach ($toDos as $key => $value) {
 			$listView[$key] = array(
-				'id' => $value['Liste']['id'],
-				'name' => $value['Liste']['name'],
-				'created' => $value['Liste']['created']
+				'id' => $value['ToDo']['id'],
+				'name' => $value['ToDo']['name'],
+				'created' => $value['ToDo']['created']
 				);
 		}
 
-		$this->set(array('lists' => $lists));
+		$this->set(array('toDos' => $toDos));
 	}
 
 	public function tasks($list_id = null) {
 		if($list_id == null)
-			$this->redirect('/Lists');
+			$this->redirect('/toDos');
 
-		$list = $this->Liste->find('first', array('conditions' => array('Liste.id' => $list_id)));
+		$list = $this->ToDo->find('first', array('conditions' => array('ToDo.id' => $list_id)));
 		if($list == array()){
-			$this->Session->setFlash('Liste inconnu');
-			$this->redirect('/lists');
+			$this->Session->setFlash('ToDo inconnu');
+			$this->redirect('/toDos');
 		}
 
 		$this->loadModel('Task');
 		//$this->Task->find('all', array('conditions' => array('id' => $value['id'])));
 
-		$listView = $list['Liste'];
+		$listView = $list['ToDo'];
 		$tasks = $list['Task'];
 
 		$this->loadModel('Checked');
@@ -65,7 +65,7 @@ class ListsController  extends AppController {
 						)
 					)
 				);*/
-			debug($this->Task->find('all', array('conditions' => array('id' => $value['id']))));
+			debug($this->Task->find('all', array('conditions' => array('Task.id' => $value['id']))));
 			//$tasks[$key] = $checked;
 		}
 		debug($tasks);
