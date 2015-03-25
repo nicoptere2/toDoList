@@ -13,8 +13,11 @@
 		</a>
 	
 	</div>
+	<button class="btn btn-default" ng-Click="listRefresh()">Refresh</button>
 
 </div>
+
+
 <script type="text/javascript">
 	
 </script>

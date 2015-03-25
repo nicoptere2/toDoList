@@ -34,11 +34,11 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 		echo $this->fetch('css');
 
-		echo $this->Js->set('url',$this->request->base);
+		echo $this->Js->set('baseUrl',$this->request->base);
 		
 		echo $this->Html->script('angular');
 		?>
-
+		<script type="text/javascript">var baseUrl = '<?php echo $this->request->base ?>'</script>
 		<script type="text/javascript">
 				var app = angular.module('myapp', ['ngRoute']);
 		</script>

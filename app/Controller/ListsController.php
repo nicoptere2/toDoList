@@ -4,11 +4,16 @@ class ListsController  extends AppController {
 
 	public $uses = 'Liste';
 
+	public $components = array('RequestHandler');
+
 	public function index() {
-		if ($this->request->is('ajax')) {
-			// modifier le layout par default pour l'ajax
-			// modifier la vue utilisé
-		}
+		$lists = $this->Liste->find('all');
+
+		$this->set(array('lists' => $lists));
+	}
+
+	public function listAjax() {
+		$this->layout = 'ajax';
 
 		$lists = $this->Liste->find('all');
 
