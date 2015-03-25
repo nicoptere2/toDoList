@@ -50,20 +50,23 @@ class ListsController  extends AppController {
 			$this->redirect('/lists');
 		}
 
+		$this->loadModel('Task');
+		//$this->Task->find('all', array('conditions' => array('id' => $value['id'])));
 
 		$listView = $list['Liste'];
 		$tasks = $list['Task'];
 
 		$this->loadModel('Checked');
 		foreach ($list['Task'] as $key => $value) {
-			$checked = $this->Checked->find('all',
+			/*$checked = $this->Checked->find('all',
 				array(
 					'conditions' => array(
 						'task_id' => $value['id']
 						)
 					)
-				);
-			$tasks[$key] = current($checked);
+				);*/
+			debug($this->Task->find('all', array('conditions' => array('id' => $value['id']))));
+			//$tasks[$key] = $checked;
 		}
 		debug($tasks);
 

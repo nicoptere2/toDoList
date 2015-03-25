@@ -9,8 +9,10 @@
 		<li class="list-group-item" ng-repeat="(key, value) in tasks">
 			<button><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
 			<div class="task">
-				<div class="task-name">{{value.Task.name}}</div>
-				<div class="task-user"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>{{value.User.username}}</div>
+				<div class="task-name">{{value[0].Task.name}}</div>
+				<div class="task-user" ng-repeat="(user_key, user) in users" ng-init="users = value.User">
+					<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>{{user.username}}
+				</div>
 			</div>
 		</li>
 	</ul>
