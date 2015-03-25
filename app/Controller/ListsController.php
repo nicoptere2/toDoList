@@ -10,6 +10,8 @@ class ListsController  extends AppController {
 			// modifier la vue utilisé
 		}
 
+		$this->set('title_for_layout', 'Accueil');
+
 		$lists = $this->Liste->find('all');
 
 		$this->set(array('lists' => $lists));
