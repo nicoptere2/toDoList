@@ -26,6 +26,40 @@ class UsersController  extends AppController {
             return $this->redirect('/');
         }
     }
+    
+    function facebook(){
+    	require APPLIBS.'Facebook'.DS.'facebook.php';
+    	$facebook = new Facebook(array(
+    		'appId' => '419331041567720',
+    		'secret' => '9c2939b0aed96b12483a8573e8e6c4a7',
+    	));
+    	
+    	$user = $facebook->getUser();
+    	
+    	if($user)
+    	{
+    		try
+    		{
+    			$infos = $facebook->api('/me');
+    			
+    			if($this->request->is('post'))
+    			{
+    				$d = $this->request->data;
+    				debug($d);
+    			}
+    		}
+    		catch(FacebookApiException $e)
+    		{
+    			debug($e);
+    		}
+    	}
+    	else
+    	{
+    		$this->Session->setFlash("Erreur de l'identification facebook", "notif", array('type'=>'error'));
+    		$this->redirect(array('action'=>'login'));
+    	}
+    	
+    	 }
 
     public function inscription(){ 
         $this->Auth->allow('inscription');
