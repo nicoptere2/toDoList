@@ -33,14 +33,22 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->fetch('meta');
 
 		echo $this->fetch('css');
+
+		echo $this->Js->set('url',$this->request->base);
 		
 		echo $this->Html->script('angular');
-		
+		?>
+
+		<script type="text/javascript">
+				var app = angular.module('myapp', ['ngRoute']);
+		</script>
+
+		<?php
 		echo $this->fetch('script');
 	?>
 </head>
-<body ng-app>
-	<div id="container">
+<body>
+	<div id="container" class="container">
 		<div id="header">
 			<h1><?php echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?></h1>
 		</div>
@@ -62,7 +70,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 			</p>
 		</div>
 	</div>
-	<?php //echo $this->Html->script('jquery') ?>
+	<?php echo $this->Html->script('jquery') ?>
 	<?php echo $this->Html->script('bootstrap') ?>
 </body>
 </html>

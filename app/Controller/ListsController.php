@@ -24,6 +24,7 @@ class ListsController  extends AppController {
 			$this->Session->setFlash('Liste inconnu');
 			$this->redirect('/lists');
 		}
+		$this->set(array('list' => $list));
 	}
 
 
