@@ -1,4 +1,3 @@
-<h2>c'est la liste des lists</h2>
 <div ng-app="Liste" ng-controller="listeController">
 
 	<div class="list-group lists" ng-model="lists" ng-init="
@@ -6,10 +5,9 @@
 			">
 
 		<a href="lists/tasks/{{value.Liste.id}}" class="list-group-item" ng-repeat="(key, value) in lists">
-			<ul>
-				<li class="name">{{value.Liste.name}}</li>
-				<li class="created">{{value.Liste.created}}</li>
-			</ul>
+				<span class="name">{{value.Liste.name}}</span> -
+				<span class="created">{{value.Liste.created}}</span>
+				<button><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
 		</a>
 	
 	</div>

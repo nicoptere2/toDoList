@@ -1,12 +1,18 @@
-.lists ul{
-	list-style-type : none;
-	padding-left : 0px;
+.lists {
+	position: relative;
 }
 
-.lists li {
-	display : inline;
+.lists span {
+	vertical-align: middle;
 }
 
-.lists li .name {
-	font-size: 20px;
+.lists .name {
+	font-size: 30px;
+}
+
+.lists button {
+	vertical-align: middle;
+	position : absolute;
+	right : 15px;
+	bottom : 15px;
 }
