@@ -1,0 +1,12 @@
+.lists ul{
+	list-style-type : none;
+	padding-left : 0px;
+}
+
+.lists li {
+	display : inline;
+}
+
+.lists li .name {
+	font-size: 20px;
+}

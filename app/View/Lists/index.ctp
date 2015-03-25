@@ -7,8 +7,8 @@
 
 		<a href="lists/tasks/{{value.Liste.id}}" class="list-group-item" ng-repeat="(key, value) in lists">
 			<ul>
-				<li>{{value.Liste.name}}</li>
-				<li>{{value.Liste.created}}</li>
+				<li class="name">{{value.Liste.name}}</li>
+				<li class="created">{{value.Liste.created}}</li>
 			</ul>
 		</a>
 	
