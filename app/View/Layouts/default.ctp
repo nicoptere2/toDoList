@@ -34,15 +34,45 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 		echo $this->fetch('css');
 		
-		echo $this->Html->script('angular');
+		
 		
 		echo $this->fetch('script');
 	?>
 </head>
 <body ng-app>
-	<div id="container">
+	<div id="container" class="container">
 		<div id="header">
-			<h1><?php echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?></h1>
+
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#"><?php echo $title_for_layout ?></a>
+					</div>
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav navbar-right">
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="navbar-right glyphicon glyphicon-menu-hamburger"></span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><?php echo $this->Html->link('Accueil', '/') ?></li>
+									<li><?php echo $this->Html->link('Profil', '/users/profil') ?></li>
+									<li class="divider"></li>
+									<li><?php echo $this->Html->link('Deconnexion', '/users/logout') ?></li>
+								</ul>
+							</li>
+						</ul>
+					</div><!-- /.navbar-collapse -->
+				</div><!-- /.container-fluid -->
+			</nav>
+
 		</div>
 		<div id="content">
 
@@ -62,7 +92,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 			</p>
 		</div>
 	</div>
-	<?php //echo $this->Html->script('jquery') ?>
+
+	<?php echo $this->Html->script('jquery') ?>
 	<?php echo $this->Html->script('bootstrap') ?>
+	<?php echo $this->Html->script('angular'); ?>
 </body>
 </html>
