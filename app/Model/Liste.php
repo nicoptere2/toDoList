@@ -1,6 +1,6 @@
 <?php 
 class Liste extends AppModel {
-	//public $useTable = 'lists';
+	public $useTable = 'listes';
 
 	public $hasOne = 'Task';
 	public $hasMany = array('Message', 'Member');
