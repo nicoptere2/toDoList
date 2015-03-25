@@ -58,17 +58,19 @@ class ToDosController  extends AppController {
 
 		$this->loadModel('Checked');
 		foreach ($list['Task'] as $key => $value) {
-			/*$checked = $this->Checked->find('all',
-				array(
-					'conditions' => array(
-						'task_id' => $value['id']
-						)
-					)
-				);*/
-			debug($this->Task->find('all', array('conditions' => array('Task.id' => $value['id']))));
-			//$tasks[$key] = $checked;
+			$tasks[$key] = $this->Task->find(
+				'all',
+				 array(
+				 	'conditions' => array(
+				 		'Task.id' => $value['id']
+				 		),
+				 	'recursive' => 2
+				 	)
+				 );
+			unset($tasks[$key][0]['ToDo']);
+
 		}
-		debug($tasks);
+		//debug($tasks);
 
 
 		$this->set(array(

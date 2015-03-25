@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 25 Mars 2015 à 20:57
+-- Généré le :  Mer 25 Mars 2015 à 22:50
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -36,16 +36,24 @@ CREATE TABLE IF NOT EXISTS `checkeds` (
   `quantity` int(11) NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `task_id` (`task_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=3;
+  KEY `task_id` (`task_id`),
+  KEY `checkeds_ibfk_1` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
+--
+-- Vider la table avant d'insérer `checkeds`
+--
+
+TRUNCATE TABLE `checkeds`;
 --
 -- Contenu de la table `checkeds`
 --
 
 INSERT INTO `checkeds` (`id`, `user_id`, `task_id`, `quantity`, `created`) VALUES
 (1, 1, 1, 1, '2015-03-19 00:00:00'),
-(2, 1, 2, 1, '2015-03-19 00:00:00');
+(2, 1, 2, 1, '2015-03-19 00:00:00'),
+(3, 1, 3, 2, '2015-03-25 00:00:00'),
+(4, 2, 3, 1, '2015-03-25 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -59,16 +67,21 @@ CREATE TABLE IF NOT EXISTS `friends` (
   `user_id` int(11) NOT NULL,
   `friend_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+--
+-- Vider la table avant d'insérer `friends`
+--
+
+TRUNCATE TABLE `friends`;
 -- --------------------------------------------------------
 
 --
--- Structure de la table `listes`
+-- Structure de la table `to_dos`
 --
 
-DROP TABLE IF EXISTS `listes`;
-CREATE TABLE IF NOT EXISTS `listes` (
+DROP TABLE IF EXISTS `to_dos`;
+CREATE TABLE IF NOT EXISTS `to_dos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(256) NOT NULL,
   `description` text NOT NULL,
@@ -80,10 +93,15 @@ CREATE TABLE IF NOT EXISTS `listes` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Contenu de la table `listes`
+-- Vider la table avant d'insérer `to_dos`
 --
 
-INSERT INTO `listes` (`id`, `name`, `description`, `frequancy`, `expirationDate`, `created`, `updated`) VALUES
+TRUNCATE TABLE `to_dos`;
+--
+-- Contenu de la table `to_dos`
+--
+
+INSERT INTO `to_dos` (`id`, `name`, `description`, `frequancy`, `expirationDate`, `created`, `updated`) VALUES
 (1, 'une liste', 'fdjksqghfdjkqs', 'each day', '2015-03-24 22:25:00', '2015-03-24 22:25:53', '2015-03-24 22:25:53'),
 (2, 'une deuxieme liste', 'jfkdslqmghdfsmghfdjkhghgfjdkslhnvjfkdmqshnjvfkdmhngdkghsml', 'each month', '2015-03-24 22:25:00', '2015-03-24 22:26:12', '2015-03-24 22:26:12');
 
@@ -97,12 +115,18 @@ DROP TABLE IF EXISTS `members`;
 CREATE TABLE IF NOT EXISTS `members` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `liste_id` int(11) NOT NULL,
+  `to_do_id` int(11) NOT NULL,
   `right_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `liste_id` (`liste_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+  KEY `to_do_id` (`to_do_id`),
+  KEY `members_ibfk_1` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+--
+-- Vider la table avant d'insérer `members`
+--
+
+TRUNCATE TABLE `members`;
 -- --------------------------------------------------------
 
 --
@@ -116,12 +140,18 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   `user_id` int(11) NOT NULL,
-  `liste_id` int(11) NOT NULL,
+  `to_do_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`id`),
-  KEY `liste_id` (`liste_id`)
+  KEY `to_do_id` (`to_do_id`),
+  KEY `messages_ibfk_1` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+--
+-- Vider la table avant d'insérer `messages`
+--
+
+TRUNCATE TABLE `messages`;
 -- --------------------------------------------------------
 
 --
@@ -135,6 +165,11 @@ CREATE TABLE IF NOT EXISTS `rights` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+--
+-- Vider la table avant d'insérer `rights`
+--
+
+TRUNCATE TABLE `rights`;
 -- --------------------------------------------------------
 
 --
@@ -148,18 +183,24 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   `quantity` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
-  `liste_id` int(11) NOT NULL,
+  `to_do_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `liste_id` (`liste_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+  KEY `to_do_id` (`to_do_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
+--
+-- Vider la table avant d'insérer `tasks`
+--
+
+TRUNCATE TABLE `tasks`;
 --
 -- Contenu de la table `tasks`
 --
 
-INSERT INTO `tasks` (`id`, `name`, `quantity`, `created`, `updated`, `liste_id`) VALUES
+INSERT INTO `tasks` (`id`, `name`, `quantity`, `created`, `updated`, `to_do_id`) VALUES
 (1, 'une tache quelconque', 1, '2015-03-11 00:00:00', '2015-03-11 00:00:00', 1),
-(2, 'fdsqggfdsfc', 12, '2015-03-03 00:00:00', '2015-03-18 00:00:00', 1);
+(2, 'fdsqggfdsfc', 12, '2015-03-03 00:00:00', '2015-03-18 00:00:00', 1),
+(3, 'quantitatif', 4, '2015-03-08 00:00:00', '2015-03-25 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -175,14 +216,20 @@ CREATE TABLE IF NOT EXISTS `users` (
   `email` varchar(256) NOT NULL,
   `age` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
+--
+-- Vider la table avant d'insérer `users`
+--
+
+TRUNCATE TABLE `users`;
 --
 -- Contenu de la table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `age`) VALUES
-(1, 'nico', '2e119f43daa2877e96d490e857ad6b0c191ce80c', 'nico@nico.fr', 18);
+(1, 'nico', '2e119f43daa2877e96d490e857ad6b0c191ce80c', 'nico@nico.fr', 18),
+(2, 'coco', 'cici', 'cici@coco.co', 100);
 
 --
 -- Contraintes pour les tables exportées
@@ -200,20 +247,20 @@ ALTER TABLE `checkeds`
 --
 ALTER TABLE `members`
   ADD CONSTRAINT `members_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `members_ibfk_2` FOREIGN KEY (`liste_id`) REFERENCES `listes` (`id`);
+  ADD CONSTRAINT `members_ibfk_2` FOREIGN KEY (`to_do_id`) REFERENCES `to_dos` (`id`);
 
 --
 -- Contraintes pour la table `messages`
 --
 ALTER TABLE `messages`
   ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`liste_id`) REFERENCES `listes` (`id`);
+  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`to_do_id`) REFERENCES `to_dos` (`id`);
 
 --
 -- Contraintes pour la table `tasks`
 --
 ALTER TABLE `tasks`
-  ADD CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`liste_id`) REFERENCES `listes` (`id`);
+  ADD CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`to_do_id`) REFERENCES `to_dos` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

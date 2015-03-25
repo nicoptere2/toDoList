@@ -10,8 +10,8 @@
 			<button><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
 			<div class="task">
 				<div class="task-name">{{value[0].Task.name}}</div>
-				<div class="task-user" ng-repeat="(user_key, user) in users" ng-init="users = value.User">
-					<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>{{user.username}}
+				<div class="task-user" ng-repeat="(user_key, checked) in value[0].Checked" >
+					<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>{{checked.User.username}} : {{checked.quantity}} sur {{value[0].Task.quantity}}
 				</div>
 			</div>
 		</li>
