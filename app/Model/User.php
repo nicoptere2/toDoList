@@ -10,11 +10,14 @@ class User extends AppModel {
         
         public $validate = array(
                             'username' => array(
-                                            'rule'  => 'notEmpty',
+                                            'rule'  => 'isUnique',
+                            				'allowEmpty' => false,
+                            				'required' => true,
                                             'message' => 'Entrer un pseudo !'
                                             ),
                             'password' => array(
                                             'rule' => 'notEmpty',
+                            				'required' => false,
                                             'message' => 'Entrer un mot de passe !'
                                              ),
                             'email'    => array(

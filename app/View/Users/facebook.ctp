@@ -1,5 +1,5 @@
 <div class="page-header">
-	<h1>Vous devez choisir un pseudo</h1>
+	<h1>Bonjour <?php echo $user['name']; ?>, <small>vous etes presque connecte, vous devez choisir un pseudo</small></h1>
 </div>
 
 <?php echo $this->Form->create('User'); ?>

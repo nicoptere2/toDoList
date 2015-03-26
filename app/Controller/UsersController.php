@@ -3,21 +3,20 @@ class UsersController  extends AppController {
 	public $scaffold;
 
 
-    public function login(){
-      /*  $this->User->save(array(
-                                'username' => 'umut',
-                                'password' => $this->Auth->password('umut')
-                          ));*/
-       // debug($this->User->findByUsername('akkulak'));
-        if(!empty($this->data)){
-            if($this->Auth->login()){           //si l'utilisateur est logÃ©
+    public function login()
+    {
+      if($this->request->is('post'))
+      {
+            if($this->Auth->login())
+            {          //si l'utilisateur est logÃ©
                 $this->Session->setFlash('<strong>FÃ©licitation</strong> Vous vous etes IdentifiÃ© avec succes', 'flash_success');
                 return $this->redirect('/');            
             }
-            else{
+            else
+            {
                $this->Session->setFlash('<strong>Attention</strong> utisateur inexistant ou mot de passe incorecte', 'flash_warning');
             }
-        }
+      }
     }
     
     public function logout(){  
@@ -42,12 +41,29 @@ class UsersController  extends AppController {
     		{
     			$infos = $facebook->api('/me');
     			
-    			if($this->request->is('post'))
-    			{
-    				$d = $this->request->data;
-    				debug($d);
+    			if($this->request->is('post')) {
+    				$data = $this->request->data['User'];
+    				$d = array(
+    						'username' => $data['username'],
+    						'facebook_id' => $infos['id'],
+    						'email' => $infos['email']
+    				);
+    				
+    				if($this->User->save($d)) {
+    					$this->Session->setFlash('Vous etes maintenant inscrit', 'notif');
+    					$u = $this->User->read(); // cette ligne, qui ne marche pas, ME FAIS CHIER
+    					$this->Auth->login($u['User']);
+    					$this->redirect('/');
+    				}
+    				else {
+    					$this->Session->setFlash("Votre pseudo est déjà utilisé", "notif", array('type' => 'error'));
+    				}
     			}
-    		}
+    			
+    			$d = array();
+    			$d['user'] = $infos;
+    			$this->set($d);
+       		}
     		catch(FacebookApiException $e)
     		{
     			debug($e);

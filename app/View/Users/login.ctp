@@ -5,7 +5,7 @@
 	
 	<?php echo $this->Form->create('User'); ?>
 		<?php echo $this->Form->input('username', array('label' => 'nom', 'placeholder' => 'username')); ?>
-		<?php echo $this->Form->input('password', array('label' => 'mot de passe','placeholder' => 'Password')); ?>
+		<?php echo $this->Form->input('password', array('label' => 'mot de passe','placeholder' => 'password')); ?>
 	<?php echo $this->Form->end('se connecter'); ?>
 </div>
 	

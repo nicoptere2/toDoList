@@ -25,7 +25,6 @@ jQuery(function($){
 		FB.login(function(response) {
 			
 			if(response.authResponse){
-				console.log('coucou');
 				window.location = url;
 			}
 		}, {scope : 'email'});
