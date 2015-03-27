@@ -32,22 +32,29 @@ class ToDosController  extends AppController {
 		if($list_id == null)
 			$this->redirect('/toDos');
 
-		$list = $this->ToDo->find('first', array('conditions' => array('ToDo.id' => $list_id)));
+		$list = $this->ToDo->find(
+			'first',
+			array(
+				'conditions' => array(
+					'ToDo.id' => $list_id
+					)
+				)
+			);
+
 		if($list == array()){
 			$this->Session->setFlash('ToDo inconnu');
 			$this->redirect('/toDos');
 		}
 
-		$this->loadModel('Task');
-		//$this->Task->find('all', array('conditions' => array('id' => $value['id'])));
+
 
 		$listView = $list['ToDo'];
 		$tasks = $list['Task'];
 
-		$this->loadModel('Checked');
+		$this->loadModel('Task');
 		foreach ($list['Task'] as $key => $value) {
 			$tasks[$key] = $this->Task->find(
-				'all',
+				'first',
 				 array(
 				 	'conditions' => array(
 				 		'Task.id' => $value['id']
@@ -55,10 +62,24 @@ class ToDosController  extends AppController {
 				 	'recursive' => 2
 				 	)
 				 );
-			unset($tasks[$key][0]['ToDo']);
+
+			$totalQte = $tasks[$key]['Task']['quantity'];
+			//debug($totalQte);
+
+			$qte = 0;
+			foreach($tasks[$key]['Checked'] as $cKey => $cValue)
+				$qte += $cValue['quantity'];
+
+			//debug($qte);
+
+			$tasks[$key]['Task']['qteCompleted'] = (int) $qte;
+
+			$tasks[$key]['Task']['completed'] = $qte == $totalQte;
+
+			unset($tasks[$key]['ToDo']);
 
 		}
-		//debug($listView);
+		//debug($tasks);
 
 
 		$this->set(array(

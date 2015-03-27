@@ -34,20 +34,6 @@ tasks.controller('tasksController', function tasksController($scope, $http, $tim
 			10000
 		);
 	}
-	refresh();
-
-/*
-	$scope.refresh = function (list) {
-		console.log(baseUrl+'/toDos/tasks/'+list);
-		$http.get(baseUrl+'/toDos/tasks/'+list)
-			.success(function (data, status, headers, config) {
-				console.log('l\'ajax a repondu avec comme data : ' + data);
-				$scope.tasks = data;
-			})
-			.error(function (data, status, header, config) {
-				console.log('l\'ajax a repondu avec erreur');
-			});
-	};
-*/
+	//refresh();
 
 });
