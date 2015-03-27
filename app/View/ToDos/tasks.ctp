@@ -1,7 +1,6 @@
 <h2><?php echo $list['name'] ?> - <?php echo $list['created'] ?></h2>
 
-<div id="tasks" ng-app="Tasks" ng-controller="tasksController">
-
+<div id="tasks" ng-app="Tasks" ng-controller="tasksController" ng-init="list_id=<?php echo $list['id'] ?>" >
 	<ul class="list-group" ng-model="tasks" ng-init="
 			tasks=<?php echo htmlentities(json_encode($tasks)) ?>
 			">
@@ -16,7 +15,6 @@
 			</div>
 		</li>
 	</ul>
-
 </div>
 
 <?php echo $this->Html->script('tasksCtrler') ?>

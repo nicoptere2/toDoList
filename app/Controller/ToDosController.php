@@ -27,32 +27,7 @@ class ToDosController  extends AppController {
 			$this->render('/ToDos/index_ajax');
 		}
 	}
-/*
-	public function listAjax() {
-		
 
-		
-
-		$toDos = $this->ToDo->find('all');
-
-		$listView = array();
-
-
-		$listView['Ajax'] = $this->RequestHandler->isAjax(); 
-
-		foreach ($toDos as $key => $value) {
-			$listView[$key] = array(
-				'id' => $value['ToDo']['id'],
-				'name' => $value['ToDo']['name'],
-				'created' => $value['ToDo']['created']
-				);
-		}
-
-		$listView['Ajax'] = $this->RequestHandler->isAjax();
-
-		$this->set(array('toDos' => $listView));
-	}
-*/
 	public function tasks($list_id = null) {
 		if($list_id == null)
 			$this->redirect('/toDos');
@@ -83,13 +58,18 @@ class ToDosController  extends AppController {
 			unset($tasks[$key][0]['ToDo']);
 
 		}
-		//debug($tasks);
+		//debug($listView);
 
 
 		$this->set(array(
 			'list' => $listView,
 			'tasks' => $tasks
 			));
+
+		if($this->RequestHandler->isAjax()) {
+			$this->layout = 'ajax';
+			$this->render('/ToDos/tasks_ajax');
+		}
 	}
 
 

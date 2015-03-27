@@ -15,16 +15,28 @@ list.config(function ($httpProvider) {
 });
 
 
-list.controller('listeController', function listeController($scope, $http) {
-	$scope.listRefresh = function () {
-		console.log(baseUrl+'/toDos/');
-		$http.get(baseUrl+'/toDos/')
-			.success(function (data, status, headers, config) {
-				console.log('l\'ajax a repondu avec comme data : ' + data);
-				$scope.lists = data;
-			})
-			.error(function (data, status, header, config) {
-				console.log('l\'ajax a repondu avec erreur');
-			});
-	};
+list.controller('listeController', function listeController($scope, $http, $timeout) {
+
+	function refresh(){
+		$timeout(
+			function(){
+				console.log(baseUrl+'/toDos/');
+				$http.get(baseUrl+'/toDos/')
+					.success(function (data, status, headers, config) {
+						console.log('l\'ajax a repondu avec comme data : ' + data);
+						$scope.tasks = data;
+					})
+					.error(function (data, status, header, config) {
+						console.log('l\'ajax a repondu avec erreur');
+					});
+
+				refresh();
+			},
+			10000
+			);
+	}
+	refresh();
+
+	
+
 });
