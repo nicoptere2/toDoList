@@ -4,9 +4,10 @@ class ToDosController  extends AppController {
 
 	//public $uses = 'ToDo';
 
-	public $components = array('RequestHandler');
+//	public $components = array('RequestHandler');
 
 	public function index() {
+
 		$toDos = $this->ToDo->find('all');
 
 		$listView = array();
@@ -20,14 +21,24 @@ class ToDosController  extends AppController {
 		}
 
 		$this->set(array('toDos' => $listView));
-	}
 
+		if($this->RequestHandler->isAjax()) {
+			$this->layout = 'ajax';
+			$this->render('/ToDos/index_ajax');
+		}
+	}
+/*
 	public function listAjax() {
-		$this->layout = 'ajax';
+		
+
+		
 
 		$toDos = $this->ToDo->find('all');
 
 		$listView = array();
+
+
+		$listView['Ajax'] = $this->RequestHandler->isAjax(); 
 
 		foreach ($toDos as $key => $value) {
 			$listView[$key] = array(
@@ -37,9 +48,11 @@ class ToDosController  extends AppController {
 				);
 		}
 
-		$this->set(array('toDos' => $toDos));
-	}
+		$listView['Ajax'] = $this->RequestHandler->isAjax();
 
+		$this->set(array('toDos' => $listView));
+	}
+*/
 	public function tasks($list_id = null) {
 		if($list_id == null)
 			$this->redirect('/toDos');
