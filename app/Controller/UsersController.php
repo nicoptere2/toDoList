@@ -18,7 +18,7 @@ class UsersController extends AppController {
 						'age'
 						),
 					'conditions' => array(
-							'id' => $id
+							'User.id' => $id
 						)
 					)
 				);
