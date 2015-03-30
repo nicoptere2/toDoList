@@ -5,11 +5,11 @@
 	
 	<?php echo $this->Form->create('User'); ?>
 		<?php echo $this->Form->input('username', array('label' => 'nom', 'placeholder' => 'username')); ?>
-		<?php echo $this->Form->input('password', array('label' => 'mot de passe','placeholder' => 'password')); ?>
+		<?php echo $this->Form->input('password', array('label' => 'mot de passe','placeholder' => 'Password')); ?>
 	<?php echo $this->Form->end('se connecter'); ?>
 </div>
 	
-<div class="span8">
-	<h1>Connexion avec Facebook</h1>
-	<a href="<?php echo $this->Html->url(array('action'=>'facebook')); ?>" class="facebookConnect">Se connecter avec Facebook</a>
-</div>
+<?php echo $this->Html->image("login_fb.jpg", array(
+    "alt" => "Se connecter avec Facebook",
+    'url' => array('action'=>'social_login', 'Facebook')
+)); ?>
