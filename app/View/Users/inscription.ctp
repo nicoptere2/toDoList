@@ -7,12 +7,7 @@
     <?php echo $this->Form->input('age', array('label' => 'age','placeholder' => 'age')); ?>
     <?php echo $this->Form->end('s\'inscrire'); ?>
 
-<?php 
-      echo $this->Html->link('synchronisation Facebook', array('controller' => 'Users',
-                                                  'action' => 'inscrireFacebook'
-                                                  ));
-      echo "</br>";
-      echo $this->Html->link('synchronisation GooGle', array('controller' => 'Users',
-                                                  'action' => 'inscrireGoogle'
-                                                  ));
-      ?>
+<?php echo $this->Html->image("register_fb.jpg", array(
+    "alt" => "Se connecter avec Facebook",
+    'url' => array('action'=>'social_login', 'Facebook')
+)); ?>
