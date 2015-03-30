@@ -29,10 +29,6 @@ class UsersController extends AppController {
 		
 	}
 
- 
-
-}
-
     public function login(){
       /*  $this->User->save(array(
                                 'username' => 'umut',
