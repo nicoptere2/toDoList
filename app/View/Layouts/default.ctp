@@ -37,6 +37,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 		echo $this->Js->set('baseUrl',$this->request->base);
 
+		echo $this->Html->script('angular');
 		
 		echo $this->fetch('script');
 	?>
@@ -100,6 +101,5 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 	<?php echo $this->Html->script('jquery') ?>
 	<?php echo $this->Html->script('bootstrap') ?>
-	<?php echo $this->Html->script('angular'); ?>
 </body>
 </html>
