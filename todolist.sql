@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Jeu 19 Mars 2015 à 21:10
+-- Généré le :  Lun 30 Mars 2015 à 21:31
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `todolist`
 --
-CREATE DATABASE IF NOT EXISTS `todolist` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `todolist`;
 
 -- --------------------------------------------------------
 
@@ -28,7 +26,6 @@ USE `todolist`;
 -- Structure de la table `checkeds`
 --
 
-DROP TABLE IF EXISTS `checkeds`;
 CREATE TABLE IF NOT EXISTS `checkeds` (
   `user_id` int(11) NOT NULL,
   `task_id` int(11) NOT NULL,
@@ -44,7 +41,6 @@ CREATE TABLE IF NOT EXISTS `checkeds` (
 -- Structure de la table `friends`
 --
 
-DROP TABLE IF EXISTS `friends`;
 CREATE TABLE IF NOT EXISTS `friends` (
   `user_id` int(11) NOT NULL,
   `friend_id` int(11) NOT NULL,
@@ -54,11 +50,10 @@ CREATE TABLE IF NOT EXISTS `friends` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `lists`
+-- Structure de la table `listes`
 --
 
-DROP TABLE IF EXISTS `lists`;
-CREATE TABLE IF NOT EXISTS `lists` (
+CREATE TABLE IF NOT EXISTS `listes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(256) NOT NULL,
   `description` text NOT NULL,
@@ -75,13 +70,12 @@ CREATE TABLE IF NOT EXISTS `lists` (
 -- Structure de la table `members`
 --
 
-DROP TABLE IF EXISTS `members`;
 CREATE TABLE IF NOT EXISTS `members` (
   `user_id` int(11) NOT NULL,
-  `list_id` int(11) NOT NULL,
+  `liste_id` int(11) NOT NULL,
   `right_id` int(11) NOT NULL,
-  PRIMARY KEY (`user_id`,`list_id`),
-  KEY `list_id` (`list_id`)
+  PRIMARY KEY (`user_id`,`liste_id`),
+  KEY `liste_id` (`liste_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -90,17 +84,16 @@ CREATE TABLE IF NOT EXISTS `members` (
 -- Structure de la table `messages`
 --
 
-DROP TABLE IF EXISTS `messages`;
 CREATE TABLE IF NOT EXISTS `messages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `message` text NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   `user_id` int(11) NOT NULL,
-  `list_id` int(11) NOT NULL,
+  `liste_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`,`list_id`),
-  KEY `list_id` (`list_id`)
+  KEY `user_id` (`user_id`,`liste_id`),
+  KEY `liste_id` (`liste_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -109,7 +102,6 @@ CREATE TABLE IF NOT EXISTS `messages` (
 -- Structure de la table `rights`
 --
 
-DROP TABLE IF EXISTS `rights`;
 CREATE TABLE IF NOT EXISTS `rights` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` int(11) NOT NULL,
@@ -122,16 +114,15 @@ CREATE TABLE IF NOT EXISTS `rights` (
 -- Structure de la table `tasks`
 --
 
-DROP TABLE IF EXISTS `tasks`;
 CREATE TABLE IF NOT EXISTS `tasks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(256) NOT NULL,
   `quantity` int(11) NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
-  `list_id` int(11) NOT NULL,
+  `liste_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `list_id` (`list_id`)
+  KEY `liste_id` (`liste_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -140,15 +131,23 @@ CREATE TABLE IF NOT EXISTS `tasks` (
 -- Structure de la table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `facebook_id` bigint(11) NOT NULL DEFAULT '0',
   `username` varchar(256) NOT NULL,
   `password` varchar(256) NOT NULL,
   `email` varchar(256) NOT NULL,
   `age` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
+--
+-- Contenu de la table `users`
+--
+
+INSERT INTO `users` (`id`, `facebook_id`, `username`, `password`, `email`, `age`) VALUES
+(1, 0, 'umutbg', '35a5090d57c7fd681ba6ed08cc5201a8b19a0bc8', 'damien.procaccino@live.fr', 22),
+(10, 392008710977815, 'testPseudo', '', 'ahquecoucou2@live.fr', 0);
 
 --
 -- Contraintes pour les tables exportées
@@ -158,28 +157,28 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Contraintes pour la table `checkeds`
 --
 ALTER TABLE `checkeds`
-  ADD CONSTRAINT `checkeds_ibfk_2` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`),
-  ADD CONSTRAINT `checkeds_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `checkeds_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `checkeds_ibfk_2` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`);
 
 --
 -- Contraintes pour la table `members`
 --
 ALTER TABLE `members`
-  ADD CONSTRAINT `members_ibfk_2` FOREIGN KEY (`list_id`) REFERENCES `lists` (`id`),
-  ADD CONSTRAINT `members_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `members_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `members_ibfk_2` FOREIGN KEY (`liste_id`) REFERENCES `listes` (`id`);
 
 --
 -- Contraintes pour la table `messages`
 --
 ALTER TABLE `messages`
-  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`list_id`) REFERENCES `lists` (`id`),
-  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`liste_id`) REFERENCES `listes` (`id`);
 
 --
 -- Contraintes pour la table `tasks`
 --
 ALTER TABLE `tasks`
-  ADD CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`list_id`) REFERENCES `lists` (`id`);
+  ADD CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`liste_id`) REFERENCES `listes` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
