@@ -393,7 +393,7 @@ Cache::config('_cake_model_', array(
     // openid providers
     "Google" => array(
         "enabled" => true,
-        "keys" => array("id" => "Your-Google-Key","secret" => "Your-Google-Secret"),
+        "keys" => array("id" => "852955795895-67pk6cdm7ldq8s81t2i2adr3qho8mvoe.apps.googleusercontent.com","secret" => "tntmyruJsxhnzTK7aaS2SWwL"),
     ),
     "Twitter" => array(
         "enabled" => true,
