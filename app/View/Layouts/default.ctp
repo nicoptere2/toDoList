@@ -29,17 +29,19 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->Html->meta('icon');
 
 		echo $this->Html->css('bootstrap.min');
+		echo $this->Html->css('style');
 
 		echo $this->fetch('meta');
 
 		echo $this->fetch('css');
-		
-		
+
+		echo $this->Js->set('baseUrl',$this->request->base);
+
 		
 		echo $this->fetch('script');
 	?>
 </head>
-<body ng-app>
+<body>
 	<div id="container" class="container">
 		<div id="header">
 
@@ -73,6 +75,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 				</div><!-- /.container-fluid -->
 			</nav>
 
+
+
 		</div>
 		<div id="content">
 
@@ -92,6 +96,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 			</p>
 		</div>
 	</div>
+
 
 	<?php echo $this->Html->script('jquery') ?>
 	<?php echo $this->Html->script('bootstrap') ?>
