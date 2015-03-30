@@ -3,12 +3,7 @@
 class UsersController extends AppController {
 
 	var $uses = array('User','SocialProfile');
-	
-	public $paginate = array(
-        'limit' => 25,
-        'conditions' => array('status' => '1'),
-    	'order' => array('User.username' => 'asc' ) 
-    );
+
 	public $components = array('Hybridauth');
 	
     public function beforeFilter() {
@@ -18,23 +13,19 @@ class UsersController extends AppController {
     }
 
 	public function login() {
-		
-		//if already logged-in, redirect
+		//Cas ou l'on est déja connecté
 		if($this->Session->check('Auth.User')){
-			$this->redirect(array('action' => 'index'));		
+			$this->redirect('/');	
 		}
 		
-		// if we get the post information, try to authenticate
+		//Authentification
 		if ($this->request->is('post')) {
-
 			if ($this->Auth->login()) {
-			
 				$status = $this->Auth->user('status');
 				if($status != 0){
 					$this->Session->setFlash(__('Bienvenue, '. $this->Auth->user('username')));
-					$this->redirect($this->Auth->redirectUrl());
+					$this->redirect('/');
 				}else{
-					// this is a deleted user
 					$this->Auth->logout();
 					$this->Session->setFlash(__('Utilisateur supprime'));
 				}
@@ -43,7 +34,6 @@ class UsersController extends AppController {
 			}
 		} 
 	}
-	
 
 	public function logout() {
 		if($this->Auth->logout()){
@@ -52,9 +42,7 @@ class UsersController extends AppController {
 		}
 	}
 	
-	
-	
-	/* social login functionality */
+	/* Connexion via réseaux sociaux */
 	public function social_login($provider) {
 		if( $this->Hybridauth->connect($provider) ){
 			$this->_successfulHybridauth($provider,$this->Hybridauth->user_profile);
@@ -71,14 +59,14 @@ class UsersController extends AppController {
 	
 	private function _successfulHybridauth($provider, $incomingProfile){
 
-		// #1 - check if user already authenticated using this provider before
+		// Regarde si l'utilisateur est connecté au réseau
 		$this->SocialProfile->recursive = -1;
 		$existingProfile = $this->SocialProfile->find('first', array(
 			'conditions' => array('social_network_id' => $incomingProfile['SocialProfile']['social_network_id'], 'social_network_name' => $provider)
 		));
 		
 		if ($existingProfile) {
-			// #2 - if an existing profile is available, then we set the user as connected and log them in
+			// Si l'utilisateur a déja un profil dans la base on le connecte directement
 			$user = $this->User->find('first', array(
 				'conditions' => array('id' => $existingProfile['SocialProfile']['user_id'])
 			));
@@ -86,10 +74,8 @@ class UsersController extends AppController {
 			$this->_doSocialLogin($user,true);
 		} else {
 			
-			// New profile.
+			// Nouveau profil
 			if ($this->Auth->loggedIn()) {
-				// user is already logged-in , attach profile to logged in user.
-				// create social profile linked to current user
 				$incomingProfile['SocialProfile']['user_id'] = $this->Auth->user('id');
 				$this->SocialProfile->save($incomingProfile);
 				
@@ -97,19 +83,17 @@ class UsersController extends AppController {
 				$this->redirect($this->Auth->redirectUrl());
 
 			} else {
-				// no-one logged and no profile, must be a registration.
 				$user = $this->User->createFromSocialProfile($incomingProfile);
 				$incomingProfile['SocialProfile']['user_id'] = $user['User']['id'];
 				$this->SocialProfile->save($incomingProfile);
 
-				// log in with the newly created user
+				// Connexion
 				$this->_doSocialLogin($user);
 			}
 		}	
 	}
 	
 	private function _doSocialLogin($user, $returning = false) {
-
 		if ($this->Auth->login($user['User'])) {
 			if($returning){
 				$this->Session->setFlash(__('Bienvenue, '. $this->Auth->user('username')));
@@ -122,16 +106,6 @@ class UsersController extends AppController {
 			$this->Session->setFlash(__('Erreur lors de la connexion '. $this->Auth->user('username')));
 		}
 	}
-
-    public function index() {
-		$this->paginate = array(
-			'limit' => 10,
-			'order' => array('User.username' => 'asc' ),
-			'conditions' => array('User.status' => 1),
-		);
-		$users = $this->paginate('User');
-		$this->set(compact('users'));
-    }
 
 	public function inscription(){ 
         $this->Auth->allow('inscription');
@@ -172,8 +146,6 @@ class UsersController extends AppController {
                 $this->redirect('/Users/inscription');
               }
             }
-            
-        
     }
 }
 
