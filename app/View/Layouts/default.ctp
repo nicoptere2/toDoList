@@ -79,6 +79,20 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 
 		</div>
+                <ul class="nav navbar-nav navbar-right">
+                    <?php if (AuthComponent::user('id') != null): ?>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-cog"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><?php echo $this->Html->link('Profil', '/users/profil') ?></li>
+                          <li class="divider"></li>
+                          <li><?php echo $this->Html->link('Déconexion', '/users/logout') ?></li>
+                        </ul>
+                      </li>
+                    <?php else: ?>
+                      <li><?php echo $this->Html->link('Connexion', '/users/login') ?></li>
+                    <?php endif ?>
+                </ul>
 		<div id="content">
 
 			<?php echo $this->Session->flash(); ?>
