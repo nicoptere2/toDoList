@@ -55,13 +55,14 @@ class UsersController extends AppController {
             }
             else{
                $this->Session->setFlash('<strong>Attention</strong> utisateur inexistant ou mot de passe incorecte', 'flash_warning');
+               $this->redirect('/Users/inscription');
             }
         }
     }
     
     public function logout(){  
         if($this->Auth->logout()){ 
-            $this->Session->setFlash('<strong>Deconnecté</strong> En espérant vous revoir', 'flash_success');
+            $this->Session->setFlash('<strong>Deconnecté(e)</strong> En espérant vous revoir', 'flash_success');
             return $this->redirect('/');
         }
     }
@@ -69,7 +70,7 @@ class UsersController extends AppController {
     public function inscription(){         
         //Cas ou l'on est déja connecté
         if($this->Session->check('Auth.User')){
-                $this->redirect('/');	
+                $this->redirect('/');
         }
         $d = array(
             'username' => "",
@@ -120,7 +121,14 @@ class UsersController extends AppController {
                     }
                     else{
                         $this->Session->setFlash('le second mot de passe ne correspond pas au premier', 'flash_danger');
-                        $this->redirect('/Users/inscription');
+                        $d = array(
+                            'username' => $user['User']['username'],
+                            /*'password' => '',
+                            're_password' =>'',*/
+                            'email' => $user['User']['email'],
+                            'age' => $user['User']['age']);
+                        $this->set('d',$d);
+                    //    $this->redirect('/Users/inscription');
                     }
                 }
               }

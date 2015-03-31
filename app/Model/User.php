@@ -24,7 +24,7 @@ class User extends AppModel {
                                             'message' => 'Entrer un email !'
                                              ),
                             'age'      => array(
-                                            'rule' => array('lengthBetween', 12, 150),
+                                            'rule' => 'notEmpty',
                                             'message' => 'Entrer votre date de naissance !'
                                              )
                             );

@@ -5,7 +5,7 @@
 <?php echo $this->Form->input('password', array('label' => 'mot de passe','placeholder' => 'Password')); ?>
 
 <?php echo $this->Form->end('se connecter'); ?>
-
+<?php echo $this->Html->link('Inscription', '/users/inscription') ?>
 	
 <?php echo $this->Html->image("login_fb.jpg", array(
     "alt" => "Se connecter avec Facebook",
