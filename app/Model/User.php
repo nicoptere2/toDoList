@@ -12,8 +12,8 @@ class User extends AppModel {
         
         public $validate = array(
                             'username' => array(
-                                            'rule'  => 'notEmpty',
-                                            'message' => 'Entrer un pseudo !'
+                                            'rule'  => 'alphaNumeric',
+                                            'message' => 'Chiffres et lettres uniquement !'
                                             ),
                             'password' => array(
                                             'rule' => 'notEmpty',
@@ -24,7 +24,7 @@ class User extends AppModel {
                                             'message' => 'Entrer un email !'
                                              ),
                             'age'      => array(
-                                            'rule' => 'notEmpty',
+                                            'rule' => array('lengthBetween', 12, 150),
                                             'message' => 'Entrer votre date de naissance !'
                                              )
                             );
