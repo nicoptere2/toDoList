@@ -1,40 +1,17 @@
+<<<<<<< HEAD
 <?php 
 class UsersController extends AppController {
+
+	public $components = array('Hybridauth');
+
+	var $uses = array('User','SocialProfile');
 	
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('login','inscription'); 
-		
+        $this->Auth->allow('login','inscription','social_login','social_endpoint'); 		
     }
     
-    
-	public function profil($id = null)
-	{
-		//il faudra le mettre autre part
-		//$id = $this->Auth->user('id');
-
-		if($id == null)
-			$this->redirect('/');
-		else
-			$id = $this->User->find(
-				'all',
-				array(
-					'fields' => array(
-						'username',
-						'email',
-						'age'
-						),
-					'conditions' => array(
-							'User.id' => $id
-						)
-					)
-				);
-			$avertissement = "Vous avez été déconnecté";
-	
-			$this->set('test',$id);	
-	
-		
-	}
 
     public function login(){
       /*  $this->User->save(array(
@@ -67,22 +44,96 @@ class UsersController extends AppController {
         }
     }
 
-    public function inscription(){         
-        //Cas ou l'on est déja connecté
-        if($this->Session->check('Auth.User')){
-                $this->redirect('/');
+
+	public function profil($id = null)
+	{
+		//il faudra le mettre autre part
+		//$id = $this->Auth->user('id');
+
+		if($id == null)
+			$this->redirect('/');
+		else
+			$id = $this->User->find(
+				'all',
+				array(
+					'fields' => array(
+						'username',
+						'email',
+						'age'
+						),
+					'conditions' => array(
+							'User.id' => $id
+						)
+					)
+				);
+			$avertissement = "Vous avez été déconnecté";
+	
+			$this->set('test',$id);		
+	}
+	
+
+
+	
+	/* Connexion via réseaux sociaux */
+	public function social_login($provider) {
+		if( $this->Hybridauth->connect($provider) ){
+			$this->_successfulHybridauth($provider,$this->Hybridauth->user_profile);
+        }else{
+            // error
+			$this->Session->setFlash($this->Hybridauth->error);
+			$this->redirect($this->Auth->loginAction);
         }
-        $d = array(
-            'username' => "",
-            'password' => "",
-            're_password' =>"",
-            'email' => "",
-            'age' => "");
-       $this->set('d',$d);
+	}
+
+	public function social_endpoint($provider) {
+		$this->Hybridauth->processEndpoint();
+	}
+	
+	private function _successfulHybridauth($provider, $incomingProfile){
+
+		// Regarde si l'utilisateur est connecté au réseau
+		$this->SocialProfile->recursive = -1;
+		$existingProfile = $this->SocialProfile->find('first', array(
+			'conditions' => array('social_network_id' => $incomingProfile['SocialProfile']['social_network_id'], 'social_network_name' => $provider)
+		));
+		
+		if ($existingProfile) {
+			// Si l'utilisateur a déja un profil dans la base on le connecte directement
+			$user = $this->User->find('first', array(
+				'conditions' => array('id' => $existingProfile['SocialProfile']['user_id'])
+			));
+			
+			$this->_doSocialLogin($user,true);
+		} else {
+			
+			// Nouveau profil
+			if ($this->Auth->loggedIn()) {
+				$incomingProfile['SocialProfile']['user_id'] = $this->Auth->user('id');
+				$this->SocialProfile->save($incomingProfile);
+				
+				$this->Session->setFlash('Your ' . $incomingProfile['SocialProfile']['social_network_name'] . ' account is now linked to your account.');
+				$this->redirect($this->Auth->redirectUrl());
+
+	
+	private function _doSocialLogin($user, $returning = false) {
+		if ($this->Auth->login($user['User'])) {
+			if($returning){
+				$this->Session->setFlash(__('Bienvenue, '. $this->Auth->user('username')));
+			} else {
+				$this->Session->setFlash(__('Inscription via facebook effectuée, bienvenue, '. $this->Auth->user('username')));
+			}
+			$this->redirect('/'); 	
+		
+		} else {
+			$this->Session->setFlash(__('Erreur lors de la connexion '. $this->Auth->user('username')));
+		}
+	}
+
+	public function inscription(){ 
+        $this->Auth->allow('inscription');
+
         //verifie si l'utilisteur a entre qqchose
         if($this->request->is('post')){
-            
-            $user = $this->request->data;
 
             //  verifie si l'utilisteur existe dans la base
             $user = $this->User->findByUsername($this->request->data['User']['username']);
@@ -137,8 +188,6 @@ class UsersController extends AppController {
                 $this->redirect('/Users/inscription');
               }
             }
-            
-        
     }
     
 }

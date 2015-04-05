@@ -384,3 +384,49 @@ Cache::config('_cake_model_', array(
 	'serialize' => ($engine === 'File'),
 	'duration' => $duration
 ));
+
+/**
+ * HybridAuth component (Facebook / Google / ...)
+ *
+ */
+ Configure::write('Hybridauth', array(
+    // openid providers
+    "Google" => array(
+        "enabled" => true,
+        "keys" => array("id" => "852955795895-67pk6cdm7ldq8s81t2i2adr3qho8mvoe.apps.googleusercontent.com","secret" => "tntmyruJsxhnzTK7aaS2SWwL"),
+    ),
+    "Twitter" => array(
+        "enabled" => true,
+        "keys" => array("key" => "Your-Twitter-Key", "secret" => "Your-Twitter-Secret")
+    ),
+    "Facebook" => array(
+        "enabled" => true,
+        "keys" => array("id" => "1788940054665201", "secret" => "581c19bd2ccb705b333db4273d3b75ee"),
+    ),
+    "OpenID" => array(
+        "enabled" => false
+    ),
+    "Yahoo" => array(
+        "enabled" => false,
+        "keys" => array("id" => "", "secret" => ""),
+    ),
+    "AOL" => array(
+        "enabled" => false
+    ),
+    "Live" => array(
+        "enabled" => false,
+        "keys" => array("id" => "", "secret" => "")
+    ),
+    "MySpace" => array(
+        "enabled" => false,
+        "keys" => array("key" => "", "secret" => "")
+    ),
+    "LinkedIn" => array(
+        "enabled" => false,
+        "keys" => array("key" => "", "secret" => "")
+    ),
+    "Foursquare" => array(
+        "enabled" => false,
+        "keys" => array("id" => "", "secret" => "")
+    ),
+));
