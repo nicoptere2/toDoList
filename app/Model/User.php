@@ -29,8 +29,8 @@ class User extends AppModel {
                                             'message' => 'Entrer un email !'
                                              ),
                             'age'      => array(
-                                            'rule' => 'notEmpty',
-                                            'message' => 'Entrer votre date de naissance !'
+                                            'rule' => array('naturalNumber', false),
+                                            'message' => 'Entrer votre âge qui doit être superieur a 0 !'
                                              )
                             );
 

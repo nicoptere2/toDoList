@@ -30,6 +30,8 @@ class ToDosController  extends AppController {
 					)
 				)
 			);
+                $this->set('idToDo',$list_id);
+                
 		if($list == array()){
 			$this->Session->setFlash('ToDo inconnu');
 			$this->redirect('/toDos');

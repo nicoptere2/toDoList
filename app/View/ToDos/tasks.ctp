@@ -26,9 +26,21 @@
 					</div>
 					<span>{{qteCompleted}} / {{qte}}</span>
 				</div>
-			</label>
+                        </label>
+                    <?php  
+                    $user_id = AuthComponent::user('id'); 
+                        echo $this->Html->link('supprimer l\'éléments', '/Tasks/delete_task/'.$idToDo.'/{{value.Task.id}}'
+                                                );
+                    ?>
 		</li>
 	</ul>
 </div>
 
 <?php echo $this->Html->script('tasksCtrler') ?>
+
+<?php  $user_id = AuthComponent::user('id'); 
+        
+        echo $this->Html->link('ajouter des éléments', array('controller' => 'Tasks',
+                                                  'action' => 'add_task',$idToDo
+                                                  ));
+        ?>
