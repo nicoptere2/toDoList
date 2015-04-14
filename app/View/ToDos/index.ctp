@@ -6,7 +6,7 @@
 
 		<a href="todos/tasks/{{value.id}}" class="list-group-item" ng-repeat="(key, value) in toDos">
 				<span class="name">{{value.name}}</span> -
-				<span class="created">{{value.created}}</span>
+				<span class="created" ng-model="created"> {{dateHelper(value.created);}} </span>
 				<button class="btn-delete"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
 		</a>
 	
@@ -17,4 +17,5 @@
 <script type="text/javascript">
 	
 </script>
+<?php echo $this->Html->script('dateHelper') ?>
 <?php echo $this->Html->script('listeCtrler') ?>
