@@ -55,6 +55,17 @@ class ToDosController  extends AppController {
 			//debug($qte);
 			$tasks[$key]['Task']['qteCompleted'] = (int) $qte;
 			$tasks[$key]['Task']['completed'] = $qte == $totalQte;
+			$tasks[$key]['Task']['empty'] = false;
+			$tasks[$key]['Task']['half'] = false;
+
+			if(!$tasks[$key]['Task']['completed'] && $qte > 0) {
+				$tasks[$key]['Task']['empty'] = false;
+				$tasks[$key]['Task']['half'] = true;
+			} elseif(!$tasks[$key]['Task']['completed']){
+				$tasks[$key]['Task']['empty'] = true;
+				$tasks[$key]['Task']['half'] = false;
+			}
+
 			unset($tasks[$key]['ToDo']);
 		}
 		//debug($tasks);
