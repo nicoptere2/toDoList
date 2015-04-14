@@ -38,5 +38,8 @@ list.controller('listeController', function listeController($scope, $http, $time
 	refresh();
 
 	
+	$scope.dateHelper = function(date){
+		return frDate(date);
+	};
 
 });
