@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php 
 class UsersController extends AppController {
 
@@ -113,8 +112,10 @@ class UsersController extends AppController {
 				
 				$this->Session->setFlash('Your ' . $incomingProfile['SocialProfile']['social_network_name'] . ' account is now linked to your account.');
 				$this->redirect($this->Auth->redirectUrl());
+            }	
+        }
+    }
 
-	
 	private function _doSocialLogin($user, $returning = false) {
 		if ($this->Auth->login($user['User'])) {
 			if($returning){

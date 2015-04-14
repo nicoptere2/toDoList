@@ -50,10 +50,10 @@ CREATE TABLE IF NOT EXISTS `friends` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `lists`
+-- Structure de la table `to_dos`
 --
 
-CREATE TABLE IF NOT EXISTS `lists` (
+CREATE TABLE IF NOT EXISTS `to_dos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(256) NOT NULL,
   `description` text NOT NULL,
@@ -197,21 +197,21 @@ ALTER TABLE `checkeds`
 -- Contraintes pour la table `members`
 --
 ALTER TABLE `members`
-  ADD CONSTRAINT `members_ibfk_2` FOREIGN KEY (`list_id`) REFERENCES `lists` (`id`),
+  ADD CONSTRAINT `members_ibfk_2` FOREIGN KEY (`list_id`) REFERENCES `to_dos` (`id`),
   ADD CONSTRAINT `members_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Contraintes pour la table `messages`
 --
 ALTER TABLE `messages`
-  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`list_id`) REFERENCES `lists` (`id`),
+  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`list_id`) REFERENCES `to_dos` (`id`),
   ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Contraintes pour la table `tasks`
 --
 ALTER TABLE `tasks`
-  ADD CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`list_id`) REFERENCES `lists` (`id`);
+  ADD CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`list_id`) REFERENCES `to_dos` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
