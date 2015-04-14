@@ -19,8 +19,8 @@ tasks.controller('tasksController', function tasksController($scope, $http, $tim
 	function refresh(){
 		$timeout(
 			function(){
-				console.log(baseUrl+'/toDos/tasks/'+ $scope.list_id);
-				$http.get(baseUrl+'/toDos/tasks/'+ $scope.list_id)
+				console.log(baseUrl+'/todos/tasks/'+ $scope.list_id);
+				$http.get(baseUrl+'/todos/tasks/'+ $scope.list_id)
 					.success(function (data, status, headers, config) {
 						console.log('l\'ajax a repondu avec comme data : ' + data);
 						$scope.tasks = data;
