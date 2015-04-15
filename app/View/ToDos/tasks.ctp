@@ -7,15 +7,31 @@
 		<li class="list-group-item item" ng-repeat="(key, value) in tasks">
 			{{qteCompleted = value.Task.qteCompleted; ""}}
 			{{qte = value.Task.quantity; ""}}
-			<label for="checked" class="checked">
-				<input type="checkbox" ng-model="value.Task.completed" ng-name="value.Task.id">
-				<span class="tick"></span>
+
+			<label class="checked">
+				<input 
+					type="checkbox" 
+					ng-name="value.Task.id"
+					ng-model="value.value"
+					ng-checked="value.Task.completed"
+					ng-change="boxClick(key)"
+				>
+
 				<div class="task">
 					<div class="task-name">{{value.Task.name}}</div>
 					<div class="task-user" ng-repeat="(user_key, checked) in value.Checked" >
 						<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>{{checked.User.username}} : {{checked.quantity}} sur {{value.Task.quantity}}
 					</div>
 				</div>
+
+				<input 
+					type="number"
+					name="quantity" 
+					ng-model="value.quantity"
+					ng-show="value.Task.quantitatif && !value.Task.completed"
+					placeholder="quantité"
+				>
+
 				<div class="quantity">
 					<div>
 						<div class="progress">

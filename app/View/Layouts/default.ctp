@@ -41,6 +41,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		echo $this->Js->set('baseUrl',$this->request->base);
 		?>
 			<script type="text/javascript">var baseUrl = '<?php echo $this->request->base ?>'</script>
+			<script type="text/javascript">var userId = '<?php echo AuthComponent::user('id') ?>'</script>
 		<?php
 
 		echo $this->Html->script('angular');

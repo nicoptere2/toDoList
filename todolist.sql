@@ -31,14 +31,15 @@ DROP TABLE IF EXISTS `checkeds`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `checkeds` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `task_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `created` datetime NOT NULL,
-  PRIMARY KEY (`user_id`,`task_id`),
+  PRIMARY KEY (`id`),
   KEY `task_id` (`task_id`),
-  CONSTRAINT `checkeds_ibfk_2` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`),
-  CONSTRAINT `checkeds_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  CONSTRAINT `checkeds_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `checkeds_ibfk_2` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -48,7 +49,7 @@ CREATE TABLE `checkeds` (
 
 LOCK TABLES `checkeds` WRITE;
 /*!40000 ALTER TABLE `checkeds` DISABLE KEYS */;
-INSERT INTO `checkeds` VALUES (8,1,1,'2015-04-14 00:00:00');
+INSERT INTO `checkeds` VALUES (1,6,2,1,'2015-04-14 00:00:00'),(2,8,1,1,'2015-04-14 00:00:00');
 /*!40000 ALTER TABLE `checkeds` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,9 +61,10 @@ DROP TABLE IF EXISTS `friends`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `friends` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `friend_id` int(11) NOT NULL,
-  PRIMARY KEY (`user_id`,`friend_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -83,13 +85,14 @@ DROP TABLE IF EXISTS `members`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `members` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `to_do_id` int(11) NOT NULL,
   `right_id` int(11) NOT NULL,
-  PRIMARY KEY (`user_id`,`to_do_id`),
+  PRIMARY KEY (`id`),
   KEY `to_do_id` (`to_do_id`),
-  CONSTRAINT `members_ibfk_2` FOREIGN KEY (`to_do_id`) REFERENCES `to_dos` (`id`),
-  CONSTRAINT `members_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  CONSTRAINT `members_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `members_ibfk_2` FOREIGN KEY (`to_do_id`) REFERENCES `to_dos` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -119,8 +122,8 @@ CREATE TABLE `messages` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`,`to_do_id`),
   KEY `to_do_id` (`to_do_id`),
-  CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`to_do_id`) REFERENCES `to_dos` (`id`),
-  CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`to_do_id`) REFERENCES `to_dos` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -208,7 +211,7 @@ CREATE TABLE `tasks` (
   PRIMARY KEY (`id`),
   KEY `to_do_id` (`to_do_id`),
   CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`to_do_id`) REFERENCES `to_dos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -217,7 +220,7 @@ CREATE TABLE `tasks` (
 
 LOCK TABLES `tasks` WRITE;
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
-INSERT INTO `tasks` VALUES (1,'cvdqsGDFF',1,'2015-04-14 00:00:00','2015-04-14 00:00:00',1);
+INSERT INTO `tasks` VALUES (1,'cvdqsGDFF',1,'2015-04-14 00:00:00','2015-04-14 00:00:00',1),(2,'kkkkkkkk',3,'2015-04-14 00:00:00','2015-04-14 00:00:00',1);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -246,7 +249,7 @@ CREATE TABLE `to_dos` (
 
 LOCK TABLES `to_dos` WRITE;
 /*!40000 ALTER TABLE `to_dos` DISABLE KEYS */;
-INSERT INTO `to_dos` VALUES (1,'test','fj','once','2015-04-18 00:00:00','2015-04-13 00:00:00','2015-04-14 00:00:00');
+INSERT INTO `to_dos` VALUES (1,'test','fj','once','2015-04-18 00:00:00','2015-04-14 00:00:00','2015-04-14 05:28:45');
 /*!40000 ALTER TABLE `to_dos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -289,4 +292,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-14 14:26:32
+-- Dump completed on 2015-04-15 14:14:34
