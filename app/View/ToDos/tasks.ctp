@@ -44,3 +44,10 @@
                                                   'action' => 'add_task',$idToDo
                                                   ));
         ?>
+
+<?php  $user_id = AuthComponent::user('id'); 
+        
+        echo $this->Html->link('ajouter des membres', array('controller' => 'Members',
+                                                  'action' => 'add_member',$idToDo
+                                                  ));
+        ?>
