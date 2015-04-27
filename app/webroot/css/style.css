@@ -1,3 +1,26 @@
+/**
+* Style du menu
+*/
+
+.navbar .title {
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.navbar .menu {
+	height :60px;
+}
+
+.navbar .menu .dropdown {
+	top : 17px;
+}
+
+.navbar .menu .dropdown span {
+	vertical-align: middle;
+	top: -7px;
+	right : 7px;
+}
+
 
 /**
 * Style de la partie des Lists

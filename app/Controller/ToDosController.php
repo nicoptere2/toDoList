@@ -77,6 +77,7 @@ class ToDosController  extends AppController {
 
 		$this->set('idToDo',$tasks[0]['Task']['to_do_id']);
 
+		$this->set('title_for_layout', 'Liste d\'item');
 
 		//debug($tasks);
 		$this->set(array(
