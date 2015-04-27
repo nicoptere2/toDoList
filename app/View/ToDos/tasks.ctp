@@ -1,43 +1,85 @@
-<h2><?php echo $list['name'] ?> - <?php echo $list['created'] ?></h2>
+<?php //debug($tasks) ?>
 
 <div id="tasks" ng-app="Tasks" ng-controller="tasksController" ng-init="list_id=<?php echo $list['id'] ?>" >
+	<h2><?php echo $list['name'] ?> - <span class="created"> <?php echo $this->Date->date($list['created']) ?> </span></h2>
+
 	<ul class="list-group" ng-model="tasks" ng-init="
 			tasks=<?php echo htmlentities(json_encode($tasks)) ?>
 			">
-		<li class="list-group-item item" ng-repeat="(key, value) in tasks">
+		<li class="list-group-item item"
+			ng-repeat="(key, value) in tasks" 
+			ng-class="
+				{
+					taskCompleted : value.Task.completed,
+					taskHalf : value.Task.half,
+					taskEmpty : value.Task.empty
+				}"
+			ng-model="value"
+			ng-click=""
+		>
 			{{qteCompleted = value.Task.qteCompleted; ""}}
 			{{qte = value.Task.quantity; ""}}
-			<label for="checked" class="checked">
-				<input type="checkbox" ng-model="value.Task.completed" ng-name="value.Task.id">
-				<span class="tick"></span>
-				<div class="task">
-					<div class="task-name">{{value.Task.name}}</div>
-					<div class="task-user" ng-repeat="(user_key, checked) in value.Checked" >
-						<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>{{checked.User.username}} : {{checked.quantity}} sur {{value.Task.quantity}}
-					</div>
-				</div>
-				<div class="quantity">
-					<div>
-						<div class="progress">
-							<div class="progress-bar" role="progressbar" aria-valuenow="{{qteCompleted / qte * 100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{qteCompleted / qte * 100}}%;">
-								{{qteCompleted / qte * 100}}%
-							</div>
+
+			<label class="checked">
+				<input 
+					type="checkbox" 
+					class="checkbox"
+					ng-name="value.Task.id"
+					ng-model="value.checkBoxValue"
+					ng-checked="value.Task.completed"
+					ng-click="boxClick(key)"
+				>
+
+				<span class="rounded"> <span class="glyphicon glyphicon-ok tick" ng-show="value.Task.completed"></span> </span>
+
+
+				<div class="task-content">
+					<div class="task">
+						<div class="task-name">{{value.Task.name}}</div>
+						<div class="task-user" ng-repeat="(user_key, checked) in value.Checked" >
+							<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>{{checked.User.username}} : {{checked.quantity}} sur {{value.Task.quantity}}
 						</div>
 					</div>
-					<span>{{qteCompleted}} / {{qte}}</span>
+					
+					<form action="#" ng-submit="boxClick(key)">
+						<input 
+							type="number"
+							name="quantity" 
+							ng-model="value.quantity"
+							ng-show="value.Task.quantitatif && !value.Task.completed"
+							placeholder="quantité"
+							ng-blur="boxClick(key)"
+						>
+					</form>
+
+					<div class="quantity" ng-show="value.Task.half">
+						<!-- <div> -->
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="{{qteCompleted / qte * 100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{qteCompleted / qte * 100}}%;">
+									{{qteCompleted / qte * 100}}%
+								</div>
+							<!-- </div> -->
+						</div>
+						<span>{{qteCompleted}} / {{qte}}</span>
+					</div>
 				</div>
-                        </label>
+            </label>
+
+			<a ng-href="/Tasks/delete_task/<?php echo $idToDo ?>/{{value.Task.id}}" class="btn-delete">
+				<span class="glyphicon glyphicon-minus"></span>
+			</a>
+
                     <?php  
-                    $user_id = AuthComponent::user('id'); 
-                        echo $this->Html->link('supprimer l\'éléments', '/Tasks/delete_task/'.$idToDo.'/{{value.Task.id}}'
-                                                );
+                    //$user_id = AuthComponent::user('id'); 
+                      //  echo $this->Html->link('supprimer l\'éléments', '/Tasks/delete_task/'.$idToDo.'/{{value.Task.id}}'
+                       //                        );
                     ?>
 		</li>
 	</ul>
 </div>
 
+<?php echo $this->Html->script('dateHelper') ?>
 <?php echo $this->Html->script('tasksCtrler') ?>
-
 <?php  $user_id = AuthComponent::user('id'); 
         
         echo $this->Html->link('ajouter des éléments', array('controller' => 'Tasks',
