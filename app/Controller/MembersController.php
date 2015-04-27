@@ -30,12 +30,12 @@ class MembersController  extends AppController {
 		}
 		//debug($tableau);
 		if($this->request->is('post')){
-			$member = $this->User->find('first', array('conditions' => array('User.username' => $this->request->data['Member']['name'])));
+			$member = $this->User->find('first', array('conditions' => array('User.username' => $this->request->data['Member']['pseudo'])));
 			//debug($member);
 			if(!(empty($member))){
 			//debug($member_id);
 			$member_id = $member['User']['id'];
-			//debug($member_id);
+			debug($member_id);
 
 			if($this->Member->save(array(
                             'user_id'     => $member_id,

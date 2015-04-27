@@ -64,9 +64,9 @@ tasks.controller('tasksController', function tasksController($scope, $http, $tim
 
 tasks.controller('addMemberController', function addMemberController($scope, $http, $timeout) {
 	$scope.pageTest = '';
-	$scope.ajouterMembre = function(){
-		console.log("test");
-		$http.get(baseUrl+'/Members/add_member/'+ $scope.list_id)
+	$scope.ajouterMembre = function(list_id){
+		console.log(list_id);
+		$http.get(baseUrl+'/Members/add_member/'+ /*$scope.*/list_id)
 			.success(function (data, status, headers, config) {
 				$scope.pageTest = data;
 			});
