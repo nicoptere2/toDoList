@@ -1,7 +1,7 @@
-<?php debug($tasks) ?>
+<?php //debug($tasks) ?>
 
 <div id="tasks" ng-app="Tasks" ng-controller="tasksController" ng-init="list_id=<?php echo $list['id'] ?>" >
-	<h2><?php echo $list['name'] ?> - <?php echo $list['created'] ?></h2>
+	<h2><?php echo $list['name'] ?> - <span class="created"> <?php echo $this->Date->date($list['created']) ?> </span></h2>
 
 	<ul class="list-group" ng-model="tasks" ng-init="
 			tasks=<?php echo htmlentities(json_encode($tasks)) ?>
@@ -24,9 +24,9 @@
 				<input 
 					type="checkbox" 
 					ng-name="value.Task.id"
-					ng-model="value.value"
+					ng-model="value.checkBoxValue"
 					ng-checked="value.Task.completed"
-					ng-change="boxClick(key)"
+					ng-click="boxClick(key)"
 				>
 				<div class="task">
 					<div class="task-name">{{value.Task.name}}</div>
@@ -34,14 +34,17 @@
 						<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>{{checked.User.username}} : {{checked.quantity}} sur {{value.Task.quantity}}
 					</div>
 				</div>
-
-				<input 
-					type="number"
-					name="quantity" 
-					ng-model="value.quantity"
-					ng-show="value.Task.quantitatif && !value.Task.completed"
-					placeholder="quantité"
-				>
+				
+				<form action="#" ng-submit="boxClick(key)">
+					<input 
+						type="number"
+						name="quantity" 
+						ng-model="value.quantity"
+						ng-show="value.Task.quantitatif && !value.Task.completed"
+						placeholder="quantité"
+						ng-blur="boxClick(key)"
+					>
+				</form>
 
 				<div class="quantity">
 					<div>

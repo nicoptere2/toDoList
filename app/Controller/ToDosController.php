@@ -74,6 +74,10 @@ class ToDosController  extends AppController {
 
 			unset($tasks[$key]['ToDo']);
 		}
+
+		$this->set('idToDo',$tasks[0]['Task']['to_do_id']);
+
+
 		//debug($tasks);
 		$this->set(array(
 			'list' => $listView,

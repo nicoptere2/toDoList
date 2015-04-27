@@ -42,10 +42,6 @@ tasksApp.controller('tasksController', function tasksController($scope, $http, $
 
 
 	$scope.boxClick = function(key) {
-		//console.log($scope.tasks[key]);
-
-		console.log($scope.tasks[key].Task.completed);
-		console.log($scope.tasks[key].value);
 
 		var action = '';
 
@@ -68,11 +64,13 @@ tasksApp.controller('tasksController', function tasksController($scope, $http, $
 		else if(action == 'add')
 			if(typeof $scope.tasks[key].quantity !== 'undefined')
 				qte = $scope.tasks[key].quantity;
-			else
+			else {
+				alert("Vous devez rentrer une valeur");
 				return false;
+			}
 
 
-		console.log(qte);
+		//console.log(qte);
 
 
 		var param = userId + '/' + $scope.tasks[key].Task.id + '/' + qte;
@@ -81,7 +79,7 @@ tasksApp.controller('tasksController', function tasksController($scope, $http, $
 
 		$http.get(url)
 			.success(function (data, status, header, config) {
-				console.log('Ajax success! : \n'+data);
+				console.log('Ajax success! : \n');
 				$scope.tasks = data;
 			})
 			.error(function (data, status, header, config) {

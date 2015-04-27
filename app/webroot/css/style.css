@@ -26,6 +26,11 @@
 * Style pour les Taches
 */
 
+#tasks > h2 > span {
+	font-size: 20px;
+	vertical-align: middle;
+}
+
 #tasks label {
 	width : 100%;
 	height : 100%;
