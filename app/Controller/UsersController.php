@@ -130,8 +130,18 @@ class UsersController extends AppController {
 		}
 	}
 
-	public function inscription(){ 
-        $this->Auth->allow('inscription');
+    public function inscription(){ 
+         //Cas ou l'on est déja connecté
+        if($this->Session->check('Auth.User')){
+                $this->redirect('/');	
+        }
+        $d = array(
+            'username' => "",
+            'password' => "",
+            're_password' =>"",
+            'email' => "",
+            'age' => "");
+        $this->set('d',$d);
 
         //verifie si l'utilisteur a entre qqchose
         if($this->request->is('post')){

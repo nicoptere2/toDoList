@@ -20,8 +20,8 @@ list.controller('listeController', function listeController($scope, $http, $time
 	function refresh(){
 		$timeout(
 			function(){
-				console.log(baseUrl+'/todos/');
-				$http.get(baseUrl+'/todos/')
+				console.log(baseUrl+'/ToDos/');
+				$http.get(baseUrl+'/ToDos/')
 					.success(function (data, status, headers, config) {
 						console.log('l\'ajax a repondu avec comme data : ' + data);
 						$scope.tasks = data;

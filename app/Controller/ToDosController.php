@@ -1,8 +1,8 @@
 <?php 
 class ToDosController  extends AppController {
+
 	public $scaffold;
-	//public $uses = 'ToDo';
-//	public $components = array('RequestHandler');
+	
 	public function index() {
 		$toDos = $this->ToDo->find('all');
 		$listView = array();
@@ -19,6 +19,7 @@ class ToDosController  extends AppController {
 			$this->render('/ToDos/index_ajax');
 		}
 	}
+
 	public function tasks($list_id = null) {
 		if($list_id == null)
 			$this->redirect('/toDos');
@@ -30,8 +31,6 @@ class ToDosController  extends AppController {
 					)
 				)
 			);
-                $this->set('idToDo',$list_id);
-                
 		if($list == array()){
 			$this->Session->setFlash('ToDo inconnu');
 			$this->redirect('/toDos');
@@ -50,6 +49,11 @@ class ToDosController  extends AppController {
 				 	)
 				 );
 			$totalQte = $tasks[$key]['Task']['quantity'];
+			if($totalQte > 1)
+				$tasks[$key]['Task']['quantitatif'] = true;
+			else
+				$tasks[$key]['Task']['quantitatif'] = false;
+			
 			//debug($totalQte);
 			$qte = 0;
 			foreach($tasks[$key]['Checked'] as $cKey => $cValue)
