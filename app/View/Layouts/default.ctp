@@ -72,7 +72,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="navbar-right glyphicon glyphicon-menu-hamburger"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li><?php echo $this->Html->link('Accueil', '/') ?></li>
-									<li><?php echo $this->Html->link('Profil', '/users/profil') ?></li>
+									<li><?php echo $this->Html->link('Profil', '/users/monprofil') ?></li>
 									<li class="divider"></li>
 									<li><?php echo $this->Html->link('Deconnexion', '/users/logout') ?></li>
 								</ul>

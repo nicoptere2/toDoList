@@ -44,7 +44,7 @@ class UsersController extends AppController {
     }
 
 
-	public function profil($id = null)
+	/*public function profil($id = null)
 	{
 		//il faudra le mettre autre part
 		//$id = $this->Auth->user('id');
@@ -68,6 +68,60 @@ class UsersController extends AppController {
 			$avertissement = "Vous avez été déconnecté";
 	
 			$this->set('test',$id);		
+	}*/
+	
+	public function profil($user)
+	{
+		
+		$id = $this->User->find('all',array(
+		'conditions' => array('username' => $user),
+		'fields'=>array('username','email','age')
+		));
+		if (!$id) {
+            throw new NotFoundException(__('Utilisateur inexistant'));
+        }
+		//$avertissement = "Vous avez été déconnecté";
+		$this->set('info',$id);	
+		
+	}
+	
+	public function monprofil()
+	{
+		$id = $this->Auth->user('id');
+		//$this->set('test',$id);	
+		/*$busername = false;
+		$bemail = false;
+		$bage = false;*/
+		
+		$user = $this->User->find('all',array(
+		'conditions' => array('id' => $id),
+		'fields'=>array('username','email','age')
+		));
+		if (!$id) {
+            throw new NotFoundException(__('Utilisateur inexistant'));
+        }
+		//$avertissement = "Vous avez été déconnecté";
+		$this->set('info',$user);
+	}
+	
+	public function monprofile($user)
+	{
+		//$id = $this->Auth->user('id');
+		//$this->set('test',$id);	
+		$busername = false;
+		$bemail = false;
+		$bage = false;
+		
+		$id = $this->User->find('all',array(
+		'conditions' => array('username' => $user),
+		'fields'=>array('username','email','age')
+		));
+		if (!$id) {
+            throw new NotFoundException(__('Utilisateur inexistant'));
+        }
+		//$avertissement = "Vous avez été déconnecté";
+		$this->set('test',$id);	
+		
 	}
 	
 

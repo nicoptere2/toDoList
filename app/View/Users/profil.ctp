@@ -1,7 +1,7 @@
 <h1 style="color:red" align="center"> Profil </h1>
 <hr style="height:3;border-bottom: 5px;color:black; background-color:black; height:5px;" />	 
 <table>
-    <?php foreach ($test as $champs): ?>
+    <?php foreach ($info as $champs): ?>
 	    	
 		<h3> Profil - <?php echo $champs['User']['username'] ?> </h3>
 		
