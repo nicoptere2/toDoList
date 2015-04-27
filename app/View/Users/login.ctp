@@ -1,4 +1,22 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+label
+
+{
+
+    display: block;
+
+    width: 150px;
+
+
+} 
+</style>
+</head>
+<body>
+
 <!--
 <div class="span8">
 	<div class="page-header">
@@ -20,12 +38,12 @@
 
 <div class="span8">
 	<div class="page-header">
-		<h1>Connexion</h1>
+		<h1 align="center">Connexion</h1>
 	</div>
-<?php echo $this->Form->create('User'); ?>
-<?php echo $this->Form->input('username', array('label' => 'nom', 'placeholder' => 'username')); ?>
-<?php echo $this->Form->input('password', array('label' => 'mot de passe','placeholder' => 'Password')); ?>
-<?php echo $this->Form->end('se connecter'); ?>
+  <?php echo $this->Form->create('User'); ?> 
+ <?php echo $this->Form->input('username', array('label' => 'nom', 'placeholder' => 'username')); ?> 
+ <?php echo $this->Form->input('password', array('label' => 'mot de passe','placeholder' => 'Password')); ?> </br>
+<label> <?php echo $this->Form->end('se connecter'); ?> </label>
 
 <?php echo $this->Html->link('Inscription', '/users/inscription') ?>
 </div>
@@ -40,3 +58,5 @@
     'url' => array('action'=>'social_login', 'Google')
 )); ?>
 
+</body>
+</html>
