@@ -1,6 +1,6 @@
 <h2><?php echo $list['name'] ?> - <?php echo $list['created'] ?></h2>
-
-<div id="tasks" ng-app="Tasks" ng-controller="tasksController" ng-init="list_id=<?php echo $list['id'] ?>" >
+<div ng-app="Tasks">
+<div id="tasks" ng-controller="tasksController" ng-init="list_id=<?php echo $list['id'] ?>" >
 	<ul class="list-group" ng-model="tasks" ng-init="
 			tasks=<?php echo htmlentities(json_encode($tasks)) ?>
 			">
@@ -45,6 +45,7 @@
                                                   ));
         ?>
 
+<<<<<<< HEAD
 <div class="dropup" align="right">
   <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
   	<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
@@ -54,9 +55,31 @@
   </ul>
 </div>
 
+=======
+<div class="dropdown" ng-controller="addMemberController" align="right">
+<div class="dropup">
+  <button ng-click="ajouterMembre()" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+   	<div bind-unsafe-html="pageTest">
+   		
+   	</div>
+    
+  </ul>
+</div>
+</div>
+
+<!--
+<div align="right">
+>>>>>>> b34c4dc1176465e23aaf77ce4c33c7ea1080753d
 <?php  $user_id = AuthComponent::user('id'); 
         
         echo $this->Html->link('ajouter des membres', array('controller' => 'Members',
                                                   'action' => 'add_member',$idToDo
                                                   ));
         ?>
+</div>
+-->
+
+</div>

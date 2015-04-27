@@ -5,6 +5,8 @@ class MembersController  extends AppController {
 	public function add_member($to_do_id){
 		//debug($to_do_id);
 		//debug($this->Session->read('Auth.User'));
+		$this->layout = "ajax";
+		
 		$id = $this->Session->read('Auth.User.id');
 		//debug($id);
 		$this->loadModel("Friend");
@@ -33,6 +35,20 @@ class MembersController  extends AppController {
 			if(!(empty($member))){
 			//debug($member_id);
 			$member_id = $member['User']['id'];
+			//debug($member_id);
+
+			if($this->Member->save(array(
+                            'user_id'     => $member_id,
+                            'to_do_id' => $to_do_id,
+                            'right_id'      => '0'
+                      ))){
+    
+                    $this->Session->setFlash('membre ajouté', 'flash_info');
+                    $this->redirect('/Todos/tasks/'.$to_do_id);
+                }else{
+                	$this->Session->setFlash('membre non ajouté', 'flash_error');
+                }
+
 				if($this->Member->save(array(
 								'user_id'     => $member_id,
 								'to_do_id' => $to_do_id,
@@ -49,7 +65,6 @@ class MembersController  extends AppController {
 			//$this->redirect('/Todos/tasks/'.$to_do_id);
 			} else {
 				//L'utilisateur qu'on veut ajouter n'existe pas en BD. Redirection + Msg Erreur
-				echo"TA MERE";
 					$this->Session->setFlash('Utilisateur inexistant', 'flash_danger');
 					$this->redirect('/Todos/tasks/'.$to_do_id);
 			}

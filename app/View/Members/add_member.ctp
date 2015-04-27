@@ -10,5 +10,5 @@
     <?php }
     echo '<br>';
     echo 'ajoutez un ami : ';
-    echo $this->Form->input('name', array('label' => 'nom', 'placeholder' => 'name')); ?>
-    <?php echo $this->Form->end('ajouter'); ?>
+    echo $this->Form->input('pseudo', array('label' => 'pseudo', 'placeholder' => 'pseudo')); ?>
+    <?php echo $this->Form->end('Valider'); ?>
