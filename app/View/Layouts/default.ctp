@@ -41,6 +41,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		echo $this->Js->set('baseUrl',$this->request->base);
 		?>
 			<script type="text/javascript">var baseUrl = '<?php echo $this->request->base ?>'</script>
+			<script type="text/javascript">var userId = '<?php echo AuthComponent::user('id') ?>'</script>
 		<?php
 
 		echo $this->Html->script('angular');
@@ -62,12 +63,12 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="#"><?php echo $title_for_layout ?></a>
+						<p class="navbar-text title"><?php echo $title_for_layout ?></p>
 					</div>
 
 					<!-- Collect the nav links, forms, and other content for toggling -->
-					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-						<ul class="nav navbar-nav navbar-right">
+					<div class="collapse navbar-collapse allnavbar" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav navbar-right menu">
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="navbar-right glyphicon glyphicon-menu-hamburger"></span></a>
 								<ul class="dropdown-menu" role="menu">

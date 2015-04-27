@@ -1,6 +1,6 @@
-var tasks = angular.module('Tasks', []);
+var tasksApp = angular.module('Tasks', []);
 
-tasks.config(function ($httpProvider) {
+tasksApp.config(function ($httpProvider) {
   // because you did not explicitly state the Content-Type for POST, the default is application/json
   $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
   $httpProvider.defaults.headers.common['Accept'] = 'application/json';
@@ -13,14 +13,14 @@ tasks.config(function ($httpProvider) {
   }
 });
 
-tasks.controller('tasksController', function tasksController($scope, $http, $timeout) {
+tasksApp.controller('tasksController', function tasksController($scope, $http, $timeout) {
 
 
 	function refresh(){
 		$timeout(
 			function(){
-				console.log(baseUrl+'/todos/tasks/'+ $scope.list_id);
-				$http.get(baseUrl+'/todos/tasks/'+ $scope.list_id)
+				console.log(baseUrl+'/ToDos/tasks/'+ $scope.list_id);
+				$http.get(baseUrl+'/ToDos/tasks/'+ $scope.list_id)
 					.success(function (data, status, headers, config) {
 						console.log('l\'ajax a repondu avec comme data : ' + data);
 						$scope.tasks = data;
@@ -36,4 +36,55 @@ tasks.controller('tasksController', function tasksController($scope, $http, $tim
 	}
 	//refresh();
 
+	$scope.dateHelper = function(date){
+		return frDate(date);
+	};
+
+
+	$scope.boxClick = function(key) {
+
+		var action = '';
+
+
+		$scope.tasks[key].Checked.some(function (element, index, array){
+			if(element.User.id == userId){
+				action = 'remove';
+				return true;
+			}
+
+		});
+
+		if(action == '')
+			action = 'add';
+
+
+		var qte;
+		if(action == 'add' && !$scope.tasks[key].Task.quantitatif)
+			qte = 1;
+		else if(action == 'add')
+			if(typeof $scope.tasks[key].quantity !== 'undefined')
+				qte = $scope.tasks[key].quantity;
+			else {
+				alert("Vous devez rentrer une valeur");
+				return false;
+			}
+
+
+		//console.log(qte);
+
+
+		var param = userId + '/' + $scope.tasks[key].Task.id + '/' + qte;
+
+		var url = baseUrl+'/checkeds/' + action + '/' + param;
+
+		$http.get(url)
+			.success(function (data, status, header, config) {
+				console.log('Ajax success! : \n');
+				$scope.tasks = data;
+			})
+			.error(function (data, status, header, config) {
+				console.log('l\'ajax de coche/decoche a repondu avec une error : ' + status);
+			});
+
+	};
 });
