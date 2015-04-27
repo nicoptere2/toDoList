@@ -39,10 +39,10 @@ class MembersController  extends AppController {
                             'right_id'      => '0'
                       ))){
     
-                    $this->Session->setFlash('élément ajouté', 'flash_info');
+                    $this->Session->setFlash('membre ajouté', 'flash_info');
                     $this->redirect('/Todos/tasks/'.$to_do_id);
                 }else{
-                	$this->Session->setFlash('élément non ajouté', 'flash_error');
+                	$this->Session->setFlash('membre non ajouté', 'flash_error');
                 }
 
 			//$this->redirect('/Todos/tasks/'.$to_do_id);
