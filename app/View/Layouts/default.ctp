@@ -63,7 +63,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="#"><?php echo $title_for_layout ?></a>
+						<a class="navbar-brand" href="/"><?php echo $title_for_layout ?></a>
 					</div>
 
 					<!-- Collect the nav links, forms, and other content for toggling -->
