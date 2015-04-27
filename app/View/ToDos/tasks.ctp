@@ -45,6 +45,15 @@
                                                   ));
         ?>
 
+<div class="dropup" align="right">
+  <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  	<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+    <?php echo $this->elements('Members/add_member'); ?>
+  </ul>
+</div>
+
 <?php  $user_id = AuthComponent::user('id'); 
         
         echo $this->Html->link('ajouter des membres', array('controller' => 'Members',
