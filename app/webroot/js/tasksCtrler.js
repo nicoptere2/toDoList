@@ -19,8 +19,8 @@ tasksApp.controller('tasksController', function tasksController($scope, $http, $
 	function refresh(){
 		$timeout(
 			function(){
-				console.log(baseUrl+'/todos/tasks/'+ $scope.list_id);
-				$http.get(baseUrl+'/todos/tasks/'+ $scope.list_id)
+				console.log(baseUrl+'/ToDos/tasks/'+ $scope.list_id);
+				$http.get(baseUrl+'/ToDos/tasks/'+ $scope.list_id)
 					.success(function (data, status, headers, config) {
 						console.log('l\'ajax a repondu avec comme data : ' + data);
 						$scope.tasks = data;
@@ -34,7 +34,7 @@ tasksApp.controller('tasksController', function tasksController($scope, $http, $
 			10000
 		);
 	}
-	//refresh();
+	refresh();
 
 	$scope.dateHelper = function(date){
 		return frDate(date);
