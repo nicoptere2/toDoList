@@ -34,7 +34,7 @@ tasksApp.controller('tasksController', function tasksController($scope, $http, $
 			10000
 		);
 	}
-	refresh();
+	//refresh();
 
 	$scope.dateHelper = function(date){
 		return frDate(date);
