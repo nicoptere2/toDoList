@@ -84,3 +84,13 @@
 	position : absolute;
 	padding-left: 15px;
 }
+
+.dropdown .dropdown-menu:after {
+    left: auto;
+    right: 13px;
+}
+
+.dropdown .dropdown-menu {
+    left: auto;
+    right: 0;
+}

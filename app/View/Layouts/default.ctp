@@ -90,6 +90,9 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 			<?php echo $this->Session->flash(); ?>
 
 			<?php echo $this->fetch('content'); ?>
+
+			<?php echo $this->fetch('test'); ?>
+			
 		</div>
 		<div id="footer">
 			<?php echo $this->Html->link(

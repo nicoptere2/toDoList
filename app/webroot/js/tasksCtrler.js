@@ -13,6 +13,29 @@ tasks.config(function ($httpProvider) {
   }
 });
 
+
+tasks.directive('bindUnsafeHtml', ['$compile', function ($compile) {
+      return function(scope, element, attrs) {
+          scope.$watch(
+            function(scope) {
+              // watch the 'bindUnsafeHtml' expression for changes
+              return scope.$eval(attrs.bindUnsafeHtml);
+            },
+            function(value) {
+              // when the 'bindUnsafeHtml' expression changes
+              // assign it into the current DOM
+              element.html(value);
+
+              // compile the new DOM and link it to the current
+              // scope.
+              // NOTE: we only compile .childNodes so that
+              // we don't get into infinite loop compiling ourselves
+              $compile(element.contents())(scope);
+            }
+        );
+    };
+}]);
+
 tasks.controller('tasksController', function tasksController($scope, $http, $timeout) {
 
 
@@ -33,7 +56,19 @@ tasks.controller('tasksController', function tasksController($scope, $http, $tim
 			},
 			10000
 		);
-	}
+	};
 	//refresh();
 
+	
+});
+
+tasks.controller('addMemberController', function addMemberController($scope, $http, $timeout) {
+	$scope.pageTest = '';
+	$scope.ajouterMembre = function(){
+		console.log("test");
+		$http.get(baseUrl+'/Members/add_member/'+ $scope.list_id)
+			.success(function (data, status, headers, config) {
+				$scope.pageTest = data;
+			});
+	};
 });
