@@ -19,11 +19,17 @@ class MembersController  extends AppController {
 				//debug($key);
 				$friend_id = $value['Friend']['friend_id'];
 				//debug($value['Friend']['friend_id']);
-				$friend = $this->User->find('first',
+				$members = $this->Member->find('first', array('conditions' => array('user_id' => $friend_id)));
+				debug($members['Member']['user_id']);
+
+				if(empty($members)){
+					$friend = $this->User->find('first',
 					array('conditions' => array('User.id' => $friend_id)));
-				//debug($friend['User']['username']);
-				$tableau[$friend_id] = $friend['User']['username'];
+					//debug($friend['User']['username']);
+					$tableau[$friend_id] = $friend['User']['username'];
+				}
 			}
+			debug($tableau);
 			$this->set(array ('tableau' => $tableau));
 		}else{
 			$this->set(array ('tableau' => ''));
