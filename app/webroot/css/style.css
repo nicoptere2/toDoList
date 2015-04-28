@@ -59,40 +59,12 @@
 	height : 100%;
 }
 
-#tasks input.checkbox {
-	display: none;
-}
-
-#tasks span.rounded {
-	background-color: transparent;
-	border: 2px solid #808080;
-	height: 21px;
-	width: 21px;
-	display: inline-block;
-	border-radius: 5px;
-	position: relative;
-}
-
-#tasks span.tick {
-	position: absolute;
-	top: 1px;
-	left: 1px;
-}
-
 #tasks ul {
 	list-style-type: none;
 }
 
 #tasks > ul > li {
 	position: relative;
-}
-
-#tasks .task-content {
-	position: relative;
-	left: 30px;
-	top: -25px;
-	display: inline-block;
-	width: 100%;
 }
 
 #tasks > ul > li > button {
@@ -117,8 +89,8 @@
 
 #tasks .quantity {
 	position : absolute;
-	right : 35px;
-	top : 10px;
+	right : 15px;
+	top : 20px;
 	width: 230px;
 }
 
@@ -132,7 +104,6 @@
 	display : inline-block;
 	position : absolute;
 	padding-left: 15px;
-	right: 0px;
 }
 
 #tasks .taskCompleted {
@@ -151,29 +122,12 @@
 	display : none;
 }
 
-#tasks .btn-delete {
-	padding: 4px 7px 3px 7px;
-	border: solid 1px #CCCCCC;
-	border-radius: 5px;
-	background-color: #E6E6E6;
-	display: inline-block;
+.dropdown .dropdown-menu:after {
+    left: auto;
+    right: 13px;
 }
 
-#tasks .taskEmpty .btn-delete {
-	position: absolute;
-	right : 15px;
-	top : 25px;
-}
-
-#tasks .taskHalf .btn-delete {
-	position: absolute;
-	right : 15px;
-	top : 50px;
-}
-
-
-#tasks .taskCompleted .btn-delete {
-	position: absolute;
-	right : 15px;
-	top : 20px;
+.dropdown .dropdown-menu {
+    left: auto;
+    right: 0;
 }

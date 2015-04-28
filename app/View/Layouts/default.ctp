@@ -41,7 +41,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		echo $this->Js->set('baseUrl',$this->request->base);
 		?>
 			<script type="text/javascript">var baseUrl = '<?php echo $this->request->base ?>'</script>
-			<script type="text/javascript">var userId = '<?php echo AuthComponent::user('id') ?>'</script>
+			<!--<script type="text/javascript">var userId = '<?php //echo (AuthComponent::user('id') != null)? AuthComponent::user('id') : ''  ?>'</script>-->
 		<?php
 
 		echo $this->Html->script('angular');
@@ -91,6 +91,9 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 			<?php echo $this->Session->flash(); ?>
 
 			<?php echo $this->fetch('content'); ?>
+
+			<?php echo $this->fetch('test'); ?>
+			
 		</div>
 		<div id="footer">
 			<?php echo $this->Html->link(
