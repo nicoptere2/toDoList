@@ -20,12 +20,12 @@ class TasksController  extends AppController {
                       ))){
     
                     $this->Session->setFlash('élément ajouté', 'flash_info');
-                    $this->redirect('/Todos/tasks/'.$to_do_id);
+                    $this->redirect('/ToDos/tasks/'.$to_do_id);
                 }      
             }
             else {
                 $this->Session->setFlash('nom de l\'élement déjà existant', 'flash_danger');
-                $this->redirect('/Todos/tasks/'.$to_do_id);
+                $this->redirect('/ToDos/tasks/'.$to_do_id);
             }
         }
         
@@ -34,12 +34,18 @@ class TasksController  extends AppController {
     
     public function delete_task($to_do_id,$idTask){
         
+        $this->loadModel('Checked');
         $task = $this->Task->find('all', array('conditions' => array( 'Task.id' => $idTask)));
-        foreach ($task as $id) {              
-             $this->Task->delete($id['Task']['id']);
+        $checked_id = $this->Checked->find('first',
+            array('conditions' => array(
+                'task_id' => $idTask)));
+        foreach ($task as $id) {
+            if(!empty($checked_id))
+                $this->Checked->delete($checked_id['Checked']['id']);
+            $this->Task->delete($id['Task']['id']);
         }
         $this->Session->setFlash('élément supprimé', 'flash_info');
-        $this->redirect('/Todos/tasks/'.$to_do_id);
+        $this->redirect('/ToDos/tasks/'.$to_do_id);
         
     }
 }

@@ -75,7 +75,8 @@ class ToDosController  extends AppController {
 			unset($tasks[$key]['ToDo']);
 		}
 
-		$this->set('idToDo',$tasks[0]['Task']['to_do_id']);
+		$this->set('idToDo',$list_id);
+
 
 		$this->set('title_for_layout', 'Liste d\'item');
 
@@ -89,4 +90,38 @@ class ToDosController  extends AppController {
 			$this->render('/ToDos/tasks_ajax');
 		}
 	}
+
+	public function create() {                
+			//verifie si l'utilisteur a entre qqchose
+			if($this->request->is('post')){
+
+                $list = $this->request->data;
+				
+				$this->ToDo->create($this->request->data, TRUE);
+				
+				// Test de la fréquence
+				if($list['ToDo']['frequency'] == '') {
+					$list['ToDo']['frequency'] = 0;
+				}
+				else if($list['ToDo']['frequency'] == '0') {
+					$list['ToDo']['frequency'] = 1;
+				}
+				else if($list['ToDo']['frequency'] == '1') {
+					$list['ToDo']['frequency'] = 7;
+				}
+					else if($list['ToDo']['frequency'] == '2') {
+					$list['ToDo']['frequency'] = 30;
+				}
+ 
+                if($this->ToDo->save(array(
+                                'name' => $list['ToDo']['name'],
+                                'frequency'    => $list['ToDo']['frequency'],
+                                'expirationDate'      => $list['ToDo']['expirationDate']
+                          ))){
+
+                        $this->Auth->login();        
+                        return $this->redirect('/');
+                }                
+			}
+		}
 }
