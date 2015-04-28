@@ -1,8 +1,5 @@
-<?php //debug($tasks) ?>
-
 <div id="tasks" ng-app="Tasks" ng-controller="tasksController" ng-init="list_id=<?php echo $list['id'] ?>" >
 	<h2><?php echo $list['name'] ?> - <span class="created"> <?php echo $this->Date->date($list['created']) ?> </span></h2>
-
 	<ul class="list-group" ng-model="tasks" ng-init="
 			tasks=<?php echo htmlentities(json_encode($tasks)) ?>
 			">
@@ -64,13 +61,29 @@
                     ?>
 		</li>
 	</ul>
-</div>
+
+    <div class="dropdown" ng-controller="addMemberController" align="right">
+    	<div class="dropup">
+    		<button ng-click="ajouterMembre(<?php echo $idToDo; ?>)" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    			<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+    		</button>
+    		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+    			<div bind-unsafe-html="pageTest">
+
+    			</div>
+
+    		</ul>
+    	</div>
+    </div>
 
 <?php echo $this->Html->script('dateHelper') ?>
 <?php echo $this->Html->script('tasksCtrler') ?>
-<?php  $user_id = AuthComponent::user('id'); 
-        
+<script type="text/javascript">
+	var userId = <?php  echo AuthComponent::user('id'); ?>;
+</script> 	
+        <?php
         echo $this->Html->link('ajouter des éléments', array('controller' => 'Tasks',
                                                   'action' => 'add_task',$idToDo
                                                   ));
         ?>
+</div>
