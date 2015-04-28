@@ -55,7 +55,7 @@ tasks.controller('tasksController', function tasksController($scope, $http, $tim
 			10000
 		);
 	}
-	refresh();
+	//refresh();
 
 	$scope.dateHelper = function(date){
 		return frDate(date);
