@@ -24,9 +24,10 @@ class MembersController  extends AppController {
 
 				if(empty($members)){
 					$friend = $this->User->find('first',
-					array('conditions' => array('User.id' => $friend_id)));
-					//debug($friend['User']['username']);
-					$tableau[$friend_id] = $friend['User']['username'];
+						array('conditions' => array('User.id' => $friend_id)));
+					//debug($friend);
+					if(!empty($friend))
+						$tableau[$friend_id] = $friend['User']['username'];
 				}
 			}
 			//debug($tableau);
@@ -50,7 +51,7 @@ class MembersController  extends AppController {
 				if($member_id == $value['Member']['user_id']){
 					echo "DEJA ENTRER";
 					$this->Session->setFlash('Cet utilisateur appartient deja à la liste', 'flash_danger');
-					$this->redirect('/Todos/tasks/'.$to_do_id);
+					$this->redirect('/ToDos/tasks/'.$to_do_id);
 				}
 			}
 			//debug($membersList['']);
@@ -61,7 +62,7 @@ class MembersController  extends AppController {
                       ))){
     
                     $this->Session->setFlash('membre ajouté', 'flash_info');
-                    $this->redirect('/Todos/tasks/'.$to_do_id);
+                    $this->redirect('/ToDos/tasks/'.$to_do_id);
                 }else{
                 	$this->Session->setFlash('membre non ajouté', 'flash_danger');
                 }
@@ -73,17 +74,17 @@ class MembersController  extends AppController {
 						  ))){
 		
 						$this->Session->setFlash('Membre ajouté', 'flash_info');
-						$this->redirect('/Todos/tasks/'.$to_do_id);
+						$this->redirect('/ToDos/tasks/'.$to_do_id);
 					}else{
 						$this->Session->setFlash('Membre non ajouté', 'flash_danger');
-						$this->redirect('/Todos/tasks/'.$to_do_id);
+						$this->redirect('/ToDos/tasks/'.$to_do_id);
 					}
 
-			//$this->redirect('/Todos/tasks/'.$to_do_id);
+			//$this->redirect('/ToDos/tasks/'.$to_do_id);
 			} else {
 				//L'utilisateur qu'on veut ajouter n'existe pas en BD. Redirection + Msg Erreur
 					$this->Session->setFlash('Utilisateur inexistant', 'flash_danger');
-					$this->redirect('/Todos/tasks/'.$to_do_id);
+					$this->redirect('/ToDos/tasks/'.$to_do_id);
 			}
 		}
 	}

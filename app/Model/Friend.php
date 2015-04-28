@@ -4,11 +4,11 @@ class Friend extends AppModel {
 		'User' => array(
 			array(
 				'className' => 'User',
-				'foreignKey' => 'user_id', 'friend_id'
+				'foreignKey' => 'user_id'
 				),
 			array(
 				'className' => 'User',
-				'foreignKey' => 'user_id', 'friend_id'
+				'foreignKey' => 'friend_id'
 				)
 			)
 		);
