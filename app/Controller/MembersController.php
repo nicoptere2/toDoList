@@ -30,7 +30,10 @@ class MembersController  extends AppController {
 				}
 			}
 			//debug($tableau);
-			$this->set(array ('tableau' => $tableau));
+			if(!empty($tableau)){
+				$this->set(array ('tableau' => $tableau));
+			}
+			
 		}else{
 			$this->set(array ('tableau' => ''));
 		}
