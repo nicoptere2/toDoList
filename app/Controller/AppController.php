@@ -42,13 +42,14 @@ class AppController extends Controller {
 		'Session',
 		'DebugKit.Toolbar',
 		'RequestHandler',
-        'Auth' => array(
+		//'AuthComponent',
+        'Auth' /*=> array(
             'loginRedirect' => array('controller' => 'users', 'action' => 'index'),
             'logoutRedirect' => array('controller' => 'users', 'action' => 'login'),
 			'authError' => 'You must be logged in to view this page.',
 			'loginError' => 'Invalid Username or Password entered, please try again.'
  
-        ));
+        )*/);
 	
 	// only allow the login controllers only
 	public function beforeFilter() {

@@ -23,56 +23,44 @@
 			<label class="checked">
 				<input 
 					type="checkbox" 
-					class="checkbox"
 					ng-name="value.Task.id"
 					ng-model="value.checkBoxValue"
 					ng-checked="value.Task.completed"
 					ng-click="boxClick(key)"
 				>
-
-				<span class="rounded"> <span class="glyphicon glyphicon-ok tick" ng-show="value.Task.completed"></span> </span>
-
-
-				<div class="task-content">
-					<div class="task">
-						<div class="task-name">{{value.Task.name}}</div>
-						<div class="task-user" ng-repeat="(user_key, checked) in value.Checked" >
-							<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>{{checked.User.username}} : {{checked.quantity}} sur {{value.Task.quantity}}
-						</div>
-					</div>
-					
-					<form action="#" ng-submit="boxClick(key)">
-						<input 
-							type="number"
-							name="quantity" 
-							ng-model="value.quantity"
-							ng-show="value.Task.quantitatif && !value.Task.completed"
-							placeholder="quantité"
-							ng-blur="boxClick(key)"
-						>
-					</form>
-
-					<div class="quantity" ng-show="value.Task.half">
-						<!-- <div> -->
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="{{qteCompleted / qte * 100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{qteCompleted / qte * 100}}%;">
-									{{qteCompleted / qte * 100}}%
-								</div>
-							<!-- </div> -->
-						</div>
-						<span>{{qteCompleted}} / {{qte}}</span>
+				<div class="task">
+					<div class="task-name">{{value.Task.name}}</div>
+					<div class="task-user" ng-repeat="(user_key, checked) in value.Checked" >
+						<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>{{checked.User.username}} : {{checked.quantity}} sur {{value.Task.quantity}}
 					</div>
 				</div>
-            </label>
+				
+				<form action="#" ng-submit="boxClick(key)">
+					<input 
+						type="number"
+						name="quantity" 
+						ng-model="value.quantity"
+						ng-show="value.Task.quantitatif && !value.Task.completed"
+						placeholder="quantité"
+						ng-blur="boxClick(key)"
+					>
+				</form>
 
-			<a ng-href="/Tasks/delete_task/<?php echo $idToDo ?>/{{value.Task.id}}" class="btn-delete">
-				<span class="glyphicon glyphicon-minus"></span>
-			</a>
-
+				<div class="quantity">
+					<div>
+						<div class="progress">
+							<div class="progress-bar" role="progressbar" aria-valuenow="{{qteCompleted / qte * 100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{qteCompleted / qte * 100}}%;">
+								{{qteCompleted / qte * 100}}%
+							</div>
+						</div>
+					</div>
+					<span>{{qteCompleted}} / {{qte}}</span>
+				</div>
+                        </label>
                     <?php  
-                    //$user_id = AuthComponent::user('id'); 
-                      //  echo $this->Html->link('supprimer l\'éléments', '/Tasks/delete_task/'.$idToDo.'/{{value.Task.id}}'
-                       //                        );
+                    $user_id = AuthComponent::user('id'); 
+                        echo $this->Html->link('supprimer l\'éléments', '/Tasks/delete_task/'.$idToDo.'/{{value.Task.id}}'
+                                                );
                     ?>
 		</li>
 	</ul>

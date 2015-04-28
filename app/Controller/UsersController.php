@@ -71,9 +71,7 @@ class UsersController extends AppController {
 	}
 	
 
-
-	
-	/* Connexion via réseaux sociaux */
+/* Connexion via réseaux sociaux */
 	public function social_login($provider) {
 		if( $this->Hybridauth->connect($provider) ){
 			$this->_successfulHybridauth($provider,$this->Hybridauth->user_profile);
@@ -99,7 +97,7 @@ class UsersController extends AppController {
 		if ($existingProfile) {
 			// Si l'utilisateur a déja un profil dans la base on le connecte directement
 			$user = $this->User->find('first', array(
-				'conditions' => array('id' => $existingProfile['SocialProfile']['user_id'])
+				'conditions' => array('User.id' => $existingProfile['SocialProfile']['user_id'])
 			));
 			
 			$this->_doSocialLogin($user,true);
@@ -112,10 +110,18 @@ class UsersController extends AppController {
 				
 				$this->Session->setFlash('Your ' . $incomingProfile['SocialProfile']['social_network_name'] . ' account is now linked to your account.');
 				$this->redirect($this->Auth->redirectUrl());
-            }	
-        }
-    }
 
+			} else {
+				$user = $this->User->createFromSocialProfile($incomingProfile);
+				$incomingProfile['SocialProfile']['user_id'] = $user['User']['id'];
+				$this->SocialProfile->save($incomingProfile);
+
+				// Connexion
+				$this->_doSocialLogin($user);
+			}
+		}	
+	}
+	
 	private function _doSocialLogin($user, $returning = false) {
 		if ($this->Auth->login($user['User'])) {
 			if($returning){
@@ -126,7 +132,8 @@ class UsersController extends AppController {
 			$this->redirect('/'); 	
 		
 		} else {
-			$this->Session->setFlash(__('Erreur lors de la connexion '. $this->Auth->user('username')));
+			$this->Session->setFlash(__('Erreur lors de la connexion '. $this->Auth->user('username'), 'flash_error'));
+			$this->redirect('/users/login');
 		}
 	}
 
