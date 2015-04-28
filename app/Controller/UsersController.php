@@ -94,7 +94,7 @@ class UsersController extends AppController {
 		$bage = false;*/
 		
 		$user = $this->User->find('all',array(
-		'conditions' => array('id' => $id),
+		'conditions' => array('User.id' => $id),
 		'fields'=>array('username','email','age')
 		));
 		if (!$id) {
