@@ -13,27 +13,6 @@ class User extends AppModel {
 	
 	public $avatarUploadDir = 'img/avatars';
 	    
-	public $hasOne = 'Friend';
-
-        public $validate = array(
-                            'username' => array(
-                                            'rule'  => 'alphaNumeric',
-                                            'message' => 'Chiffres et lettres uniquement !'
-                                            ),
-                            'password' => array(
-                                            'rule' => 'notEmpty',
-                                            'message' => 'Entrer un mot de passe !'
-                                             ),
-                            'email'    => array(
-                                            'rule' => 'email',
-                                            'message' => 'Entrer un email !'
-                                             ),
-                            'age'      => array(
-                                            'rule' => array('naturalNumber', false),
-                                            'message' => 'Entrer votre âge qui doit être superieur a 0 !'
-                                             )
-                            );
-
 	
 	public function createFromSocialProfile($incomingProfile){
 		// On regarde si l'email n'est pas déja utilisé

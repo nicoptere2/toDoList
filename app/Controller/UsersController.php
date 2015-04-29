@@ -13,22 +13,18 @@ class UsersController extends AppController {
     
 
     public function login(){
-      /*  $this->User->save(array(
-                                'username' => 'umut',
-                                'password' => $this->Auth->password('umut')
-                          ));*/
-       // debug($this->User->findByUsername('akkulak'));
-        
         //Cas ou l'on est déja connecté
         if($this->Session->check('Auth.User')){
                 $this->redirect('/');	
         }
                 
         if(!empty($this->data)){
-            if($this->Auth->login()){           //si l'utilisateur est logé
+			// Si la connexion a réussie
+            if($this->Auth->login()){
                 $this->Session->setFlash('<strong>Félicitation</strong> Vous vous etes Identifié avec succes', 'flash_success');
                 return $this->redirect('/');            
             }
+			// Si la connexion a échouée
             else{
                $this->Session->setFlash('<strong>Attention</strong> utisateur inexistant ou mot de passe incorecte', 'flash_warning');
                $this->redirect('/Users/inscription');
@@ -42,33 +38,6 @@ class UsersController extends AppController {
             return $this->redirect('/');
         }
     }
-
-
-	/*public function profil($id = null)
-	{
-		//il faudra le mettre autre part
-		//$id = $this->Auth->user('id');
-
-		if($id == null)
-			$this->redirect('/');
-		else
-			$id = $this->User->find(
-				'all',
-				array(
-					'fields' => array(
-						'username',
-						'email',
-						'age'
-						),
-					'conditions' => array(
-							'User.id' => $id
-						)
-					)
-				);
-			$avertissement = "Vous avez été déconnecté";
-	
-			$this->set('test',$id);		
-	}*/
 	
 	public function profil($user)
 	{
@@ -125,7 +94,7 @@ class UsersController extends AppController {
 	}
 	
 
-/* Connexion via réseaux sociaux */
+	/* Connexion via réseaux sociaux */
 	public function social_login($provider) {
 		if( $this->Hybridauth->connect($provider) ){
 			$this->_successfulHybridauth($provider,$this->Hybridauth->user_profile);
@@ -141,7 +110,6 @@ class UsersController extends AppController {
 	}
 	
 	private function _successfulHybridauth($provider, $incomingProfile){
-
 		// Regarde si l'utilisateur est connecté au réseau
 		$this->SocialProfile->recursive = -1;
 		$existingProfile = $this->SocialProfile->find('first', array(
@@ -181,7 +149,7 @@ class UsersController extends AppController {
 			if($returning){
 				$this->Session->setFlash(__('Bienvenue, '. $this->Auth->user('username')));
 			} else {
-				$this->Session->setFlash(__('Inscription via facebook effectuée, bienvenue, '. $this->Auth->user('username')));
+				$this->Session->setFlash(__('Inscription effectuée, bienvenue, '. $this->Auth->user('username')));
 			}
 			$this->redirect('/'); 	
 		
