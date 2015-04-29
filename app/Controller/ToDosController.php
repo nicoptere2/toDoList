@@ -92,7 +92,7 @@ class ToDosController  extends AppController {
 	}
 
 	public function create() {                
-			//verifie si l'utilisteur a entre qqchose
+			// Vérifie que l'utilisateur a bien entré des données
 			if($this->request->is('post')){
 
                 $list = $this->request->data;
