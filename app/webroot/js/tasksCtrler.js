@@ -80,18 +80,17 @@ tasks.controller('tasksController', function tasksController($scope, $http, $tim
 
 
 		var qte;
-		if(action == 'add' && !$scope.tasks[key].Task.quantitatif)
+		if(action == 'add' && !$scope.tasks[key].Task.quantitatif){
 			qte = 1;
+		}
 		else if(action == 'add')
 			if(typeof $scope.tasks[key].quantity !== 'undefined')
 				qte = $scope.tasks[key].quantity;
 			else {
-				alert("Vous devez rentrer une valeur");
-				return false;
+				qte = $scope.tasks[key].Task.quantity - $scope.tasks[key].Task.qteCompleted ;
 			}
 
 
-		//console.log(qte);
 
 
 		var param = userId + '/' + $scope.tasks[key].Task.id + '/' + qte;
