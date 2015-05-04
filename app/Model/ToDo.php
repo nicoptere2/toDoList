@@ -1,7 +1,6 @@
 <?php 
 class ToDo extends AppModel {
 	public $useTable = 'to_dos';
-	public $hasOne = 'Task';
 	public $hasMany = array('Message', 'Member', 'Task');
 	
 	public $validate = array(
