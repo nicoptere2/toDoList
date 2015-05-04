@@ -6,7 +6,7 @@
 
 		<a href="ToDos/tasks/{{value.id}}" class="list-group-item" ng-repeat="(key, value) in toDos">
 				<span class="name">{{value.name}}</span> -
-				<span class="created" ng-model="created"> {{dateHelper(value.created);}} </span>
+				<span class="created" ng-model="created"> {{dateHelper(value.expirationDate);}} </span>
 				<button class="btn-delete"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
 		</a>
 	
