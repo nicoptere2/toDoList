@@ -23,6 +23,7 @@ class ToDosController  extends AppController {
 				'expirationDate' => $value['ToDo']['expirationDate']
 				);
 		}
+
 		$this->set(array('toDos' => $listView));
 		if($this->RequestHandler->isAjax()) {
 			$this->layout = 'ajax';
