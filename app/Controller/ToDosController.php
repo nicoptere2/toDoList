@@ -4,7 +4,18 @@ class ToDosController  extends AppController {
 	public $scaffold;
 	
 	public function index() {
-		$toDos = $this->ToDo->find('all');
+
+
+		$this->loadModel('Member');
+		$toDos = $this->Member->find(
+			'all',
+			array(
+				'conditions' => array(
+					'user_id' => AuthComponent::user('id')
+					)
+				)
+			);
+		
 		$listView = array();
 		foreach ($toDos as $key => $value) {
 			$listView[$key] = array(
@@ -13,6 +24,7 @@ class ToDosController  extends AppController {
 				'expirationDate' => $value['ToDo']['expirationDate']
 				);
 		}
+
 		$this->set(array('toDos' => $listView));
 		if($this->RequestHandler->isAjax()) {
 			$this->layout = 'ajax';
