@@ -4,7 +4,17 @@ class ToDosController  extends AppController {
 	public $scaffold;
 	
 	public function index() {
-		$toDos = $this->ToDo->find('all');
+
+		$this->loadModel('Member');
+		$toDos = $this->Member->find(
+			'all',
+			array(
+				'conditions' => array(
+					'user_id' => AuthComponent::user('id')
+					)
+				)
+			);
+
 		$listView = array();
 		foreach ($toDos as $key => $value) {
 			$listView[$key] = array(
@@ -25,6 +35,23 @@ class ToDosController  extends AppController {
 			$this->redirect('/toDos');
 
 
+		$this->loadModel('Member');
+		if(empty(
+				$this->Member->find(
+					'all',
+					array(
+						'conditions' => array(
+							'user_id' => AuthComponent::user('id'),
+							'to_do_id' => $list_id,
+							)
+						)
+					)
+				)) {
+				$this->Session->setFlash('cette list ne vous appartient pas', 'flash_danger');
+				$this->redirect('/');
+			}
+
+
 		$list = $this->ToDo->find(
 			'first',
 			array(
@@ -34,7 +61,7 @@ class ToDosController  extends AppController {
 				)
 			);
 
-		//debug($list);
+		
 
 		if($list == array()){
 			$this->Session->setFlash('ToDo inconnu');

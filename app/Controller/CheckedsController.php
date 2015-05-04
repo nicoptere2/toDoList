@@ -33,14 +33,12 @@ class CheckedsController  extends AppController {
 		if(!isset($check['Checked'])){
 			$this->set(array('error' => 'Vous n\'avez pas le droit de décocher une element coché par quelqu\'un d\'autre'));
 			$delete = false;
-
 		}
 
 		if($delete)
 			$this->Checked->delete($check['Checked']['id']);
 
 		//debug($check);
-
 		$this->loadModel('Task');
 		$todo_id = $this->Task->find(
 			'first',
@@ -61,6 +59,7 @@ class CheckedsController  extends AppController {
 					)
 				)
 			);
+
 		if($list == array()){
 			$this->Session->setFlash('ToDo inconnu');
 			$this->redirect('/toDos');
