@@ -10,7 +10,7 @@ class ToDosController  extends AppController {
 			$listView[$key] = array(
 				'id' => $value['ToDo']['id'],
 				'name' => $value['ToDo']['name'],
-				'created' => $value['ToDo']['created']
+				'expirationDate' => $value['ToDo']['expirationDate']
 				);
 		}
 		$this->set(array('toDos' => $listView));
