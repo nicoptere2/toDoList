@@ -23,6 +23,8 @@ class ToDosController  extends AppController {
 	public function tasks($list_id = null) {
 		if($list_id == null)
 			$this->redirect('/toDos');
+
+
 		$list = $this->ToDo->find(
 			'first',
 			array(
@@ -31,14 +33,24 @@ class ToDosController  extends AppController {
 					)
 				)
 			);
+
+		//debug($list);
+
 		if($list == array()){
 			$this->Session->setFlash('ToDo inconnu');
 			$this->redirect('/toDos');
 		}
+
 		$listView = $list['ToDo'];
 		$tasks = $list['Task'];
+
+
 		$this->loadModel('Task');
 		foreach ($list['Task'] as $key => $value) {
+			if(!is_numeric($key))
+				continue;
+
+
 			$tasks[$key] = $this->Task->find(
 				'first',
 				 array(
@@ -48,21 +60,23 @@ class ToDosController  extends AppController {
 				 	'recursive' => 2
 				 	)
 				 );
+
 			$totalQte = $tasks[$key]['Task']['quantity'];
 			if($totalQte > 1)
 				$tasks[$key]['Task']['quantitatif'] = true;
 			else
 				$tasks[$key]['Task']['quantitatif'] = false;
 			
-			//debug($totalQte);
+
 			$qte = 0;
 			foreach($tasks[$key]['Checked'] as $cKey => $cValue)
 				$qte += $cValue['quantity'];
-			//debug($qte);
+
 			$tasks[$key]['Task']['qteCompleted'] = (int) $qte;
 			$tasks[$key]['Task']['completed'] = $qte == $totalQte;
 			$tasks[$key]['Task']['empty'] = false;
 			$tasks[$key]['Task']['half'] = false;
+
 
 			if(!$tasks[$key]['Task']['completed'] && $qte > 0) {
 				$tasks[$key]['Task']['empty'] = false;
