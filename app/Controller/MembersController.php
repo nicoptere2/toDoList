@@ -90,9 +90,18 @@ class MembersController  extends AppController {
 	}
 
 	public function show_members($to_do_id){
+
+    	$id = AuthComponent::user('id');
+    	debug($id);
 		$members = $this->Member->find('all', 
 			array('conditions' => array( 'Member.to_do_id' => $to_do_id)));
-		debug($members);
+		//debug($members);
+    	$myself = $this->Member->find('first', 
+            array('conditions' => array( 'Member.user_id' => $id, 'Member.to_do_id' => $to_do_id)));
+    	debug($myself);
+    	if(!empty($myself)){
+    		$this->set(array ('myself' => $myself));
+    	}
 		if(!empty($members)){
 				$this->set(array ('members' => $members));
 			}
