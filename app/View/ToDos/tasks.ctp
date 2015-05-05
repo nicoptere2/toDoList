@@ -61,7 +61,7 @@
 					</div>
 				</div>
 
-	            <a ng-href="/Tasks/delete_task/<?php echo $idToDo ?>/{{value.Task.id}}" class="btn-delete">
+	            <a ng-href="{{base}}/Tasks/delete_task/<?php echo $idToDo ?>/{{value.Task.id}}" class="btn-delete">
 					<span class="glyphicon glyphicon-minus"></span>
 				</a>
             </label>

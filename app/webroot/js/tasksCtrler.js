@@ -37,6 +37,8 @@ tasks.directive('bindUnsafeHtml', ['$compile', function ($compile) {
 
 tasks.controller('tasksController', function tasksController($scope, $http, $timeout) {
 
+	$scope.base = baseUrl;
+
 	function refresh(){
 		$timeout(
 			function(){
