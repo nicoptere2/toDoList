@@ -37,7 +37,7 @@ class ToDosController  extends AppController {
 
 
 		$this->loadModel('Member');
-		if(empty(
+		if(null == 
 				$this->Member->find(
 					'all',
 					array(
@@ -47,7 +47,7 @@ class ToDosController  extends AppController {
 							)
 						)
 					)
-				)) {
+				) {
 				$this->Session->setFlash('cette list ne vous appartient pas', 'flash_danger');
 				$this->redirect('/');
 			}
