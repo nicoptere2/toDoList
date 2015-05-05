@@ -68,7 +68,7 @@
 		</li>
 	</ul>
 
-    <div class="dropdown" ng-controller="addMemberController" align="right">
+    <div class="dropdown dropdown-right" ng-controller="addMemberController" align="right">
     	<div class="dropup">
     		<button ng-click="ajouterMembre(<?php echo $idToDo; ?>)" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     			<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
@@ -82,6 +82,13 @@
     	</div>
     </div>
 
+<script type="text/javascript">
+	$('.dropdown-menu ul').on('click',function(){
+		console.log("message a la con");
+		return false;
+	});
+</script>
+
 <?php echo $this->Html->script('dateHelper') ?>
 <?php echo $this->Html->script('tasksCtrler') ?>
 <script type="text/javascript">
@@ -90,6 +97,12 @@
         <?php
         echo $this->Html->link('ajouter des éléments', array('controller' => 'Tasks',
                                                   'action' => 'add_task',$idToDo
+                                                  ));
+        ?>
+
+        <?php
+        echo $this->Html->link('afficher les utilisateurs', array('controller' => 'Members',
+                                                  'action' => 'show_members',$idToDo
                                                   ));
         ?>
 </div>

@@ -181,12 +181,12 @@
 	top : 20px;
 }
 
-.dropdown .dropdown-menu:after {
+.dropdown-right .dropdown-menu:after {
     left: auto;
     right: 13px;
 }
 
-.dropdown .dropdown-menu {
+.dropdown-right .dropdown-menu {
     left: auto;
     right: 0;
 }

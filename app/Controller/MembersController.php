@@ -58,7 +58,7 @@ class MembersController  extends AppController {
 			if($this->Member->save(array(
                             'user_id'     => $member_id,
                             'to_do_id' => $to_do_id,
-                            'right_id'      => '0'
+                            'right_id'      => '3'
                       ))){
     
                     $this->Session->setFlash('membre ajouté', 'flash_info');
@@ -87,5 +87,14 @@ class MembersController  extends AppController {
 					$this->redirect('/ToDos/tasks/'.$to_do_id);
 			}
 		}
+	}
+
+	public function show_members($to_do_id){
+		$members = $this->Member->find('all', 
+			array('conditions' => array( 'Member.to_do_id' => $to_do_id)));
+		debug($members);
+		if(!empty($members)){
+				$this->set(array ('members' => $members));
+			}
 	}
 }

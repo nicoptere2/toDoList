@@ -63,7 +63,6 @@ tasks.controller('tasksController', function tasksController($scope, $http, $tim
 		return frDate(date);
 	};
 
-
 	$scope.boxClick = function(key) {
 
 		var action = '';
