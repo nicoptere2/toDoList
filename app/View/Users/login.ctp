@@ -43,6 +43,7 @@ label
   <?php echo $this->Form->create('User'); ?> 
  <?php echo $this->Form->input('username', array('label' => 'nom', 'placeholder' => 'username')); ?> 
  <?php echo $this->Form->input('password', array('label' => 'mot de passe','placeholder' => 'Password')); ?> </br>
+ <?php echo $this->Form->input('souvenir', array('type' => 'checkbox', 'label' => 'se souvenir de moi')); ?>
 <label> <?php echo $this->Form->end('se connecter'); ?> </label>
 
 <?php echo $this->Html->link('Inscription', '/users/inscription') ?>

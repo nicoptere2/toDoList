@@ -12,22 +12,58 @@ class UsersController extends AppController {
     }
     
 
-    public function login(){
+ public function login(){
+      /*  $this->User->save(array(
+                                'username' => 'umut',
+                                'password' => $this->Auth->password('umut')
+                          ));*/
+       // debug($this->User->findByUsername('akkulak'));
+        $d = array(
+            'username' => "",
+            'password' => "");
+        $this->set('d',$d);
         //Cas ou l'on est déja connecté
         if($this->Session->check('Auth.User')){
                 $this->redirect('/');	
         }
+        else{
+            if($this->Cookie->read('User.username')!=null){
                 
-        if(!empty($this->data)){
-			// Si la connexion a réussie
-            if($this->Auth->login()){
-                $this->Session->setFlash('<strong>Félicitation</strong> Vous vous etes Identifié avec succes', 'flash_success');
-                return $this->redirect('/');            
+                $d = array(
+                    'username' => $this->Cookie->read('User.username'),
+                    'password' => $this->Cookie->read('User.token'));
+                $this->set('d',$d);
+                if($this->Auth->login()){
+                    $this->Session->setFlash('<strong>Bievenu(e) '.$this->Cookie->read('User.username').'</strong> Vous vous etes Identifié avec succes', 'flash_success');
+             //   debug($d);
+                    return $this->redirect('/');  
+                }
             }
-			// Si la connexion a échouée
-            else{
-               $this->Session->setFlash('<strong>Attention</strong> utisateur inexistant ou mot de passe incorecte', 'flash_warning');
-               $this->redirect('/Users/inscription');
+            else {
+                debug($this->Cookie->read('User.name'));
+                if(!empty($this->data)){
+                    $user = $this->request->data;
+                    $souvenir = $user['User']['souvenir'];       
+                    if($souvenir==false){  
+                        $this->Cookie->del('User');  
+                    }  
+                    else  
+                    {  
+                        $cookie = array();  
+                        $cookie['username'] = $this->data['User']['username'];  
+                        $cookie['token']    = $this->data['User']['password'];  
+                        $this->Cookie->write('User', $cookie, true, '+2 weeks');  
+                    } 
+
+                    if($this->Auth->login()){           //si l'utilisateur est logé
+                        $this->Session->setFlash('<strong>Félicitation</strong> Vous vous etes Identifié avec succes', 'flash_success');
+                        return $this->redirect('/');            
+                    }
+                    else{
+                       $this->Session->setFlash('<strong>Attention</strong> utisateur inexistant ou mot de passe incorecte', 'flash_warning');
+                       $this->redirect('/Users/inscription');
+                    }
+                }
             }
         }
     }

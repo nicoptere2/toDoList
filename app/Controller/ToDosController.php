@@ -166,4 +166,15 @@ class ToDosController  extends AppController {
                 }                
 			}
 		}
+                
+        public function delete_todos($to_do_id){
+        
+            $todo = $this->ToDo->find('all', array('conditions' => array( 'ToDo.id' => $to_do_id)));
+            foreach ($todo as $id) {
+                $this->ToDo->delete($id['ToDo']['id']);
+            }
+            $this->Session->setFlash('TodoListe supprimé', 'flash_info');
+            $this->redirect('/');
+
+        }
 }

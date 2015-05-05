@@ -6,10 +6,6 @@ class TasksController  extends AppController {
         //verifie si l'utilisteur a entre qqchose
         if($this->request->is('post')){
 
-            //  verifie si la tache existe déjà dans la base
-            $task = $this->Task->findByName($this->request->data['Task']['name']);
-            if(empty($task)){       //si il existe pas on l'enregistre 
-
                 $task = $this->request->data;
 
                 $this->Task->create($task, TRUE);
@@ -22,11 +18,8 @@ class TasksController  extends AppController {
                     $this->Session->setFlash('élément ajouté', 'flash_info');
                     $this->redirect('/ToDos/tasks/'.$to_do_id);
                 }      
-            }
-            else {
-                $this->Session->setFlash('nom de l\'élement déjà existant', 'flash_danger');
-                $this->redirect('/ToDos/tasks/'.$to_do_id);
-            }
+            
+            
         }
         
         
