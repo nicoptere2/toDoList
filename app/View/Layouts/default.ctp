@@ -42,7 +42,6 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		?>
 			<script type="text/javascript">
 				var baseUrl = '<?php echo $this->request->base ?>'
-				alert("dfjskl")	;
 			</script>
 			<!--<script type="text/javascript">var userId = '<?php //echo (AuthComponent::user('id') != null)? AuthComponent::user('id') : ''  ?>'</script>-->
 		<?php
