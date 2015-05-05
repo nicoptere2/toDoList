@@ -9,7 +9,7 @@
 					<span class="name">{{value.name}}</span> -
 					<span class="expirationDate" ng-model="expirationDate"> {{dateHelper(value.expirationDate);}} </span>
 			</a>
-			<a href="#" class="btn-delete bouton"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>
+			<a href="{{base}}ToDos/delete_todos/{{value.id}}" class="btn-delete bouton" onclick="return confirm('Voulez-Vous supprimer cette liste ?\n Cette action est irreversible.')"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>
 		</div>
 	
 	</div>
