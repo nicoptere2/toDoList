@@ -13,62 +13,38 @@ class UsersController extends AppController {
     
 
  public function login(){
-      /*  $this->User->save(array(
-                                'username' => 'umut',
-                                'password' => $this->Auth->password('umut')
-                          ));*/
-       // debug($this->User->findByUsername('akkulak'));
-        $d = array(
-            'username' => "",
-            'password' => "");
-        $this->set('d',$d);
+        $user = $this->request->data;
         //Cas ou l'on est déja connecté
         if($this->Session->check('Auth.User')){
                 $this->redirect('/');	
         }
-        else{
-            if($this->Cookie->read('User.username')!=null){
-                
-                $d = array(
-                    'username' => $this->Cookie->read('User.username'),
-                    'password' => $this->Cookie->read('User.token'));
-                $this->set('d',$d);
-                if($this->Auth->login()){
-                    $this->Session->setFlash('<strong>Bievenu(e) '.$this->Cookie->read('User.username').'</strong> Vous vous etes Identifié avec succes', 'flash_success');
-             //   debug($d);
-                    return $this->redirect('/');  
-                }
-            }
-            else {
-                debug($this->Cookie->read('User.name'));
-                if(!empty($this->data)){
-                    $user = $this->request->data;
-                    $souvenir = $user['User']['souvenir'];       
-                    if($souvenir==false){  
-                        $this->Cookie->del('User');  
-                    }  
-                    else  
-                    {  
-                        $cookie = array();  
-                        $cookie['username'] = $this->data['User']['username'];  
-                        $cookie['token']    = $this->data['User']['password'];  
-                        $this->Cookie->write('User', $cookie, true, '+2 weeks');  
-                    } 
+        else if(!empty ($user)){
+            $souvenir = $user['User']['souvenir'];
+            
+            if ($souvenir == true) {
+                    // temps d'expiration du cookie
+                    $cookieTime = "2 months"; // on peut aussi mettre : 1 week, 17 weeks, 14 days
 
-                    if($this->Auth->login()){           //si l'utilisateur est logé
-                        $this->Session->setFlash('<strong>Félicitation</strong> Vous vous etes Identifié avec succes', 'flash_success');
-                        return $this->redirect('/');            
-                    }
-                    else{
-                       $this->Session->setFlash('<strong>Attention</strong> utisateur inexistant ou mot de passe incorecte', 'flash_warning');
-                       $this->redirect('/Users/inscription');
-                    }
-                }
+                // suppression du "se souvenir de moi"
+                unset($this->request->data['User']['souvenir']);
+
+                // on recupere le hashe du mdp
+                $this->request->data['User']['password'] = $this->Auth->password($this->request->data['User']['password']);
+
+                // on ecrit le cookie
+                $this->Cookie->write('souvenir', $this->request->data['User'], true, $cookieTime);
             }
+            
+            if ($this->Auth->login()) {
+                $this->Session->setFlash('<strong>Bievenu(e) '.$this->Cookie->read('User.username').'</strong> Vous vous etes Identifié avec succes', 'flash_success');
+                $this->redirect('/');
+            }
+            
         }
     }
     
     public function logout(){  
+        $this->Cookie->delete('souvenir');
         if($this->Auth->logout()){ 
             $this->Session->setFlash('<strong>Deconnecté(e)</strong> En espérant vous revoir', 'flash_success');
             return $this->redirect('/');

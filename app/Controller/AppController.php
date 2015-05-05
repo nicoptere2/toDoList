@@ -54,7 +54,26 @@ class AppController extends Controller {
 	// only allow the login controllers only
 	public function beforeFilter() {
 		$this->Auth->allow(array('login', 'inscription'));
-    }
+                
+                                // set cookie options
+                $this->Cookie->httpOnly = true;
+
+                if (!$this->Auth->loggedIn() && $this->Cookie->read('souvenir')) {
+                     $cookie = $this->Cookie->read('souvenir');
+
+                         $this->loadModel('User'); // If the User model is not loaded already
+                     $user = $this->User->find('first', array(
+                            'conditions' => array(
+                                'User.username' => $cookie['username'],
+                                'User.password' => $cookie['password']
+                            )
+                     ));
+
+                     if ($user && !$this->Auth->login($user['User'])) {
+                            $this->redirect('/users/logout'); // destroy session & cookie
+                     }
+                 }
+        }
 	
 	public function isAuthorized($user) {
 		// Here is where we should verify the role and give access based on role

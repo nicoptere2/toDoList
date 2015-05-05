@@ -169,7 +169,35 @@ class ToDosController  extends AppController {
                 
         public function delete_todos($to_do_id){
         
+            $this->loadModel('Member');
+             
             $todo = $this->ToDo->find('all', array('conditions' => array( 'ToDo.id' => $to_do_id)));
+            $members_id = $this->Member->find('all',
+                                                array('conditions' => array(
+                                                    'to_do_id' => $to_do_id)));
+            //supprime tout les membres associés a la liste
+            foreach ($members_id as $id) {
+                $this->Member->delete($id['Member']['id']);
+            }
+            
+            
+            $this->loadModel('Task');
+            $task = $this->Task->find('all', array('conditions' => array(
+                                                    'Task.to_do_id' => $to_do_id)));   
+            $this->loadModel('Checked');
+            // pour supprimer la selection
+            foreach ($task as $id) {
+                $checked_id = $this->Checked->find('first',
+                    array('conditions' => array(
+                        'task_id' => $id['Task']['id'])));
+                if(!empty($checked_id))
+                    $this->Checked->delete($checked_id['Checked']['id']);
+            }
+            // pour supprimer les élément de la todolist
+            foreach ($task as $id) {
+                $this->Task->delete($id['Task']['id']);
+            }            
+            //supprimer la todolist
             foreach ($todo as $id) {
                 $this->ToDo->delete($id['ToDo']['id']);
             }
