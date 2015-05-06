@@ -92,4 +92,19 @@
                                                   'action' => 'add_task',$idToDo
                                                   ));
         ?>
+
+        <?php echo "<br>je test ici"?>
+        <br>
+     <div align="center">
+     	   <!-- Ici, affichage d'une liste selection multiple (dans le cas de plusieurs suppression d'un coup ?)
+      	  Avec liste limité a l'affichage de 3 éléments max-->
+	        <select multiple size="3" align="center">
+			  <option value='User1'>User1</option>
+			  <option value='User2'>User2</option>
+			  <option value='User3'>User3</option>
+			  <option value='User4'>User4</option>
+			</select>
+			<br>
+			<p><button align="left">Supprimer</button>		<button align="right">Annuler</button></p>
+	</div>
 </div>
