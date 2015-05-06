@@ -19,24 +19,42 @@ class MembersController  extends AppController {
 				//debug($key);
 				$friend_id = $value['Friend']['friend_id'];
 				//debug($value['Friend']['friend_id']);
-				$friend = $this->User->find('first',
+				$members = $this->Member->find('first', array('conditions' => array('user_id' => $friend_id)));
+				//debug($members['Member']['user_id']);
+
+				if(empty($members)){
+					$friend = $this->User->find('first',
 					array('conditions' => array('User.id' => $friend_id)));
-				//debug($friend['User']['username']);
-				$tableau[$friend_id] = $friend['User']['username'];
+					//debug($friend['User']['username']);
+					$tableau[$friend_id] = $friend['User']['username'];
+				}
 			}
-			$this->set(array ('tableau' => $tableau));
+			//debug($tableau);
+			if(!empty($tableau)){
+				$this->set(array ('tableau' => $tableau));
+			}
+			
 		}else{
 			$this->set(array ('tableau' => ''));
 		}
 		//debug($tableau);
 		if($this->request->is('post')){
-			$member = $this->User->find('first', array('conditions' => array('User.username' => $this->request->data['Member']['name'])));
+			$member = $this->User->find('first', array('conditions' => array('User.username' => $this->request->data['Member']['pseudo'])));
 			//debug($member);
 			if(!(empty($member))){
 			//debug($member_id);
 			$member_id = $member['User']['id'];
-			//debug($member_id);
-
+			debug($member_id);
+			$membersList = $this->Member->find('all', array('conditions' => array('to_do_id' => $to_do_id)));
+			foreach ($membersList as $key => $value) {
+				debug($value['Member']['user_id']);
+				if($member_id == $value['Member']['user_id']){
+					echo "DEJA ENTRER";
+					$this->Session->setFlash('Cet utilisateur appartient deja à la liste', 'flash_danger');
+					$this->redirect('/Todos/tasks/'.$to_do_id);
+				}
+			}
+			//debug($membersList['']);
 			if($this->Member->save(array(
                             'user_id'     => $member_id,
                             'to_do_id' => $to_do_id,
@@ -46,7 +64,7 @@ class MembersController  extends AppController {
                     $this->Session->setFlash('membre ajouté', 'flash_info');
                     $this->redirect('/Todos/tasks/'.$to_do_id);
                 }else{
-                	$this->Session->setFlash('membre non ajouté', 'flash_error');
+                	$this->Session->setFlash('membre non ajouté', 'flash_danger');
                 }
 
 				if($this->Member->save(array(
@@ -58,7 +76,7 @@ class MembersController  extends AppController {
 						$this->Session->setFlash('Membre ajouté', 'flash_info');
 						$this->redirect('/Todos/tasks/'.$to_do_id);
 					}else{
-						$this->Session->setFlash('Membre non ajouté', 'flash_error');
+						$this->Session->setFlash('Membre non ajouté', 'flash_danger');
 						$this->redirect('/Todos/tasks/'.$to_do_id);
 					}
 
