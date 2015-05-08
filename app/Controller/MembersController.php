@@ -1,7 +1,6 @@
 <?php 
 class MembersController  extends AppController {
 	public $scaffold;
-
 	public function add_member($to_do_id){
 		//debug($to_do_id);
 		//debug($this->Session->read('Auth.User'));
@@ -21,7 +20,6 @@ class MembersController  extends AppController {
 				//debug($value['Friend']['friend_id']);
 				$members = $this->Member->find('first', array('conditions' => array('user_id' => $friend_id)));
 				//debug($members['Member']['user_id']);
-
 				if(empty($members)){
 					$friend = $this->User->find('first',
 						array('conditions' => array('User.id' => $friend_id)));
@@ -58,7 +56,7 @@ class MembersController  extends AppController {
 			if($this->Member->save(array(
                             'user_id'     => $member_id,
                             'to_do_id' => $to_do_id,
-                            'right_id'      => '0'
+                            'right_id'      => '3'
                       ))){
     
                     $this->Session->setFlash('membre ajouté', 'flash_info');
@@ -66,7 +64,6 @@ class MembersController  extends AppController {
                 }else{
                 	$this->Session->setFlash('membre non ajouté', 'flash_danger');
                 }
-
 				if($this->Member->save(array(
 								'user_id'     => $member_id,
 								'to_do_id' => $to_do_id,
@@ -79,7 +76,6 @@ class MembersController  extends AppController {
 						$this->Session->setFlash('Membre non ajouté', 'flash_danger');
 						$this->redirect('/ToDos/tasks/'.$to_do_id);
 					}
-
 			//$this->redirect('/ToDos/tasks/'.$to_do_id);
 			} else {
 				//L'utilisateur qu'on veut ajouter n'existe pas en BD. Redirection + Msg Erreur
@@ -87,5 +83,21 @@ class MembersController  extends AppController {
 					$this->redirect('/ToDos/tasks/'.$to_do_id);
 			}
 		}
+	}
+	public function suppr_members($to_do_id){
+    	$id = AuthComponent::user('id');
+    	//debug($id);
+		$members = $this->Member->find('all', 
+			array('conditions' => array( 'Member.to_do_id' => $to_do_id)));
+		//debug($members);
+    	$myself = $this->Member->find('first', 
+            array('conditions' => array( 'Member.user_id' => $id, 'Member.to_do_id' => $to_do_id)));
+    	//debug($myself);
+    	if(!empty($myself)){
+    		$this->set(array ('myself' => $myself));
+    	}
+		if(!empty($members)){
+				$this->set(array ('members' => $members));
+			}
 	}
 }

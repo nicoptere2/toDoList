@@ -91,20 +91,10 @@
         echo $this->Html->link('ajouter des éléments', array('controller' => 'Tasks',
                                                   'action' => 'add_task',$idToDo
                                                   ));
-        ?>
 
-        <?php echo "<br>je test ici"?>
-        <br>
-     <div align="center">
-     	   <!-- Ici, affichage d'une liste selection multiple (dans le cas de plusieurs suppression d'un coup ?)
-      	  Avec liste limité a l'affichage de 3 éléments max-->
-	        <select multiple size="3" align="center">
-			  <option value='User1' style="background-color:#FF8409">User1</option><!--couleur users all droit?-->
-			  <option value='User2' style="background-color:#00EEFB">User2</option><!--couleur users uniquement addItem?-->
-			  <option value='User3'>User3</option><!-- pas de couleur couluer users no droit-->
-			  <option value='User4'>User4</option>
-			</select>
-			<br>
-			<p><button align="left">Supprimer</button><button align="right">Annuler</button></p>
-	</div>
+ 		echo '<br>';
+        echo $this->Html->link('afficher les utilisateurs', array('controller' => 'Members',
+                                                  'action' => 'suppr_members',$idToDo
+                                                  ));
+        ?>
 </div>
