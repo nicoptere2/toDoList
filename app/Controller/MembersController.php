@@ -89,7 +89,6 @@ class MembersController  extends AppController {
 		}
 	}
 
-<<<<<<< HEAD
 	public function modif_droit($todoId){
 		$this->loadModel('Task');
 
@@ -175,7 +174,6 @@ class MembersController  extends AppController {
 	}
 
 
-=======
 	public function show_members($to_do_id){
 
     	$id = AuthComponent::user('id');
@@ -212,5 +210,4 @@ class MembersController  extends AppController {
 				$this->set(array ('members' => $members));
 			}
 	}
->>>>>>> origin/AfficherMembre
 }
