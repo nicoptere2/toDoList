@@ -116,6 +116,12 @@ a.bouton:active {
 	top : 8px;
 }
 
+#lists a.btn-edit{
+	position: absolute;
+	right : 60px;
+	top : 8px;
+}
+
 #lists a.btn-add{
 	margin-left: 25px;
 }
