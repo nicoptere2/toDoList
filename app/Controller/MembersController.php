@@ -89,7 +89,7 @@ class MembersController  extends AppController {
     	//debug($id);
 		$members = $this->Member->find('all', 
 			array('conditions' => array( 'Member.to_do_id' => $to_do_id)));
-		//debug($members);
+		debug($members);
     	$myself = $this->Member->find('first', 
             array('conditions' => array( 'Member.user_id' => $id, 'Member.to_do_id' => $to_do_id)));
     	//debug($myself);
