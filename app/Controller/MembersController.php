@@ -88,4 +88,64 @@ class MembersController  extends AppController {
 			}
 		}
 	}
+
+	public function modif_droit_ajax($idUtil, $idList, $idDroit) {
+		if(($idUtil == null) || ($idList == null) || ($idDroit == null))
+			return false;
+
+		$member = $this->Member->find(
+			'first',
+			array(
+				'conditions' => array(
+					'user_id' => $idUtil,
+					'to_do_id' => $idList
+					)
+				)
+			);
+		if($member == null || $member == array())
+			return false;
+
+		$this->loadModel('Right');
+		$droit = $this->Right->find(
+			'first',
+			array(
+				'conditions' => array(
+					'id' => $idDroit
+					)
+				)
+			);
+		if($droit == null || $droit == array())
+			return false;
+
+		$owner = $this->Member->find(
+			'first',
+			array(
+				'conditions' =>array(
+					'right_id' => 2,
+					'user_id' => AuthComponent::user('id'),
+					'to_do_id' => $idList
+					)
+				)
+			);
+		if($owner == null || $owner == array())
+			return false;
+
+
+
+
+		$this->Member->updateAll(
+			array('right_id' => $idDroit),
+			array(
+				'user_id' => $idUtil,
+				'to_do_id' => $idList
+				)
+			);
+
+
+		if($this->RequestHandler->isAjax())
+			$this->layout = 'ajax';
+
+	}
+
+
 }
