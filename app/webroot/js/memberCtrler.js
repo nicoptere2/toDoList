@@ -14,7 +14,20 @@ member.config(function ($httpProvider) {
 });
 
 
-member.controller('memberController', function tasksController($scope, $http) {
+member.controller('memberController', function tasksController($scope, $http, $sce) {
+
+  $scope.rights = function (key){
+    var ret = "";
+    if($scope.members[key].Member.right_id==2) {
+      ret = 'Proprietaire</td><td></td>';
+    }
+    else {
+      ret = "<label><input type=\"checkbox\" name=\"owner\" ng-name=\"item{{$scope.members[key].User.id}}\" ng-checked=\"$scope.members[key].Member.right_id == 3\" ng-click=\"rightOwner(key)\">modification d'item</label></td><td><label><input type=\"checkbox\" name=\"user\" ng-name=\"users{{$scope.members[key].User.id}}\" ng-checked=\"$scope.members[key].Member.right_id == 4\" ng-click=\"rightUser(key)\">ajout utilisateur</label></td>";
+    }
+
+
+    return $sce.trustAsHtml(ret);
+  };
 
   function changeRight(param){
 

@@ -1,46 +1,15 @@
 
-    <h3>Utilisateurs de la liste</h3>
-    <?php echo "<table style=\"width:100%\">";
-
-        $owner = false;
-        $disabled = true;
-        if($myself['Right']['id'] == 2){
-            $owner = true;
-            $disabled = false;
-        }
-
-    	foreach ($members as $key => $value){
-            //debug($value['User']['username']) ?>
-    		<tr>
-                <td>    <?php echo $value['User']['username']; ?>    </td>
-                <td>
-                <?php 
-                    //debug($value['Right']['id']);
-
-                    if($value['Right']['id'] == 2){
-                        echo "Proprietaire";
-                    }else
-                    if($value['Right']['id'] == 3){
-                        echo $this->Form->input('conditions', array('label' => "Add Item", 'type' => 'checkbox', 'checked' => 'checked','disabled' => $disabled));
-                    }else
-                    if($value['Right']['id'] == 4){
-                        echo $this->Form->input('conditions', array('label' => "Add Member", 'type' => 'checkbox', 'checked' => 'checked','disabled' => $disabled));
-                    }else
-                    if($value['Right']['id'] == 5){
-
-                        echo $this->Form->input('conditions', array('label' => "Add Item", 'type' => 'checkbox', 'checked' => 'checked','disabled' => $disabled));
-                        echo "<td>";
-                        echo $this->Form->input('conditions', array('label' => "Add Member", 'type' => 'checkbox', 'checked' => 'checked','disabled' => $disabled));
-                        echo "</td>";
-                    }
-                    ?>
-                </td>
-                <br>
-    		 	
-    		</tr>
-        <?php }
-        echo "</table>";
-        ?>
+<h3>Utilisateurs de la liste</h3>
+<div ng-app="Member">
+    <table class="table" ng-controller="memberController">
+        <tbody ng-init="members=<?php echo htmlentities(json_encode($members)) ?>">
+           <tr ng-repeat="(key, value) in members" >
+                <td>{{value.User.username}}</td>
+                <td ng-bind-html="rights(key)">
+            </tr>
+        </tbody>
+    </table>
+</div>
         
         <?php echo $this->Html->script('show_membersCtrler') ?>
     <div id="members" ng-app="Members" ng-controller="addMemberController" ng-init="list_id=<?php echo $list['id'] ?>" >
@@ -81,3 +50,8 @@
         echo "</table>";
     ?>
     </div>
+
+<script type="text/javascript">
+    var userId = <?php  echo AuthComponent::user('id'); ?>;
+</script> 
+<?php echo $this->Html->script('memberCtrler') ?>
