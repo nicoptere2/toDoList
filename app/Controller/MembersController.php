@@ -58,7 +58,7 @@ class MembersController  extends AppController {
 			if($this->Member->save(array(
                             'user_id'     => $member_id,
                             'to_do_id' => $to_do_id,
-                            'right_id'      => '0'
+                            'right_id'      => '3'
                       ))){
     
                     $this->Session->setFlash('membre ajouté', 'flash_info');
@@ -89,6 +89,7 @@ class MembersController  extends AppController {
 		}
 	}
 
+<<<<<<< HEAD
 	public function modif_droit($todoId){
 		$this->loadModel('Task');
 
@@ -174,4 +175,42 @@ class MembersController  extends AppController {
 	}
 
 
+=======
+	public function show_members($to_do_id){
+
+    	$id = AuthComponent::user('id');
+    	debug($id);
+		$members = $this->Member->find('all', 
+			array('conditions' => array( 'Member.to_do_id' => $to_do_id)));
+		//debug($members);
+    	$myself = $this->Member->find('first', 
+            array('conditions' => array( 'Member.user_id' => $id, 'Member.to_do_id' => $to_do_id)));
+    	//debug($myself);
+
+    	
+    	$this->loadModel('ToDo');
+    	$list = $this->ToDo->find(
+			'first',
+			array(
+				'conditions' => array(
+					'ToDo.id' => $to_do_id
+					)
+				)
+			);
+    	debug($list['ToDo']);
+    	if(!empty($list)){
+    		$this->set(array ('list' => $list['ToDo']));
+    	}
+		
+
+    	if($to_do_id != null)
+    		$this->set(array ('idToDo' => $to_do_id));
+    	if(!empty($myself)){
+    		$this->set(array ('myself' => $myself));
+    	}
+		if(!empty($members)){
+				$this->set(array ('members' => $members));
+			}
+	}
+>>>>>>> origin/AfficherMembre
 }
