@@ -43,7 +43,10 @@
         ?>
         
         <?php echo $this->Html->script('show_membersCtrler') ?>
-<div id="members" ng-app="Members" ng-controller="addMemberController" ng-init="list_id=<?php echo $list['id'] ?>" >
+    <div id="members" ng-app="Members" ng-controller="addMemberController" ng-init="list_id=<?php echo $list['id'] ?>" >
+    <?php echo "<table style=\"width:100%\">"; ?>
+    <tr>
+        <td>
         <div class="dropdown" ng-controller="addMemberController" align="left">
             <div class="dropup">
                 <button  ng-click="ajouterMembre(<?php echo $idToDo; ?>)" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -57,7 +60,8 @@
                 </ul>
             </div>
         </div>
-
+        </td>
+        <td>
         <div class="dropdown dropdown-right" ng-controller="addMemberController" align="right">
             <div class="dropup">
                 <button  id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -71,4 +75,9 @@
                 </ul>
             </div>
         </div>
-</div>
+        </td>
+    </tr>
+    <?php
+        echo "</table>";
+    ?>
+    </div>
