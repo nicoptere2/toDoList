@@ -98,7 +98,26 @@ class MembersController  extends AppController {
 		//debug($members);
     	$myself = $this->Member->find('first', 
             array('conditions' => array( 'Member.user_id' => $id, 'Member.to_do_id' => $to_do_id)));
-    	debug($myself);
+    	//debug($myself);
+
+    	
+    	$this->loadModel('ToDo');
+    	$list = $this->ToDo->find(
+			'first',
+			array(
+				'conditions' => array(
+					'ToDo.id' => $to_do_id
+					)
+				)
+			);
+    	debug($list['ToDo']);
+    	if(!empty($list)){
+    		$this->set(array ('list' => $list['ToDo']));
+    	}
+		
+
+    	if($to_do_id != null)
+    		$this->set(array ('idToDo' => $to_do_id));
     	if(!empty($myself)){
     		$this->set(array ('myself' => $myself));
     	}
