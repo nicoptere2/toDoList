@@ -1,1 +1,4 @@
-<h1>modification...</h1>
+<?php
+	if(isset($error))
+		echo $error;
+?>

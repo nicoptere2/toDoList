@@ -89,9 +89,25 @@ class MembersController  extends AppController {
 		}
 	}
 
+	public function modif_droit($todoId){
+		$this->loadModel('Task');
+
+		$users = $this->Member->find(
+			'all',
+			array(
+				'conditions' => array(
+					'to_do_id' => $todoId
+					)
+				)
+			);
+		$this->set(array('users' =>$users));
+	}
+
 	public function modif_droit_ajax($idUtil, $idList, $idDroit) {
-		if(($idUtil == null) || ($idList == null) || ($idDroit == null))
+		if(($idUtil == null) || ($idList == null) || ($idDroit == null)){
+			$error = 'erreur';
 			return false;
+		}
 
 		$member = $this->Member->find(
 			'first',
@@ -102,8 +118,10 @@ class MembersController  extends AppController {
 					)
 				)
 			);
-		if($member == null || $member == array())
+		if($member == null || $member == array()){
+			$error = 'erreur';
 			return false;
+		}
 
 		$this->loadModel('Right');
 		$droit = $this->Right->find(
@@ -114,8 +132,10 @@ class MembersController  extends AppController {
 					)
 				)
 			);
-		if($droit == null || $droit == array())
+		if($droit == null || $droit == array()){
+			$error = 'erreur';
 			return false;
+		}
 
 		$owner = $this->Member->find(
 			'first',
@@ -127,13 +147,15 @@ class MembersController  extends AppController {
 					)
 				)
 			);
-		if($owner == null || $owner == array())
+		if($owner == null || $owner == array()){
+			$error = 'erreur';
 			return false;
+		}
 
 
 
 
-		$this->Member->updateAll(
+		$ret = $this->Member->updateAll(
 			array('right_id' => $idDroit),
 			array(
 				'user_id' => $idUtil,
@@ -141,9 +163,13 @@ class MembersController  extends AppController {
 				)
 			);
 
-
+		debug($ret);
+		
 		if($this->RequestHandler->isAjax())
 			$this->layout = 'ajax';
+		
+		if(isset($error))
+			$this->set(array('erreur' => $error));
 
 	}
 
