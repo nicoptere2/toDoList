@@ -134,26 +134,26 @@ class ToDosController  extends AppController {
 	}
 
 	public function create() {                
-			// Vérifie que l'utilisateur a bien entré des données
-			if($this->request->is('post')){
+   // VÃ©rifie que l'utilisateur a bien entrÃ© des donnÃ©es
+   if($this->request->is('post')){
 
                 $list = $this->request->data;
-				
-				$this->ToDo->create($this->request->data, TRUE);
-				
-				// Test de la fréquence
-				if($list['ToDo']['frequency'] == '') {
-					$list['ToDo']['frequency'] = 0;
-				}
-				else if($list['ToDo']['frequency'] == '0') {
-					$list['ToDo']['frequency'] = 1;
-				}
-				else if($list['ToDo']['frequency'] == '1') {
-					$list['ToDo']['frequency'] = 7;
-				}
-					else if($list['ToDo']['frequency'] == '2') {
-					$list['ToDo']['frequency'] = 30;
-				}
+    
+    $this->ToDo->create($this->request->data, TRUE);
+    
+    // Test de la frÃ©quence
+    if($list['ToDo']['frequency'] == '') {
+     $list['ToDo']['frequency'] = 0;
+    }
+    else if($list['ToDo']['frequency'] == '0') {
+     $list['ToDo']['frequency'] = 1;
+    }
+    else if($list['ToDo']['frequency'] == '1') {
+     $list['ToDo']['frequency'] = 7;
+    }
+     else if($list['ToDo']['frequency'] == '2') {
+     $list['ToDo']['frequency'] = 30;
+    }
  
                 if($this->ToDo->save(array(
                                 'name' => $list['ToDo']['name'],
@@ -161,10 +161,74 @@ class ToDosController  extends AppController {
                                 'expirationDate'      => $list['ToDo']['expirationDate']
                           ))){
 
+                  $this->loadModel('Member');
+
+                  $result = $this->ToDo->find( 'all', 
+                          array( 'conditions' => array( 'name' => $list['ToDo']['name'])));
+                  
+                  foreach($result as $id)
+                  {
+                   $this->Member->create($this->request->data, TRUE);
+                   
+                   if($this->Member->save(array(
+                     'user_id' => AuthComponent::user('id'),
+                     'to_do_id'    => $id['ToDo']['id'],
+                     'right_id'      => 2
+                   ))){
+                    
+                    // id
+                    // user_id
+                    // to_do_id
+                    // right_id
+                   }
+                   
+                  }
+                  
                         $this->Auth->login();        
                         return $this->redirect('/');
-                }                
+                }  
+
+                
+   }
+  }
+		
+		public function edit($list_id = null) {
+		if($list_id == null)
+			$this->redirect('/toDos');
+
+
+		$this->loadModel('Member');
+		if(null == 
+				$this->Member->find(
+					'all',
+					array(
+						'conditions' => array(
+							'user_id' => AuthComponent::user('id'),
+							'to_do_id' => $list_id,
+							)
+						)
+					)
+				) {
+				$this->Session->setFlash('Cette liste ne vous appartient pas', 'flash_danger');
+				$this->redirect('/');
 			}
+			
+					$id = $this->Auth->user('id');
+		//$this->set('test',$id);	
+		/*$busername = false;
+		$bemail = false;
+		$bage = false;*/
+		
+		$this->loadModel('Todo');
+
+		$user = $this->Todo->find('all',array(
+		'conditions' => array('Todo.id' => $id),
+		'fields'=>array('id', 'name', 'frequancy','expirationDate')
+		));
+		if (!$id) {
+            throw new NotFoundException(__('Liste inexistante'));
+        }
+		$this->set('info',$user);
 		}
                 
         public function delete_todos($to_do_id){

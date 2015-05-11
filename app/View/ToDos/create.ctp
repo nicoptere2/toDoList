@@ -9,6 +9,8 @@
         <?php echo $this->Html->div('datepicker fl pl460p pa', ' ' ,array('id' => 'datepicker')); ?>
 <?php echo $this->Form->end('Creer une liste'); ?>
 
+        <?php echo $this->Html->div('datepicker fl pl460p pa', ' ' ,array('id' => 'datepicker')); ?>
+
 <?php
 	// Script du calendrier en JQuery
 	echo $this->Html->css('jquery-ui');
