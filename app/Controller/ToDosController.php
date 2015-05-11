@@ -62,8 +62,6 @@ class ToDosController  extends AppController {
 				)
 			);
 
-		
-
 		if($list == array()){
 			$this->Session->setFlash('ToDo inconnu');
 			$this->redirect('/toDos');
@@ -134,14 +132,14 @@ class ToDosController  extends AppController {
 	}
 
 	public function create() {                
-   // VÃ©rifie que l'utilisateur a bien entrÃ© des donnÃ©es
+   // Verifie que l'utilisateur a bien entre des donnees
    if($this->request->is('post')){
 
                 $list = $this->request->data;
     
     $this->ToDo->create($this->request->data, TRUE);
     
-    // Test de la frÃ©quence
+    // Test de la frequence
     if($list['ToDo']['frequency'] == '') {
      $list['ToDo']['frequency'] = 0;
     }
@@ -175,18 +173,14 @@ class ToDosController  extends AppController {
                      'to_do_id'    => $id['ToDo']['id'],
                      'right_id'      => 2
                    ))){
-                    
-                    // id
-                    // user_id
-                    // to_do_id
-                    // right_id
+
                    }
                    
                   }
                   
                         $this->Auth->login();        
                         return $this->redirect('/');
-                }  
+                } 				
 
                 
    }
@@ -212,9 +206,15 @@ class ToDosController  extends AppController {
 				$this->redirect('/toDos');
 		}
 		
-		if(isset($this->data) && $id !=null){
-			$this->ToDo->save($this->data);
-			//$this->redirect('/toDos');
+		if($this->request->is('put')){
+			if(isset($this->data) && $id !=null){
+				if ($this->ToDo->save($this->request->data)) {
+					$this->Session->setFlash('La liste a bien été modifiée', 'flash_info');
+					$this->redirect('/toDos');
+				}
+			else
+				$this->Session->setFlash('La date est incorrecte', 'flash_danger');
+			}
 		}
 		
 		// On récupère les informations de a liste et on les place
