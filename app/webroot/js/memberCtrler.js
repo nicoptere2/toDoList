@@ -13,21 +13,58 @@ member.config(function ($httpProvider) {
   }
 });
 
+member.directive( 'compileData', function ( $compile ) {
+  return {
+    scope: true,
+    link: function ( scope, element, attrs ) {
+
+      var elmnt;
+
+      attrs.$observe( 'template', function ( myTemplate ) {
+        if ( angular.isDefined( myTemplate ) ) {
+          // compile the provided template against the current scope
+          elmnt = $compile( myTemplate )( scope );
+
+            element.html(""); // dummy "clear"
+
+          element.append( elmnt );
+        }
+      });
+    }
+  };
+});
+
 
 member.controller('memberController', function tasksController($scope, $http, $sce) {
 
-  $scope.rights = function (key){
+  $scope.rightsItem = function (key){
     var ret = "";
     if($scope.members[key].Member.right_id==2) {
-      ret = 'Proprietaire</td><td></td>';
+      ret = 'Proprietaire';
     }
     else {
-      ret = "<label><input type=\"checkbox\" name=\"owner\" ng-name=\"item{{$scope.members[key].User.id}}\" ng-checked=\"$scope.members[key].Member.right_id == 3\" ng-click=\"rightOwner(key)\">modification d'item</label></td><td><label><input type=\"checkbox\" name=\"user\" ng-name=\"users{{$scope.members[key].User.id}}\" ng-checked=\"$scope.members[key].Member.right_id == 4\" ng-click=\"rightUser(key)\">ajout utilisateur</label></td>";
-    }
+      ret = "<label>\
+      <input type=\"checkbox\" name=\"owner\" ng-name=\"item{{$scope.members[key].User.id}}\" ng-checked=\"$scope.members[key].Member.right_id == 3\" ng-click=\"rightItem(key)\">\
+      modification d'item\
+      </label>";
 
-
+    };
     return $sce.trustAsHtml(ret);
   };
+
+  $scope.rightsUser = function (key) {
+      var ret = "";
+      if($scope.members[key].Member.right_id!=2) {
+        ret = "<td>\
+        <label>\
+        <input type=\"checkbox\" name=\"user\" ng-name=\"users{{$scope.members[key].User.id}}\" ng-checked=\"$scope.members[key].Member.right_id == 4\" ng-click=\"rightUser(key)\">\
+        ajout utilisateur\
+        </label>\
+        </td>";
+      }
+
+      return $sce.trustAsHtml(ret);
+    };
 
   function changeRight(param){
 
@@ -39,16 +76,13 @@ member.controller('memberController', function tasksController($scope, $http, $s
 
     $http.get(url)
       .success(function (data, status, header, config) {
-        console.log('Ajax success! : \n');
+        console.log('Ajax success!\n');
+        $scope.members = data;
       })
       .error(function (data, status, header, config) {
         console.log('l\'ajax de coche/decoche a repondu avec une error : ' + status + '\n' + data);
       });
   }
-
-  $scope.rightOwner = function (key){
-
-  };
 
   $scope.rightItem = function (key){
     var param = [$scope.members[key].User.id, $scope.members[key].ToDo.id, 3];
@@ -56,7 +90,7 @@ member.controller('memberController', function tasksController($scope, $http, $s
   };
 
   $scope.rightUser = function (key){
-    var param = [userId, $scope.members[key].ToDo.id, 4];
+    var param = [$scope.members[key].User.id, $scope.members[key].ToDo.id, 4];
     changeRight(param);
   };
 

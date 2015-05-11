@@ -163,13 +163,22 @@ class MembersController  extends AppController {
 				)
 			);
 
-		debug($ret);
-		
-		if($this->RequestHandler->isAjax())
-			$this->layout = 'ajax';
+		$users = $this->Member->find(
+			'all',
+			array(
+				'conditions' => array(
+					'to_do_id' => $idList
+					)
+				)
+			);
+		$this->set(array('users' =>$users));
 		
 		if(isset($error))
 			$this->set(array('erreur' => $error));
+		
+
+		if($this->RequestHandler->isAjax())
+			$this->layout = 'ajax';
 
 	}
 

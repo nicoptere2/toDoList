@@ -2,10 +2,18 @@
 <h3>Utilisateurs de la liste</h3>
 <div ng-app="Member">
     <table class="table" ng-controller="memberController">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Modification d'item</th>
+                <th>Modification d'utilisateur</th>
+            </tr>
+        </thead>
         <tbody ng-init="members=<?php echo htmlentities(json_encode($members)) ?>">
            <tr ng-repeat="(key, value) in members" >
                 <td>{{value.User.username}}</td>
-                <td ng-bind-html="rights(key)">
+                <td compile-data template="{{rightsItem(key)}}"></td>
+                <td compile-data template="{{rightsUser(key)}}"></td>
             </tr>
         </tbody>
     </table>
