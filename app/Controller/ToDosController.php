@@ -192,43 +192,37 @@ class ToDosController  extends AppController {
    }
   }
 		
-		public function edit($list_id = null) {
-		if($list_id == null)
+		public function edit($id = null) {
+		// Si l'id de la liste est nul, on retouner à l'accueil
+		if($id == null) {
 			$this->redirect('/toDos');
-
-
+		}
+		
+		// On vérifie que l'utilisateur a bien les droits de modifier la liste
 		$this->loadModel('Member');
-		if(null == 
-				$this->Member->find(
-					'all',
-					array(
-						'conditions' => array(
+		if(null == $this->Member->find('all',
+					array('conditions' => array(
 							'user_id' => AuthComponent::user('id'),
-							'to_do_id' => $list_id,
+							'to_do_id' => $id,
 							)
 						)
 					)
 				) {
 				$this->Session->setFlash('Cette liste ne vous appartient pas', 'flash_danger');
-				$this->redirect('/');
-			}
-			
-					$id = $this->Auth->user('id');
-		//$this->set('test',$id);	
-		/*$busername = false;
-		$bemail = false;
-		$bage = false;*/
+				$this->redirect('/toDos');
+		}
 		
-		$this->loadModel('Todo');
-
-		$user = $this->Todo->find('all',array(
-		'conditions' => array('Todo.id' => $id),
-		'fields'=>array('id', 'name', 'frequancy','expirationDate')
-		));
-		if (!$id) {
-            throw new NotFoundException(__('Liste inexistante'));
-        }
-		$this->set('info',$user);
+		if(isset($this->data) && $id !=null){
+			$this->ToDo->save($this->data);
+			//$this->redirect('/toDos');
+		}
+		
+		// On récupère les informations de a liste et on les place
+		// Dans data pour pouvoir pré-remplir les champs
+		if($id != null) {
+			$this->ToDo->id = $id;
+			$this->data = $this->ToDo->read();
+			}
 		}
                 
         public function delete_todos($to_do_id){
@@ -243,7 +237,6 @@ class ToDosController  extends AppController {
             foreach ($members_id as $id) {
                 $this->Member->delete($id['Member']['id']);
             }
-            
             
             $this->loadModel('Task');
             $task = $this->Task->find('all', array('conditions' => array(
