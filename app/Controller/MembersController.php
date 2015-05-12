@@ -33,12 +33,26 @@ class MembersController  extends AppController {
 			if(!empty($tableau)){
 				$this->set(array ('tableau' => $tableau));
 			}
+			$this->set(array ('to_do_id' => $to_do_id));
 		}else{
 			$this->set(array ('tableau' => ''));
 		}
 		//debug($tableau);
 		if($this->request->is('post')){
 			$member = $this->User->find('first', array('conditions' => array('User.username' => $this->request->data['Member']['pseudo'])));
+			$addItem = $this->request->data['Member']['item'];
+			$addUser = $this->request->data['Member']['user'];
+			$right = 1;
+			if($addItem == 1){
+				$right = 3;
+			}
+			if($addUser == 1){
+				$right = 4;
+			}
+			if($addUser == 1 && $addItem == 1){
+				$right = 5;
+			}
+			debug($addItem);
 			//debug($member);
 			if(!empty($member)){
 				//debug($member_id);
@@ -71,7 +85,7 @@ class MembersController  extends AppController {
 				if($this->Member->save(array(
 	                            'user_id'     => $member_id,
 	                            'to_do_id' => $to_do_id,
-	                            'right_id'      => '3'
+	                            'right_id'      => $right
 	                      ))){
 	    
 	                    $this->Session->setFlash('membre ajouté', 'flash_info');

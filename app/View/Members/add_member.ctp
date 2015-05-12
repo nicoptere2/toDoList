@@ -22,21 +22,21 @@
     	<?php echo "<option value='$value'>"; ?>
     	<?php } ?>
     </datalist>
-
     
     <table style="width:80%">
     <tr>
         <td>
             <?php 
-                echo $this->Form->input('conditions', array('label' => "Add Item", 'type' => 'checkbox', 'checked' => 'checked',));
+                echo $this->Form->input('item', array('label' => "Add Item", 'type' => 'checkbox'));
             ?>
         </td>
         <td>
             <?php 
-                echo $this->Form->input('conditions', array('label' => "Add User", 'type' => 'checkbox', 'checked' => 'checked',));
+                echo $this->Form->input('user', array('label' => "Add User", 'type' => 'checkbox'));
             ?>
         </td>
     </tr>
     </table>
-<?php echo $this->Form->end('Valider'); ?>
+<?php echo $this->Form->end('Valider');
+?>
 </div>
