@@ -92,7 +92,7 @@ class MembersController  extends AppController {
 	public function show_members($to_do_id){
 
     	$id = AuthComponent::user('id');
-    	debug($id);
+    	//debug($id);
 		$members = $this->Member->find('all', 
 			array('conditions' => array( 'Member.to_do_id' => $to_do_id)));
 		//debug($members);
@@ -110,7 +110,7 @@ class MembersController  extends AppController {
 					)
 				)
 			);
-    	debug($list['ToDo']);
+    	//debug($list['ToDo']);
     	if(!empty($list)){
     		$this->set(array ('list' => $list['ToDo']));
     	}
