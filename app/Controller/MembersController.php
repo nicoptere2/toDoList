@@ -10,7 +10,7 @@ class MembersController  extends AppController {
 		//debug($id);
 		$this->loadModel("Friend");
 		$friend = $this->Friend->find('all', 
-			array('conditions' => array( 'Friend.user_id' => $id)));
+			array('conditions' => array('Friend.user_id' => $id)));
 		//debug($friend);
 		$this->loadModel("User");
 		if(!empty($friend)){
@@ -18,13 +18,15 @@ class MembersController  extends AppController {
 				//debug($key);
 				$friend_id = $value['Friend']['friend_id'];
 				//debug($value['Friend']['friend_id']);
-				$members = $this->Member->find('first', array('conditions' => array('user_id' => $friend_id)));
-				//debug($members['Member']['user_id']);
+				$members = $this->Member->find('first', array('conditions' => array('user_id' => $friend_id, 'to_do_id' => $to_do_id)));
+				//debug($members);
 				if(empty($members)){
+					echo "SERIEUX ";
 					$friend = $this->User->find('first',
 						array('conditions' => array('User.id' => $friend_id)));
-					//debug($friend);
+					debug($friend);
 					if(!empty($friend))
+
 						$tableau[$friend_id] = $friend['User']['username'];
 				}
 			}

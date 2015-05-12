@@ -69,7 +69,7 @@
 	</ul>
 
     <div class="dropdown" ng-controller="addMemberController" align="right">
-    	<div class="dropup">
+    	<div class="dropdown">
     		<button ng-click="ajouterMembre(<?php echo $idToDo; ?>)" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     			<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
     		</button>
@@ -93,7 +93,7 @@
                                                   ));
 
  		echo '<br>';
-        echo $this->Html->link('afficher les utilisateurs', array('controller' => 'Members',
+        echo $this->Html->link('supprimer des utilisateurs', array('controller' => 'Members',
                                                   'action' => 'suppr_members',$idToDo
                                                   ));
         ?>
