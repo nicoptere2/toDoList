@@ -273,3 +273,14 @@ a.bouton:active {
     right: 0;
 }
 
+.OptionAllRight {
+	background-color: #FF8409;
+}
+
+.OptionMidRight {
+	background-color: #00EEFB;
+}
+
+.OptionNoRight {
+	background-color: #FFFFFF;
+}

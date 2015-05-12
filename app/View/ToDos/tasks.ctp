@@ -91,5 +91,10 @@
         echo $this->Html->link('ajouter des éléments', array('controller' => 'Tasks',
                                                   'action' => 'add_task',$idToDo
                                                   ));
+
+ 		echo '<br>';
+        echo $this->Html->link('supprimer des utilisateurs', array('controller' => 'Members',
+                                                  'action' => 'suppr_members',$idToDo
+                                                  ));
         ?>
 </div>
