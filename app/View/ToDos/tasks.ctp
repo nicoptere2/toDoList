@@ -69,7 +69,7 @@
 	</ul>
 
     <div class="dropdown" ng-controller="addMemberController" align="right">
-    	<div class="dropdown">
+    	<div class="dropup">
     		<button ng-click="ajouterMembre(<?php echo $idToDo; ?>)" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     			<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
     		</button>

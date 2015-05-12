@@ -21,10 +21,9 @@ class MembersController  extends AppController {
 				$members = $this->Member->find('first', array('conditions' => array('user_id' => $friend_id, 'to_do_id' => $to_do_id)));
 				//debug($members);
 				if(empty($members)){
-					echo "SERIEUX ";
 					$friend = $this->User->find('first',
 						array('conditions' => array('User.id' => $friend_id)));
-					debug($friend);
+					//debug($friend);
 					if(!empty($friend))
 
 						$tableau[$friend_id] = $friend['User']['username'];
@@ -44,10 +43,10 @@ class MembersController  extends AppController {
 			if(!(empty($member))){
 			//debug($member_id);
 			$member_id = $member['User']['id'];
-			debug($member_id);
+			//debug($member_id);
 			$membersList = $this->Member->find('all', array('conditions' => array('to_do_id' => $to_do_id)));
 			foreach ($membersList as $key => $value) {
-				debug($value['Member']['user_id']);
+				//debug($value['Member']['user_id']);
 				if($member_id == $value['Member']['user_id']){
 					echo "DEJA ENTRER";
 					$this->Session->setFlash('Cet utilisateur appartient deja à la liste', 'flash_danger');
@@ -91,7 +90,7 @@ class MembersController  extends AppController {
     	//debug($id);
 		$members = $this->Member->find('all', 
 			array('conditions' => array( 'Member.to_do_id' => $to_do_id)));
-		debug($members);
+		//debug($members);
     	$myself = $this->Member->find('first', 
             array('conditions' => array( 'Member.user_id' => $id, 'Member.to_do_id' => $to_do_id)));
     	//debug($myself);
@@ -99,7 +98,32 @@ class MembersController  extends AppController {
     		$this->set(array ('myself' => $myself));
     	}
 		if(!empty($members)){
-				$this->set(array ('members' => $members));
+			$this->set(array ('members' => $members));
+		}
+
+		$this->loadModel("User");
+		if($this->request->is('post')){
+			$member = $this->User->find('first', array('conditions' => array('User.username' => $this->request->data['Member']['pseudo'])));
+			//debug($this->request->data['Member']['pseudo']);
+			//debug($member);
+			debug($to_do_id);
+			if(!empty($member)){
+			//debug($member_id);
+				$member_id = $member['User']['id'];
+				debug($member_id);
+
+				$delete = $this->Member->find('first', array('conditions' => array('user_id' => $member_id, 'to_do_id' => $to_do_id)));
+				debug($delete['Member']['id']);
+
+				if($this->Member->delete($delete['Member']['id'])){
+					$this->Session->setFlash('membre supprimé', 'flash_info');
+                    $this->redirect('/ToDos/tasks/'.$to_do_id);
+                }
+				//$delete = $this->Member->find('first', array('conditions' => array('user_id' => $member_id, 'to_do_id' => $to_do_id)));
+				//debug($delete);
+				//$this->Member->deleteAll('first', array('conditions' => array('user_id' => $member_id, 'to_do_id' => $to_do_id)));
 			}
+
+		}
 	}
 }
