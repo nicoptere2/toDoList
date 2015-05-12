@@ -8,9 +8,18 @@ class ToDo extends AppModel {
 			'rule'  => 'notEmpty',
 			'message' => 'Entrer un nom de liste !'
 		),
+		'Todo.name' => array(
+			'rule'  => 'notEmpty',
+			'message' => 'Entrer un nom de liste !'
+		),
 		'expirationDate' => array(
+            'rule'    => 'date',
+			'message' => 'Date invalide !'
+		),
+		'Todo.expirationDate' => array(
             'rule'    => 'date',
 			'message' => 'Date invalide !'
 		)
 	);
+
 }

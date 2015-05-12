@@ -62,8 +62,6 @@ class ToDosController  extends AppController {
 				)
 			);
 
-		
-
 		if($list == array()){
 			$this->Session->setFlash('ToDo inconnu');
 			$this->redirect('/toDos');
@@ -134,41 +132,112 @@ class ToDosController  extends AppController {
 	}
 
 	public function create() {                
-			// Vérifie que l'utilisateur a bien entré des données
-			if($this->request->is('post')){
+		// Verifie que l'utilisateur a bien entre des donnees
+		if($this->request->is('post')){
+            $list = $this->request->data;
+			$this->ToDo->create($this->request->data, TRUE);
+    
+			// Test de la frequence
+			if($list['ToDo']['frequency'] == '') {
+				$list['ToDo']['frequency'] = 0;
+			}
+			else if($list['ToDo']['frequency'] == '0') {
+				$list['ToDo']['frequency'] = 1;
+			}
+			else if($list['ToDo']['frequency'] == '1') {
+				$list['ToDo']['frequency'] = 7;
+			}
+			else if($list['ToDo']['frequency'] == '2') {
+				$list['ToDo']['frequency'] = 30;
+			}
+		 
+			if($this->ToDo->save(array(
+				'name' => $list['ToDo']['name'],
+				'frequency'    => $list['ToDo']['frequency'],
+				'expirationDate'      => $list['ToDo']['expirationDate']
+			))){
 
-                $list = $this->request->data;
-				
+			$this->loadModel('Member');
+			$result = $this->ToDo->find( 'all', array( 'conditions' => array( 'name' => $list['ToDo']['name'])));
+                  
+			foreach($result as $id) {
+				$this->Member->create($this->request->data, TRUE);
+                   
+				if($this->Member->save(array(
+					'user_id' => AuthComponent::user('id'),
+                     'to_do_id'    => $id['ToDo']['id'],
+                     'right_id'      => 2
+                ))){
+
+                   }
+                   
+			}
+                  
+			$this->Auth->login();        
+			return $this->redirect('/');
+			} 				
+
+                
+		}
+	}
+		
+	public function edit($id = null) {
+		// Si l'id de la liste est nul, on retouner à l'accueil
+		if($id == null) {
+			$this->redirect('/toDos');
+		}
+		
+		// On vérifie que l'utilisateur a bien les droits de modifier la liste
+		$this->loadModel('Member');
+		if(null == $this->Member->find('all',
+					array('conditions' => array(
+							'user_id' => AuthComponent::user('id'),
+							'to_do_id' => $id,
+							)
+						)
+					)
+			) {
+				$this->Session->setFlash('Cette liste ne vous appartient pas', 'flash_danger');
+				$this->redirect('/toDos');
+		}
+		
+		if($this->request->is('put')){
+			if(isset($this->data) && $id !=null){
+			    $data = $this->request->data;
 				$this->ToDo->create($this->request->data, TRUE);
-				
-				// Test de la fréquence
-				if($list['ToDo']['frequency'] == '') {
-					$list['ToDo']['frequency'] = 0;
+    
+				// Test de la frequence
+				if($data['ToDo']['frequency'] == '') {
+					$data['ToDo']['frequency'] = 0;
 				}
-				else if($list['ToDo']['frequency'] == '0') {
-					$list['ToDo']['frequency'] = 1;
+				else if($data['ToDo']['frequency'] == '0') {
+					$data['ToDo']['frequency'] = 1;
 				}
-				else if($list['ToDo']['frequency'] == '1') {
-					$list['ToDo']['frequency'] = 7;
+				else if($data['ToDo']['frequency'] == '1') {
+					$data['ToDo']['frequency'] = 7;
 				}
-					else if($list['ToDo']['frequency'] == '2') {
-					$list['ToDo']['frequency'] = 30;
+				 else if($data['ToDo']['frequency'] == '2') {
+					$data['ToDo']['frequency'] = 30;
 				}
- 
-                if($this->ToDo->save(array(
-                                'name' => $list['ToDo']['name'],
-                                'frequency'    => $list['ToDo']['frequency'],
-                                'expirationDate'      => $list['ToDo']['expirationDate']
-                          ))){
-
-                        $this->Auth->login();        
-                        return $this->redirect('/');
-                }                
+			
+				if ($this->ToDo->save($data)) {
+					$this->Session->setFlash('La liste a bien été modifiée', 'flash_info');
+					$this->redirect('/toDos');
+				}
+				else
+					$this->Session->setFlash('La date est incorrecte', 'flash_danger');
+			}
+		}
+		
+		// On récupère les informations de a liste et on les place
+		// Dans data pour pouvoir pré-remplir les champs
+		if($id != null) {
+			$this->ToDo->id = $id;
+			$this->data = $this->ToDo->read();
 			}
 		}
                 
         public function delete_todos($to_do_id){
-        
             $this->loadModel('Member');
              
             $todo = $this->ToDo->find('all', array('conditions' => array( 'ToDo.id' => $to_do_id)));
@@ -179,7 +248,6 @@ class ToDosController  extends AppController {
             foreach ($members_id as $id) {
                 $this->Member->delete($id['Member']['id']);
             }
-            
             
             $this->loadModel('Task');
             $task = $this->Task->find('all', array('conditions' => array(
