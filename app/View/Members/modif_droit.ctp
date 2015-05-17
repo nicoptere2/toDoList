@@ -1,16 +1,34 @@
 <?php debug($users) ?>
 
 
-<div ng-app="Member">
+<div id="membres" ng-app="Member">
 	<table class="table" ng-controller="memberController">
-		<tbody ng-init="members=<?php echo htmlentities(json_encode($users)) ?>">
-				<tr ng-repeat="(key, value) in members" >
-					<th>{{value.User.username}}</th>
-					<th><input type="checkbox" name="owner" ng-name="owner{{value.User.id}}" ng-checked="value.Member.right_id == 2" ng-click="rightOwner(key)"></th>
-					<th><input type="checkbox" name="item" ng-name="item{{value.User.id}}" ng-checked="value.Member.right_id == 3" ng-click="rightItem(key)"></th>
-					<th><input type="checkbox" name="user" ng-name="users{{value.User.id}}" ng-checked="value.Member.right_id == 4" ng-click="rightUser(key)"></th>
+		<tbody>
+			<?php $i=0; ?>
+			<?php foreach ($users as $key => $value): ?>
+				<tr>
+					<th><?php echo $value['User']['username'] ?></th>
+					<?php if ($value['Right']['id']==2): ?>
+						<td>Proprietaire</td>
+						<td></td>
+					<?php else: ?>
+						<th>
+							<label>
+								<input type="checkbox" name="item" ng-model="item<?php echo $i +"=" + ($value['Right']['item'])? 'checked' : '' ?>" >
+								Add Item
+							</label>
+						</th>
+						<th>
+							<label>
+								<input type="checkbox" name="user" <?php echo ($value['Right']['user'])? 'checked' : ''  ?> >
+								Add User
+							</label>
+						</th>
+					<?php endif ?>
 				</tr>
+			<?php endforeach ?>
 		</tbody>
+		{{item1}}
 	</table>
 </div>
 

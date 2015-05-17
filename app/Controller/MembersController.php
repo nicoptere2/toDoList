@@ -100,6 +100,18 @@ class MembersController  extends AppController {
 					)
 				)
 			);
+		foreach($users as $key => $value){
+			if($value['Right']['id'] == 3 || $value['Right']['id'] == 5)
+				$users[$key]['Right']['item'] = true;
+			else
+				$users[$key]['Right']['item'] = false;
+
+			if($value['Right']['id'] == 4 || $value['Right']['id'] == 5)
+				$users[$key]['Right']['user'] = true;
+			else
+				$users[$key]['Right']['user'] = false;
+		}
+
 		$this->set(array('users' =>$users));
 	}
 

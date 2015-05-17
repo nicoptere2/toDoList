@@ -5,6 +5,6 @@
 
 <?php 
 	if(isset($users))
-		echo htmlentities(json_encode($users))
+		echo json_encode($users);
 
 ?>
