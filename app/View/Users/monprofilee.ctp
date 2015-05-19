@@ -1,20 +1,25 @@
 <?php   
 
 
-echo '<table>';?><?php echo $this->Form->create('User', array('label' => false));
+echo '<table><form method="POST">';
     foreach($info as $champs)
 	echo '<h3> Profil - '.$champs['User']['username'].' </h3>';
 	{
 		echo '<tr height="50px" width="500px">
 		<td></td>
 		<td><b> Pseudo : </b></td>
-		<td>';?><?php echo $this->Form->input('username', array('label' => '', 'default' => $champs['User']['username'], 'onclick' => 'changeusername();', 'disabled' => 'disabled')); ?> 
-		<?php echo'</td>
+		<td><input type="text" disabled="disabled" value="'.$champs['User']['username'].'" id="username"/></td>
 		<td><div class="dropdown" align="right">
 			<div class="dropup" align="right">
-			<button type="button" class="btn btn-default"  id="busername" onclick="changeusername()">
+			<button type="button" class="btn btn-default"  id="busername" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<span class="glyphicon glyphicon-pencil"></span>
 			</button>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+    			<div bind-unsafe-html="pageTest">
+					essai
+    			</div>
+
+    		</ul>
 			</div>
 			</div>
 			</td>
@@ -22,8 +27,7 @@ echo '<table>';?><?php echo $this->Form->create('User', array('label' => false))
 		echo '<tr height="50px">
 		<td></td>
 		<td><b> Email : </b></td>
-		<td>';?><?php echo $this->Form->input('email', array('label' => '', 'default' => $champs['User']['email'], 'onclick' => 'changeemail();', 'disabled' => 'disabled')); ?>
-		<?php echo'</td>
+		<td><input type="text" disabled="disabled" value="'.$champs['User']['email'].'" id="email"/></td>
 		<td><button type="button" class="btn btn-default" onclick="changeemail()" id="bemail"">
 				<span class="glyphicon glyphicon-pencil"></span>
 			</button>
@@ -32,8 +36,7 @@ echo '<table>';?><?php echo $this->Form->create('User', array('label' => false))
 		echo '<tr height="50px">
 		<td width="50px"></td>
 		<td width="100px"><b> Age : </b></td>
-		<td align="left">';?><?php echo $this->Form->input('age', array('label' => '', 'default' => $champs['User']['age'], 'onclick' => 'changeage();', 'disabled' => 'disabled')); ?>
-		<?php echo'</td>
+		<td align="left"><input type="text" disabled="disabled" value="'.$champs['User']['age'].'"/ id="age"></td>
 		<td align="left" width="10%"><button type="button" class="btn btn-default" onclick="changeage()" id="bage" >
 				<span class="glyphicon glyphicon-pencil"></span>
 			</button>
@@ -41,46 +44,41 @@ echo '<table>';?><?php echo $this->Form->create('User', array('label' => false))
 	</tr>'; 
 	}
 	
-echo'</table>'; ?>
+echo'</table><input type="submit" value="Enregistrer les modifications" style="display:none;" id="valid"></form>
 
- <?php echo '<div style="display:none;" id="submit">' ?>
-<?php echo $this->Form->end('Enregistrer'); ?><?php echo '</div>' ?>
-
-<?php
-echo'
 <script>
-var v = document.getElementById("submit");
+var v = document.getElementById("valid");
 function changeusername() {
-    var champ = document.getElementById("UserUsername");
+    var champ = document.getElementById("username");
 	v.style.display="";
 	var pseudo = prompt("Nouveau pseudo :", "");
-    champ.disabled = "";
+    
 	if (pseudo.match(/^[a-z0-9]/)) {
-		champ.value = pseudo;
+		document.getElementById("username").value = pseudo;
 	}
 	else{
 		changeusername();
 	}
 }
 function changeemail() {
-    var champ = document.getElementById("UserEmail");
+    var champ = document.getElementById("email");
 	v.style.display="";
 	var mail = prompt("Nouvel email :", "");
-    champ.disabled = "";
+    
 	if(mail.match(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/)){
-		champ.value = mail;
+		document.getElementById("email").value = mail;
 	}
 	else{
 		changeemail();
 	}
 }
 function changeage() {
-    var champ = document.getElementById("UserAge");
+    var champ = document.getElementById("age");
 	v.style.display="";
 	var annees = prompt("nouvel age :", "");
-    champ.disabled = "";
+    
 	if((annees.match(/^-?[0-9]+$/))){
-		champ.value = annees;
+		document.getElementById("age").value = annees;
 	}
 	else{
 		changeage();

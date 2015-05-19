@@ -69,6 +69,101 @@ class UsersController extends AppController {
 	public function monprofil()
 	{
 		$id = $this->Auth->user('id');
+		
+		if($this->request->is('post')){
+			
+			//$userv = $this->User->findById($id);
+			$userv = $this->User->find('all',array(
+				'conditions' => array('User.username' => $this->request->data['User']['username']),
+				'fields'=>array('username')
+			));
+			$this->User->id = $id;
+			if(empty($userv)){
+				if($this->User->save($this->request->data)) {
+					$this->Session->setFlash("modifs sauvegardées !");
+				}
+			}
+			else{
+				$this->Session->setFlash("Pseudo déjà utilisé !");
+			}
+			$this->redirect('/users/monprofil');
+		}
+
+		
+		$user = $this->User->find('all',array(
+		'conditions' => array('User.id' => $id),
+		'fields'=>array('username','email','age')
+		));
+		if (!$id) {
+            throw new NotFoundException(__('Utilisateur inexistant'));
+        }
+		//$avertissement = "Vous avez été déconnecté";
+		$this->set('info',$user);
+		
+		
+	}
+	
+	public function monprofile()
+	{
+		$id = $this->Auth->user('id');
+		
+		if($this->request->is('post')){
+			
+			//$userv = $this->User->findById($id);
+			$userv = $this->User->find('all',array(
+				'conditions' => array('User.username' => $this->request->data['User']['username']),
+				'fields'=>array('username')
+			));
+			$this->User->id = $id;
+			if(empty($userv)){
+				if($this->User->save($this->request->data)) {
+					$this->Session->setFlash("modifs sauvegardées !");
+				}
+			}
+			else{
+				$this->Session->setFlash("Pseudo déjà utilisé !");
+			}
+			$this->redirect('/users/monprofil');
+		}
+
+		
+		$user = $this->User->find('all',array(
+		'conditions' => array('User.id' => $id),
+		'fields'=>array('username','email','age')
+		));
+		if (!$id) {
+            throw new NotFoundException(__('Utilisateur inexistant'));
+        }
+		//$avertissement = "Vous avez été déconnecté";
+		$this->set('info',$user);
+		
+	}
+	
+	public function monprofilee()
+	{
+		//verifie si l'utilisateur a entre des donnees ( modification du profil )
+		if($this->request->is('post')){
+			$userm = $this->request->data;
+			$userv = $this->User->find('all',array(
+				'conditions' => array('User.username' => $userm),
+				'fields'=>array('username','email','age')
+			));
+			//si le nouveau pseudo n'existe pas en bdd
+			if(empty($userv)){/*
+                    if($this->User->save(array('Users' => array(
+                                'username' => $userm['username'],
+                                'email'    => $userm['email'],
+                                'age'      => $userm['age']   
+								))))
+					{       
+                        return $this->redirect('/');
+                    }  */    
+            }
+		}
+		
+		
+		
+		$id = $this->Auth->user('id');
 		//$this->set('test',$id);	
 		/*$busername = false;
 		$bemail = false;
@@ -83,25 +178,7 @@ class UsersController extends AppController {
         }
 		//$avertissement = "Vous avez été déconnecté";
 		$this->set('info',$user);
-	}
-	
-	public function monprofile($user)
-	{
-		//$id = $this->Auth->user('id');
-		//$this->set('test',$id);	
-		$busername = false;
-		$bemail = false;
-		$bage = false;
 		
-		$id = $this->User->find('all',array(
-		'conditions' => array('username' => $user),
-		'fields'=>array('username','email','age')
-		));
-		if (!$id) {
-            throw new NotFoundException(__('Utilisateur inexistant'));
-        }
-		//$avertissement = "Vous avez été déconnecté";
-		$this->set('test',$id);	
 		
 	}
 	
