@@ -241,6 +241,19 @@ class ToDosController  extends AppController {
             $this->loadModel('Member');
              
             $todo = $this->ToDo->find('all', array('conditions' => array( 'ToDo.id' => $to_do_id)));
+            
+            $members_prop = $this->Member->find('all',
+                                                array('conditions' => array(
+                                                    'user_id' => AuthComponent::user('id'),
+                                                    'to_do_id' => $to_do_id)));
+            //verifie si c'est l'utilisateur qui supr
+            foreach ($members_prop as $id) {
+                if($id['Member']['right_id']!=2){
+                    $this->Session->setFlash('Vous êtes n\'avait pas le droit de supprimer cette liste', 'flash_warning');
+                    $this->redirect('/');
+                }
+            }
+            
             $members_id = $this->Member->find('all',
                                                 array('conditions' => array(
                                                     'to_do_id' => $to_do_id)));
@@ -272,5 +285,27 @@ class ToDosController  extends AppController {
             $this->Session->setFlash('TodoListe supprimé', 'flash_info');
             $this->redirect('/');
 
+        }
+        
+        public function quit_todos($to_do_id){
+            $this->loadModel('Member');
+             
+            $todo = $this->ToDo->find('all', array('conditions' => array( 'ToDo.id' => $to_do_id)));
+            $members_id = $this->Member->find('all',
+                                                array('conditions' => array(
+                                                    'user_id' => AuthComponent::user('id'),
+                                                    'to_do_id' => $to_do_id, )));
+            //supprime le membre qui veut quitter
+            foreach ($members_id as $id) {
+                if($id['Member']['right_id']==2){
+                    $this->Session->setFlash('Vous êtes le propriétaire, vous pouvez pas quitter cette liste', 'flash_warning');
+                    $this->redirect('/');
+                }
+                else{
+                    $this->Member->delete($id['Member']['id']);
+                }
+            }
+            $this->Session->setFlash('Vous avez quitter la TodoListe', 'flash_info');
+            $this->redirect('/');
         }
 }

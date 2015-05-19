@@ -91,10 +91,14 @@
         echo $this->Html->link('ajouter des éléments', array('controller' => 'Tasks',
                                                   'action' => 'add_task',$idToDo
                                                   ));
-
+        
  		echo '<br>';
         echo $this->Html->link('supprimer des utilisateurs', array('controller' => 'Members',
                                                   'action' => 'suppr_members',$idToDo
                                                   ));
         ?>
+</br>
+        <a ng-href="{{base}}/ToDos/quit_todos/<?php echo $idToDo ?>" onclick="return confirm('Voulez-Vous quitter cette liste ?\n Cette action est irreversible.')">
+                <span class="glyphicon glyphicon-minus">quitter</span>
+        </a>
 </div>
