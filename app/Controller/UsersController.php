@@ -55,6 +55,11 @@ class UsersController extends AppController {
 		// On supprime si l'on a cliqué sur le bouton "oui"
 		if($this->request->is('post')){		
 		
+			$id = AuthComponent::user('id');
+			$this->loadModel('Friend');            
+			$this->Friend->deleteAll(array('user_id' => $id), false);
+			$this->Friend->deleteAll(array('friend_id' => $id), false);
+		
 			// On supprime tout ce que l'utilisateur à coché
 			$this->loadModel('Checked');            
 			$lists_id = $this->Checked->find('all', array('conditions' => array('user_id' => AuthComponent::user('id'))));
