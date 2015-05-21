@@ -14,7 +14,7 @@ class ToDo extends AppModel {
 		),
 		'expirationDate' => array(
             'rule'    => 'date',
-			'message' => 'Date invalide !'
+			'message' => 'La date invalide !'
 		),
 		'Todo.expirationDate' => array(
             'rule'    => 'date',

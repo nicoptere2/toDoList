@@ -131,7 +131,8 @@ class ToDosController  extends AppController {
 		}
 	}
 
-	public function create() {                
+	public function create() {	
+	
 		// Verifie que l'utilisateur a bien entre des donnees
 		if($this->request->is('post')){
             $list = $this->request->data;
@@ -151,6 +152,17 @@ class ToDosController  extends AppController {
 				$list['ToDo']['frequency'] = 30;
 			}
 		 
+		 
+			// Test de la date
+			$dateExp=date_create($list['ToDo']['expirationDate']);
+			App::uses('CakeTime', 'Utility');
+
+			if(!CakeTime::isFuture($dateExp)) {
+				$this->Session->setFlash('La date d\'expiration doit être ultérieure à la date actuelle et au format "AAAA-MM-DD"');
+				return;
+			}
+		 
+			// Sauvegarde de la nouvelle TodoList dans la base de donnée
 			if($this->ToDo->save(array(
 				'name' => $list['ToDo']['name'],
 				'frequency'    => $list['ToDo']['frequency'],
@@ -176,8 +188,7 @@ class ToDosController  extends AppController {
 			$this->Auth->login();        
 			return $this->redirect('/');
 			} 				
-
-                
+ 
 		}
 	}
 		
@@ -218,6 +229,15 @@ class ToDosController  extends AppController {
 				}
 				 else if($data['ToDo']['frequency'] == '2') {
 					$data['ToDo']['frequency'] = 30;
+				}
+				
+				// Test de la date
+				$dateExp=date_create($data['ToDo']['expirationDate']);
+				App::uses('CakeTime', 'Utility');
+
+				if(!CakeTime::isFuture($dateExp)) {
+					$this->Session->setFlash('La date d\'expiration doit être ultérieure à la date actuelle et au format "AAAA-MM-DD"');
+					return;
 				}
 			
 				if ($this->ToDo->save($data)) {
