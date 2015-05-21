@@ -55,6 +55,7 @@ class UsersController extends AppController {
 		// On supprime si l'on a cliqué sur le bouton "oui"
 		if($this->request->is('post')){		
 		
+			// On supprime les amis du membre et ceux qu'il l'on ajouté en ami
 			$id = AuthComponent::user('id');
 			$this->loadModel('Friend');            
 			$this->Friend->deleteAll(array('user_id' => $id), false);
@@ -89,7 +90,10 @@ class UsersController extends AppController {
 			// On supprime l'utilisateur
 			$this->loadModel('User');            
 			$id = AuthComponent::user('id');
-						
+			
+			// Suppression du profil associé au réseau social si il existe
+			$this->SocialProfile->deleteAll(array('user_id' => $id), false);
+			
 			if ($this->User->delete($id)) {
 				// Deconnexion et redirection si tout s'est bien déroulé
 				$this->Session->setFlash('Votre compté a été supprimé !', 'flash_success');
