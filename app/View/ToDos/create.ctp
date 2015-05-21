@@ -10,6 +10,7 @@
 	<?php echo $this->Html->div('datepicker_img w100p fl pl460p pa', $this->Html->image('jquery/datepicker_calendar_icon.gif'),array('id' => 'datepicker_img')); ?>
 	<?php echo $this->Html->div('datepicker fl pl460p pa', ' ' ,array('id' => 'datepicker')); ?>
 	</td></tr></table><br>
+	
 	<?php echo $this->Form->input('frequency', array('label' => 'Fréquence : ','style'=>'width:132px; height:26px;','options' => array('Journalier', 'Hebdomadaire', 'Mensuel'),'empty' => 'Sans repetition'));?><br>    
 <?php echo $this->Form->end('Valider'); ?>
 
