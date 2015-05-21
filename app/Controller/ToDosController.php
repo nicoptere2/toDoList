@@ -180,7 +180,7 @@ class ToDosController  extends AppController {
                      'to_do_id'    => $id['ToDo']['id'],
                      'right_id'      => 2
                 ))){
-
+					$this->Session->setFlash('La liste a bien été crée.', 'flash_info');
                    }
                    
 			}
@@ -204,6 +204,7 @@ class ToDosController  extends AppController {
 					array('conditions' => array(
 							'user_id' => AuthComponent::user('id'),
 							'to_do_id' => $id,
+							'right_id' => 2,
 							)
 						)
 					)
@@ -241,7 +242,7 @@ class ToDosController  extends AppController {
 				}
 			
 				if ($this->ToDo->save($data)) {
-					$this->Session->setFlash('La liste a bien été modifiée', 'flash_info');
+					$this->Session->setFlash('La liste a bien été modifiée.', 'flash_info');
 					$this->redirect('/toDos');
 				}
 				else
