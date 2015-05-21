@@ -1,5 +1,6 @@
 <?php 
 class Task extends AppModel {
+	public $useTable = 'tasks';
 	public $hasMany = 'Checked';
 	public $belongsTo = 'ToDo';
         

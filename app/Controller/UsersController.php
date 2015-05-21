@@ -51,9 +51,54 @@ class UsersController extends AppController {
         }
     }
 	
+	public function delete(){  
+		// On supprime si l'on a cliqué sur le bouton "oui"
+		if($this->request->is('post')){		
+		
+			// On supprime tout ce que l'utilisateur à coché
+			$this->loadModel('Checked');            
+			$lists_id = $this->Checked->find('all', array('conditions' => array('user_id' => AuthComponent::user('id'))));
+			foreach ($lists_id as $id) {
+				$this->Checked->delete($id['Checked']['id']);
+			}
+			
+			$this->loadModel('Member');            
+			$lists_id = $this->Member->find('all', array('conditions' => array('user_id' => AuthComponent::user('id'))));
+			// On supprime les droits qu'il possède pour chaque liste
+			foreach ($lists_id as $id) {
+			$todoId = $id['Member']['to_do_id'];
+			$rightId = $id['Member']['right_id'];
+				$this->loadModel('Member');            
+				$this->Member->delete($id['Member']['id']);
+				
+				// Si il est proprietaire de la liste on supprime les taches et la liste
+				if($rightId == 2) {
+				$this->loadModel('Task');
+				$this->Task->deleteAll(array('to_do_id' => $todoId), false);
+
+				$this->loadModel('ToDo');           
+				$this->ToDo->delete($id['ToDo']['id']);
+				}
+			}
+				
+			// On supprime l'utilisateur
+			$this->loadModel('User');            
+			$id = AuthComponent::user('id');
+						
+			if ($this->User->delete($id)) {
+				// Deconnexion et redirection si tout s'est bien déroulé
+				$this->Session->setFlash('Votre compté a été supprimé !', 'flash_success');
+				$this ->logout();
+				$this->redirect(array('action' => '/'));
+			}
+			else {
+			  $this->Session->setFlash('Erreur lors de la suppression du compte', 'flash_error');
+			}
+		}   
+    }
+	
 	public function profil($user)
 	{
-		
 		$id = $this->User->find('all',array(
 		'conditions' => array('username' => $user),
 		'fields'=>array('username','email','age')

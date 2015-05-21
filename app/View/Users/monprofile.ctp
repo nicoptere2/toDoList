@@ -69,5 +69,11 @@ function changeage() {
 ';
 
 ?>
+<br><br>
+<center>
+<?php echo $this->Html->link("Desinscription", array('controller' => 'users','action'=> 'delete'), array( 'class' => 'button')) ?>
+</center>
+
+
 
 
