@@ -253,9 +253,24 @@ class ToDosController  extends AppController {
 		// Dans data pour pouvoir pré-remplir les champs
 		if($id != null) {
 			$this->ToDo->id = $id;
-			$this->data = $this->ToDo->read();
+			$data = $this->ToDo->read();
+			
+			if($data['ToDo']['frequency'] == 0) {
+					$data['ToDo']['frequency'] = null;
+			}
+			else if($data['ToDo']['frequency'] == 1) {
+					$data['ToDo']['frequency'] = 0;
+			}
+			else if($data['ToDo']['frequency'] == 7) {
+					$data['ToDo']['frequency'] = 1;
+			}
+			else if($data['ToDo']['frequency'] == 30) {
+				$data['ToDo']['frequency'] = 2;
 			}
 		}
+		
+		$this->data = $data;
+	}
                 
         public function delete_todos($to_do_id){
             $this->loadModel('Member');
