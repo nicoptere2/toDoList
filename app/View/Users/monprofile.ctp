@@ -43,7 +43,7 @@ echo '<table>';?><?php echo $this->Form->create('User', array('label' => false))
 	
 echo'</table>'; ?>
 
- <?php echo '<div style="display:none;" id="submit">' ?>
+<?php echo '<div style="display:none;" id="submit">' ?>
 <?php echo $this->Form->end('Enregistrer'); ?><?php echo '</div>' ?>
 
 <?php
@@ -71,7 +71,9 @@ function changeage() {
 ?>
 <br><br>
 <center>
-<?php echo $this->Html->link("Desinscription", array('controller' => 'users','action'=> 'delete'), array( 'class' => 'button')) ?>
+<?php echo $this->Html->link("Accueil", array('controller' => '/'), array( 'class' => 'button')); echo "		"; ?>
+<?php echo $this->Html->link("Desinscription", array('controller' => 'users','action'=> 'delete'), array( 'class' => 'button')); echo "		"; ?>
+<?php echo $this->Html->link("Retour", array('controller' => '/'), array( 'class' => 'button')) ?>
 </center>
 
 
