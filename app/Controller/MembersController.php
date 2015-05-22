@@ -71,6 +71,7 @@ class MembersController  extends AppController {
 					$this->Session->setFlash('Cet utilisateur n\'est pas dans votre liste d\'amis', 'flash_danger');
 					$this->redirect('/ToDos/tasks/'.$to_do_id);
 				}
+<<<<<<< HEAD
 				//debug($member_id);
 				$membersList = $this->Member->find('all', array('conditions' => array('to_do_id' => $to_do_id)));
 				foreach ($membersList as $key => $value) {
@@ -78,6 +79,32 @@ class MembersController  extends AppController {
 					if($member_id == $value['Member']['user_id']){
 						//debug($value['Member']['user_id']);
 						$this->Session->setFlash('Cet utilisateur appartient deja à la liste', 'flash_danger');
+=======
+			}
+			//debug($membersList['']);
+			if($this->Member->save(array(
+                            'user_id'     => $member_id,
+                            'to_do_id' => $to_do_id,
+                            'right_id'      => '3'
+                      ))){
+    
+                    $this->Session->setFlash('membre ajouté', 'flash_info');
+                    $this->redirect('/ToDos/tasks/'.$to_do_id);
+                }else{
+                	$this->Session->setFlash('membre non ajouté', 'flash_danger');
+                }
+
+				if($this->Member->save(array(
+								'user_id'     => $member_id,
+								'to_do_id' => $to_do_id,
+								'right_id'      => '0'
+						  ))){
+		
+						$this->Session->setFlash('Membre ajouté', 'flash_info');
+						$this->redirect('/ToDos/tasks/'.$to_do_id);
+					}else{
+						$this->Session->setFlash('Membre non ajouté', 'flash_danger');
+>>>>>>> modifDroits
 						$this->redirect('/ToDos/tasks/'.$to_do_id);
 					}
 				}
@@ -113,19 +140,236 @@ class MembersController  extends AppController {
 			}
 		}
 	}
+<<<<<<< HEAD
 	public function suppr_members($to_do_id){
     	$id = AuthComponent::user('id');
     	//debug($id);
+=======
+
+	public function modif_droit($todoId){
+		$this->loadModel('Task');
+
+		$users = $this->Member->find(
+			'all',
+			array(
+				'conditions' => array(
+					'to_do_id' => $todoId
+					)
+				)
+			);
+
+		$owner = $this->Member->find(
+			'first',
+			array(
+				'conditions' => array(
+					'user_id' => AuthComponent::user('id'),
+					'to_do_id' => $todoId,
+					'right_id' => 2
+					)
+				)
+			);
+
+		if($owner == null)
+			$this->set(array('ownerShip' => false));
+		else
+			$this->set(array('ownerShip' => true));
+
+		foreach($users as $key => $value){
+			if($value['Right']['id'] == 3 || $value['Right']['id'] == 5)
+				$users[$key]['Right']['item'] = true;
+			else
+				$users[$key]['Right']['item'] = false;
+
+			if($value['Right']['id'] == 4 || $value['Right']['id'] == 5)
+				$users[$key]['Right']['user'] = true;
+			else
+				$users[$key]['Right']['user'] = false;
+		}
+
+		$this->set(array('users' =>$users));
+	}
+
+	public function modif_droit_ajax($idUtil, $idList, $idDroit, $status) {
+		if(($idUtil == null) || ($idList == null) || ($idDroit == null)){
+			$error = 'erreur1';
+//			return false;
+		}
+
+		$member = $this->Member->find(
+			'first',
+			array(
+				'conditions' => array(
+					'user_id' => $idUtil,
+					'to_do_id' => $idList
+					)
+				)
+			);
+		if($member == null || $member == array()){
+			$error = 'erreur2';
+//			return false;
+		}
+
+		$this->loadModel('Right');
+		$droit = $this->Right->find(
+			'first',
+			array(
+				'conditions' => array(
+					'id' => $idDroit
+					)
+				)
+			);
+		if($droit == null || $droit == array()){
+			$error = 'erreur3: droit = ' . $idDroit;
+//			return false;
+		}
+
+		$owner = $this->Member->find(
+			'first',
+			array(
+				'conditions' =>array(
+					'right_id' => 2,
+					'user_id' => AuthComponent::user('id'),
+					'to_do_id' => $idList
+					)
+				)
+			);
+
+		if($owner == null || $owner == array()){
+			$error = 'erreur4';
+//			return false;
+		}
+
+		if($member['Member']['right_id'] == 5){
+			if($idDroit == 4)
+				$idDroit = 3;
+			else
+				$idDroit = 4;
+		}
+		else if($member['Member']['right_id'] == 3 && $idDroit == 4)
+			$idDroit = 5;
+		else if($member['Member']['right_id'] == 4 && $idDroit == 3)
+			$idDroit = 5;
+		else if($member['Member']['right_id'] == 4 && $idDroit == 4)
+			$idDroit = 1;
+		else if($member['Member']['right_id'] == 3 && $idDroit == 3)
+			$idDroit = 1;
+
+		if(!isset($error)){
+			$ret = $this->Member->updateAll(
+				array('right_id' => $idDroit),
+				array(
+					'user_id' => $idUtil,
+					'to_do_id' => $idList
+					)
+				);
+		}
+
+		if(isset($error))
+			$this->set($error);
+		
+
+		if($this->RequestHandler->isAjax())
+			$this->layout = 'ajax';
+
+	}
+
+
+	public function show_members($to_do_id){
+		$this->loadModel('Task');
+
+		$users = $this->Member->find(
+			'all',
+			array(
+				'conditions' => array(
+					'to_do_id' => $to_do_id
+					)
+				)
+			);
+
+		$owner = $this->Member->find(
+			'first',
+			array(
+				'conditions' => array(
+					'user_id' => AuthComponent::user('id'),
+					'to_do_id' => $to_do_id,
+					'right_id' => 2
+					)
+				)
+			);
+
+		if($owner == null)
+			$this->set(array('ownerShip' => false));
+		else
+			$this->set(array('ownerShip' => true));
+
+		foreach($users as $key => $value){
+			if($value['Right']['id'] == 3 || $value['Right']['id'] == 5)
+				$users[$key]['Right']['item'] = true;
+			else
+				$users[$key]['Right']['item'] = false;
+
+			if($value['Right']['id'] == 4 || $value['Right']['id'] == 5)
+				$users[$key]['Right']['user'] = true;
+			else
+				$users[$key]['Right']['user'] = false;
+		}
+
+		$this->set(array('users' =>$users));
+
+		$this->loadModel('ToDo');
+    	$list = $this->ToDo->find(
+			'first',
+			array(
+				'conditions' => array(
+					'ToDo.id' => $to_do_id
+					)
+				)
+			);
+    	//debug($list['ToDo']);
+    	if(!empty($list)){
+    		$this->set(array ('list' => $list['ToDo']));
+    	}
+
+    	if($to_do_id != null)
+    		$this->set(array ('idToDo' => $to_do_id));
+
+/*
+    	$id = AuthComponent::user('id');
+    	debug($id);
+>>>>>>> modifDroits
 		$members = $this->Member->find('all', 
 			array('conditions' => array( 'Member.to_do_id' => $to_do_id)));
 		//debug($members);
     	$myself = $this->Member->find('first', 
             array('conditions' => array( 'Member.user_id' => $id, 'Member.to_do_id' => $to_do_id)));
     	//debug($myself);
+<<<<<<< HEAD
+=======
+
+    	
+    	$this->loadModel('ToDo');
+    	$list = $this->ToDo->find(
+			'first',
+			array(
+				'conditions' => array(
+					'ToDo.id' => $to_do_id
+					)
+				)
+			);
+    	debug($list['ToDo']);
+    	if(!empty($list)){
+    		$this->set(array ('list' => $list['ToDo']));
+    	}
+		
+
+    	if($to_do_id != null)
+    		$this->set(array ('idToDo' => $to_do_id));
+>>>>>>> modifDroits
     	if(!empty($myself)){
     		$this->set(array ('myself' => $myself));
     	}
 		if(!empty($members)){
+<<<<<<< HEAD
 			$this->set(array ('members' => $members));
 		}
 
@@ -153,5 +397,9 @@ class MembersController  extends AppController {
 			}
 
 		}
+=======
+				$this->set(array ('members' => $members));
+			}**/
+>>>>>>> modifDroits
 	}
 }

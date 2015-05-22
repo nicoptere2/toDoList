@@ -46,6 +46,8 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 			<!--<script type="text/javascript">var userId = '<?php //echo (AuthComponent::user('id') != null)? AuthComponent::user('id') : ''  ?>'</script>-->
 		<?php
 
+		echo $this->Html->script('jquery');
+
 		echo $this->Html->script('angular');
 		
 		echo $this->fetch('script');

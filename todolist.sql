@@ -83,10 +83,11 @@ CREATE TABLE IF NOT EXISTS `members` (
 -- Contenu de la table `members`
 --
 
-INSERT INTO `members` (`id`, `user_id`, `to_do_id`, `right_id`) VALUES
-(15, 12, 71, 2);
-
--- --------------------------------------------------------
+LOCK TABLES `members` WRITE;
+/*!40000 ALTER TABLE `members` DISABLE KEYS */;
+INSERT INTO `members` VALUES (2,2,1,3),(3,8,1,2),(4,8,2,5),(5,6,1,5);
+/*!40000 ALTER TABLE `members` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Structure de la table `messages`

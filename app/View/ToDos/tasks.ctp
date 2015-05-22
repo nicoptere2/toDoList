@@ -68,9 +68,9 @@
 		</li>
 	</ul>
 
-    <div class="dropdown" ng-controller="addMemberController" align="right">
+    <div class="dropdown dropdown-right" ng-controller="showMembersController" align="right">
     	<div class="dropup">
-    		<button ng-click="ajouterMembre(<?php echo $idToDo; ?>)" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    		<button ng-click="afficherMembres(<?php echo $idToDo; ?>)" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     			<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
     		</button>
     		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
@@ -81,6 +81,13 @@
     		</ul>
     	</div>
     </div>
+
+<script type="text/javascript">
+	$('.dropdown-menu ul').on('click',function(){
+		console.log("message a la con");
+		return false;
+	});
+</script>
 
 <?php echo $this->Html->script('dateHelper') ?>
 <?php echo $this->Html->script('tasksCtrler') ?>
@@ -97,8 +104,15 @@
                                                   'action' => 'suppr_members',$idToDo
                                                   ));
         ?>
-</br>
+
         <a ng-href="{{base}}/ToDos/quit_todos/<?php echo $idToDo ?>" onclick="return confirm('Voulez-Vous quitter cette liste ?\n Cette action est irreversible.')">
                 <span class="glyphicon glyphicon-minus">quitter</span>
         </a>
+        <?php
+        echo $this->Html->link('afficher les utilisateurs', array('controller' => 'Members',
+                                                  'action' => 'show_members',$idToDo
+                                                  ));
+        ?>
 </div>
+
+
