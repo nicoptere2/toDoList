@@ -100,6 +100,23 @@ class MembersController  extends AppController {
 					)
 				)
 			);
+
+		$owner = $this->Member->find(
+			'first',
+			array(
+				'conditions' => array(
+					'user_id' => AuthComponent::user('id'),
+					'to_do_id' => $todoId,
+					'right_id' => 2
+					)
+				)
+			);
+
+		if($owner == null)
+			$this->set(array('ownerShip' => false));
+		else
+			$this->set(array('ownerShip' => true));
+
 		foreach($users as $key => $value){
 			if($value['Right']['id'] == 3 || $value['Right']['id'] == 5)
 				$users[$key]['Right']['item'] = true;
@@ -115,10 +132,10 @@ class MembersController  extends AppController {
 		$this->set(array('users' =>$users));
 	}
 
-	public function modif_droit_ajax($idUtil, $idList, $idDroit) {
+	public function modif_droit_ajax($idUtil, $idList, $idDroit, $status) {
 		if(($idUtil == null) || ($idList == null) || ($idDroit == null)){
-			$error = 'erreur';
-			return false;
+			$error = 'erreur1';
+//			return false;
 		}
 
 		$member = $this->Member->find(
@@ -131,8 +148,8 @@ class MembersController  extends AppController {
 				)
 			);
 		if($member == null || $member == array()){
-			$error = 'erreur';
-			return false;
+			$error = 'erreur2';
+//			return false;
 		}
 
 		$this->loadModel('Right');
@@ -145,8 +162,8 @@ class MembersController  extends AppController {
 				)
 			);
 		if($droit == null || $droit == array()){
-			$error = 'erreur';
-			return false;
+			$error = 'erreur3: droit = ' . $idDroit;
+//			return false;
 		}
 
 		$owner = $this->Member->find(
@@ -159,34 +176,39 @@ class MembersController  extends AppController {
 					)
 				)
 			);
+
 		if($owner == null || $owner == array()){
-			$error = 'erreur';
-			return false;
+			$error = 'erreur4';
+//			return false;
 		}
 
+		if($member['Member']['right_id'] == 5){
+			if($idDroit == 4)
+				$idDroit = 3;
+			else
+				$idDroit = 4;
+		}
+		else if($member['Member']['right_id'] == 3 && $idDroit == 4)
+			$idDroit = 5;
+		else if($member['Member']['right_id'] == 4 && $idDroit == 3)
+			$idDroit = 5;
+		else if($member['Member']['right_id'] == 4 && $idDroit == 4)
+			$idDroit = 1;
+		else if($member['Member']['right_id'] == 3 && $idDroit == 3)
+			$idDroit = 1;
 
-
-
-		$ret = $this->Member->updateAll(
-			array('right_id' => $idDroit),
-			array(
-				'user_id' => $idUtil,
-				'to_do_id' => $idList
-				)
-			);
-
-		$users = $this->Member->find(
-			'all',
-			array(
-				'conditions' => array(
+		if(!isset($error)){
+			$ret = $this->Member->updateAll(
+				array('right_id' => $idDroit),
+				array(
+					'user_id' => $idUtil,
 					'to_do_id' => $idList
 					)
-				)
-			);
-		$this->set(array('users' =>$users));
-		
+				);
+		}
+
 		if(isset($error))
-			$this->set(array('erreur' => $error));
+			$this->set($error);
 		
 
 		if($this->RequestHandler->isAjax())

@@ -37,61 +37,26 @@ member.directive( 'compileData', function ( $compile ) {
 
 member.controller('memberController', function tasksController($scope, $http, $sce) {
 
-  $scope.rightsItem = function (key){
-    var ret = "";
-    if($scope.members[key].Member.right_id==2) {
-      ret = 'Proprietaire';
-    }
-    else {
-      ret = "<label>\
-      <input type=\"checkbox\" name=\"owner\" ng-name=\"item{{$scope.members[key].User.id}}\" ng-checked=\"$scope.members[key].Member.right_id == 3\" ng-click=\"rightItem(key)\">\
-      modification d'item\
-      </label>";
+  function requete(param) {
+    console.log(param);
 
-    };
-    return $sce.trustAsHtml(ret);
-  };
-
-  $scope.rightsUser = function (key) {
-      var ret = "";
-      if($scope.members[key].Member.right_id!=2) {
-        ret = "<td>\
-        <label>\
-        <input type=\"checkbox\" name=\"user\" ng-name=\"users{{$scope.members[key].User.id}}\" ng-checked=\"$scope.members[key].Member.right_id == 4\" ng-click=\"rightUser(key)\">\
-        ajout utilisateur\
-        </label>\
-        </td>";
-      }
-
-      return $sce.trustAsHtml(ret);
-    };
-
-  function changeRight(param){
-
-    param = param.join('/');
-
-    var url = baseUrl+'/Members/' + 'modif_droit_ajax' + '/' + param;
-
-    console.log('url :' + url);
-
-    $http.get(url)
-      .success(function (data, status, header, config) {
-        console.log('Ajax success!\n');
-        $scope.members = data;
+    $http.get('/Members/modif_droit_ajax/'+param)
+      .success(function (data, status, headers, config) {
+        console.log("ca marche");
       })
-      .error(function (data, status, header, config) {
-        console.log('l\'ajax de coche/decoche a repondu avec une error : ' + status + '\n' + data);
-      });
+      .error(function (data, status, headers, config) {
+        console.log("ca marche pas battard!");
+      })
   }
 
-  $scope.rightItem = function (key){
-    var param = [$scope.members[key].User.id, $scope.members[key].ToDo.id, 3];
-    changeRight(param);
-  };
+  $scope.itemClick = function (idUtil, idToDo) {
+    var param = idUtil+'/'+idToDo+'/3/'+'update';
+    requete(param);
+  }
 
-  $scope.rightUser = function (key){
-    var param = [$scope.members[key].User.id, $scope.members[key].ToDo.id, 4];
-    changeRight(param);
-  };
+  $scope.userClick = function (idUtil, idToDo) {
+    var param = idUtil+'/'+idToDo+'/4/'+'update';
+    requete(param);
+  }
 
 });
