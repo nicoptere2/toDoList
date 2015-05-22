@@ -41,7 +41,7 @@ CREATE TABLE `checkeds` (
   KEY `checkeds_ibfk_1` (`user_id`),
   CONSTRAINT `checkeds_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `checkeds_ibfk_2` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,6 +50,7 @@ CREATE TABLE `checkeds` (
 
 LOCK TABLES `checkeds` WRITE;
 /*!40000 ALTER TABLE `checkeds` DISABLE KEYS */;
+INSERT INTO `checkeds` VALUES (49,13,4,1,'2015-05-22 13:13:33');
 /*!40000 ALTER TABLE `checkeds` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,7 +95,7 @@ CREATE TABLE `members` (
   KEY `to_do_id` (`to_do_id`),
   KEY `members_ibfk_1` (`user_id`),
   KEY `right_id` (`right_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +104,7 @@ CREATE TABLE `members` (
 
 LOCK TABLES `members` WRITE;
 /*!40000 ALTER TABLE `members` DISABLE KEYS */;
-INSERT INTO `members` VALUES (2,11,71,3),(3,8,71,2),(4,12,71,5);
+INSERT INTO `members` VALUES (2,11,71,3),(4,12,71,5),(16,13,72,2);
 /*!40000 ALTER TABLE `members` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,7 +211,7 @@ CREATE TABLE `tasks` (
   `to_do_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `to_do_id` (`to_do_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,6 +220,7 @@ CREATE TABLE `tasks` (
 
 LOCK TABLES `tasks` WRITE;
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
+INSERT INTO `tasks` VALUES (4,'fdsqdf',1,'2015-05-22 13:02:50','2015-05-22 13:02:50',72);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -238,7 +240,7 @@ CREATE TABLE `to_dos` (
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -247,7 +249,7 @@ CREATE TABLE `to_dos` (
 
 LOCK TABLES `to_dos` WRITE;
 /*!40000 ALTER TABLE `to_dos` DISABLE KEYS */;
-INSERT INTO `to_dos` VALUES (71,'napo','',30,'2015-05-13','2015-05-12 16:08:05','2015-05-12 16:09:02');
+INSERT INTO `to_dos` VALUES (71,'napo','',30,'2015-05-13','2015-05-12 16:08:05','2015-05-12 16:09:02'),(72,'test2','',0,'2015-05-28','2015-05-22 12:54:51','2015-05-22 12:54:51');
 /*!40000 ALTER TABLE `to_dos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -277,7 +279,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (8,'nico','ab90f8ed40e3e23ab72ed288fdbee63ea4b2896a','nico@nico.fr',20,'2015-05-22 12:52:50','2015-05-22 12:52:50',1),(11,'benjamin','04190855e4837e309d67374415fa15084776e85e','ben@ben.fr',22,'2015-05-12 15:55:26','2015-05-12 15:55:26',1),(12,'napoleon','93ac6d6b0eb53a409b7a10ae9946725335bdfb38','napo@napo.fr',50,'2015-05-12 15:56:21','2015-05-12 15:56:21',1);
+INSERT INTO `users` VALUES (11,'benjamin','04190855e4837e309d67374415fa15084776e85e','ben@ben.fr',22,'2015-05-12 15:55:26','2015-05-12 15:55:26',1),(12,'napoleon','93ac6d6b0eb53a409b7a10ae9946725335bdfb38','napo@napo.fr',50,'2015-05-12 15:56:21','2015-05-12 15:56:21',1),(13,'nico','ab90f8ed40e3e23ab72ed288fdbee63ea4b2896a','nico@nico.fr',20,'2015-05-22 12:52:50','2015-05-22 12:52:50',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -290,4 +292,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-22 14:53:19
+-- Dump completed on 2015-05-22 15:13:54
