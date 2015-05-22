@@ -1,63 +1,84 @@
-
-<h3>Utilisateurs de la liste</h3>
-<div ng-app="Member">
+<div id="membres" ng-app="Member">
     <table class="table" ng-controller="memberController">
-        <thead>
-            <tr>
-                <th>Username</th>
-                <th>Modification d'item</th>
-                <th>Modification d'utilisateur</th>
-            </tr>
-        </thead>
-        <tbody ng-init="members=<?php echo htmlentities(json_encode($members)) ?>">
-           <tr ng-repeat="(key, value) in members" >
-                <td>{{value.User.username}}</td>
-                <td compile-data template="{{rightsItem(key)}}"></td>
-                <td compile-data template="{{rightsUser(key)}}"></td>
-            </tr>
+        <tbody>
+            <?php $i=0; ?>
+            <?php foreach ($users as $key => $value): ?>
+                <tr>
+                    <th><?php echo $value['User']['username'] ?></th>
+                    <?php if ($value['Right']['id']==2): ?>
+                        <td>Proprietaire</td>
+                        <td></td>
+                    <?php else: ?>
+                        <th>
+                            <label>
+                                <input 
+                                    type="checkbox"
+                                    name="item<?php echo $i; ?>"
+                                    data-ng-init="item<?php echo $i ?>=<?php echo ($value['Right']['item'])? 'true': 'false'; ?>"
+                                    ng-model="item<?php echo $i ?>" 
+                                    ng-checked="item<?php echo $i ?>"
+                                    ng-click="itemClick(<?php echo $value['User']['id']?>, <?php echo $value['ToDo']['id'] ?>) "
+                                    <?php echo ($ownerShip)? '' : 'disabled' ?>
+                                >
+                                Add Item
+                            </label>
+                        </th>
+                        <th>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    name="user<?php echo $i; ?>"
+                                    data-ng-init="user<?php echo $i ?>=<?php echo ($value['Right']['user'])? 'true': 'false'; ?>"
+                                    ng-model="user<?php echo $i ?>" 
+                                    ng-checked="user<?php echo $i ?>"
+                                    ng-click="userClick(<?php echo $value['User']['id']?>, <?php echo $value['ToDo']['id'] ?>) "
+                                    <?php echo ($ownerShip)? '' : 'disabled' ?>
+                                >
+                                Add User
+                            </label>
+                        </th>
+                    <?php endif ?>
+                </tr>
+                <?php $i++; ?>
+            <?php endforeach ?>
         </tbody>
     </table>
-</div>
         
-        <?php echo $this->Html->script('show_membersCtrler') ?>
-    <div id="members" ng-app="Members" ng-controller="addMemberController" ng-init="list_id=<?php echo $list['id'] ?>" >
-    <?php echo "<table style=\"width:100%\">"; ?>
-    <tr>
-        <td>
-        <div class="dropdown" ng-controller="addMemberController" align="left">
-            <div class="dropup">
-                <button  ng-click="ajouterMembre(<?php echo $idToDo; ?>)" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    <div bind-unsafe-html="pageTest">
-                        
+    <div id="members" ng-controller="addMemberController" ng-init="list_id=<?php echo $list['id'] ?>" >
+        <table style="width:100%">
+            <tr>
+                <td>
+                    <div class="dropdown" ng-controller="addMemberController" align="left">
+                        <div class="dropup">
+                            <button  ng-click="ajouterMembre(<?php echo $idToDo; ?>)" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <div bind-unsafe-html="pageTest">
+                                </div>
+                            </ul>
+                        </div>
                     </div>
+                </td>
+                <td>
+                    <div class="dropdown dropdown-right" ng-controller="addMemberController" align="right">
+                        <div class="dropup">
+                            <button  id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <div bind-unsafe-html="pageTest">
+                                    TEST
+                                </div>
 
-                </ul>
-            </div>
-        </div>
-        </td>
-        <td>
-        <div class="dropdown dropdown-right" ng-controller="addMemberController" align="right">
-            <div class="dropup">
-                <button  id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    <div bind-unsafe-html="pageTest">
-                        TEST
+                            </ul>
+                        </div>
                     </div>
-
-                </ul>
-            </div>
-        </div>
-        </td>
-    </tr>
-    <?php
-        echo "</table>";
-    ?>
+                </td>
+            </tr>
+        </table>
     </div>
+</div>
 
 <script type="text/javascript">
     var userId = <?php  echo AuthComponent::user('id'); ?>;

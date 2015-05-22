@@ -218,7 +218,65 @@ class MembersController  extends AppController {
 
 
 	public function show_members($to_do_id){
+		$this->loadModel('Task');
 
+		$users = $this->Member->find(
+			'all',
+			array(
+				'conditions' => array(
+					'to_do_id' => $to_do_id
+					)
+				)
+			);
+
+		$owner = $this->Member->find(
+			'first',
+			array(
+				'conditions' => array(
+					'user_id' => AuthComponent::user('id'),
+					'to_do_id' => $to_do_id,
+					'right_id' => 2
+					)
+				)
+			);
+
+		if($owner == null)
+			$this->set(array('ownerShip' => false));
+		else
+			$this->set(array('ownerShip' => true));
+
+		foreach($users as $key => $value){
+			if($value['Right']['id'] == 3 || $value['Right']['id'] == 5)
+				$users[$key]['Right']['item'] = true;
+			else
+				$users[$key]['Right']['item'] = false;
+
+			if($value['Right']['id'] == 4 || $value['Right']['id'] == 5)
+				$users[$key]['Right']['user'] = true;
+			else
+				$users[$key]['Right']['user'] = false;
+		}
+
+		$this->set(array('users' =>$users));
+
+		$this->loadModel('ToDo');
+    	$list = $this->ToDo->find(
+			'first',
+			array(
+				'conditions' => array(
+					'ToDo.id' => $to_do_id
+					)
+				)
+			);
+    	//debug($list['ToDo']);
+    	if(!empty($list)){
+    		$this->set(array ('list' => $list['ToDo']));
+    	}
+
+    	if($to_do_id != null)
+    		$this->set(array ('idToDo' => $to_do_id));
+
+/*
     	$id = AuthComponent::user('id');
     	debug($id);
 		$members = $this->Member->find('all', 
@@ -251,6 +309,6 @@ class MembersController  extends AppController {
     	}
 		if(!empty($members)){
 				$this->set(array ('members' => $members));
-			}
+			}**/
 	}
 }
