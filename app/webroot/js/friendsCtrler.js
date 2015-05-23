@@ -21,9 +21,12 @@ friends.controller('addFriendController', function addFriendController($scope, $
   $scope.pageTest = '';
   $scope.ajouterAmi = function(){
     console.log("2");
-    $http.get(baseUrl+'/Friends/add_friends' /*$scope.*/)
+    $http.get(baseUrl+'/Friends/add_friends')
       .success(function (data, status, headers, config) {
         $scope.pageTest = data;
-      });
+      })
+      .error(function (data, status, headers, config) {
+        console.log('ca marche pas...');
+      })
   };
 });
