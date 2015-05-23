@@ -7,7 +7,7 @@
     if($value['Member']['right_id']!=2)
       $options[$value['User']['username']] = $value['User']['username'];
    }
-   debug($options);
+   //debug($options);
     echo $this->Form->input('pseudo', array('options' => $options)); ?>
     <!-- Ici, affichage d'une liste selection multiple (dans le cas de plusieurs suppression d'un coup ?)
         Avec liste limité a l'affichage de 3 éléments max-->

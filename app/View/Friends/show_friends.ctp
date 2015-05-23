@@ -13,12 +13,22 @@
         </tbody>
     </table>
 
-    <?php
-        echo $this->Html->link('ajouter des amis', array('controller' => 'Friends',
-                                                  'action' => 'add_friends',
-                                                  ));
+    
+    <div class="dropdown" ng-controller="addFriendController" align="right">
+      <div class="dropup">
+        <button ng-click="ajouterAmi()" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <div bind-unsafe-html="pageTest">
 
-        
+          </div>
+
+        </ul>
+      </div>
+    </div>
+
+        <?php
         echo $this->Html->link('supprimer des amis', array('controller' => 'Friends',
                                                   'action' => 'del_friends',
                                                   ));

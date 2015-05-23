@@ -16,3 +16,14 @@ friends.config(function ($httpProvider) {
 friends.controller('friendController', function tasksController($scope, $http, $timeout) {
 
 });
+
+friends.controller('addFriendController', function addFriendController($scope, $http, $timeout) {
+  $scope.pageTest = '';
+  $scope.ajouterAmi = function(){
+    console.log("2");
+    $http.get(baseUrl+'/Friends/add_friends' /*$scope.*/)
+      .success(function (data, status, headers, config) {
+        $scope.pageTest = data;
+      });
+  };
+});
