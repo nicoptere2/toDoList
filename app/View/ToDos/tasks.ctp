@@ -115,7 +115,7 @@
 	var userId = <?php  echo AuthComponent::user('id'); ?>;
 </script> 
 
-        <a ng-href="{{base}}/ToDos/quit_todos/<?php echo $idToDo ?>" onclick="return confirm('Voulez-Vous quitter cette liste ?\n Cette action est irreversible.')">
+        <a ng-href="{{base}}/ToDos/quit_todos/<?php echo $idToDo ?>" class="bouton btn-add" onclick="return confirm('Voulez-Vous quitter cette liste ?\n Cette action est irreversible.')">
                 <span class="glyphicon glyphicon-minus">quitter</span>
         </a>
         <?php
