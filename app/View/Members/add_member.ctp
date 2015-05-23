@@ -16,7 +16,7 @@
     
     <?php
     //debug($tableau);
-    echo $this->Form->input('pseudo', array('label' => 'pseudo', 'placeholder' => 'pseudo','list' => 'friends')); ?>
+    echo $this->Form->input('nom d\'utilisateur', array('label' => 'pseudo', 'placeholder' => 'pseudo','list' => 'friends')); ?>
     <datalist id="friends">
     	<?php foreach ($tableau as $key => $value){ ?>
     	<?php echo "<option value='$value'>"; ?>

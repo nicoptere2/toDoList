@@ -12,6 +12,18 @@
             </tr>
         </tbody>
     </table>
+
+    <?php
+        echo $this->Html->link('ajouter des amis', array('controller' => 'Friends',
+                                                  'action' => 'add_friends',
+                                                  ));
+
+        
+        echo $this->Html->link('supprimer des amis', array('controller' => 'Friends',
+                                                  'action' => 'del_friends',
+                                                  ));
+
+    ?>
 </div>
 
 <?php echo $this->Html->script('friendsCtrler') ?>
