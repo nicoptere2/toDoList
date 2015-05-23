@@ -68,6 +68,11 @@ function changeage() {
 </script>
 ';
 
+echo $this->Html->link('afficher les amis', array('controller' => 'Friends',
+                                                  'action' => 'show_friends',
+                                                  ));
+
+
 ?>
 <br><br>
 <center>
