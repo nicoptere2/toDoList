@@ -120,3 +120,64 @@ tasks.controller('showMembersController', function showMembersController($scope,
 			});
 	};
 });
+
+tasks.controller('memberController', function tasksController($scope, $http, $sce) {
+
+  function requete(param) {
+    console.log(param);
+
+    $http.get('/Members/modif_droit_ajax/'+param)
+      .success(function (data, status, headers, config) {
+      })
+      .error(function (data, status, headers, config) {
+        console.log("ca marche pas battard!");
+      })
+  }
+
+  $scope.itemClick = function (idUtil, idToDo) {
+    var param = idUtil+'/'+idToDo+'/3/'+'update';
+    requete(param);
+  }
+
+  $scope.userClick = function (idUtil, idToDo) {
+    var param = idUtil+'/'+idToDo+'/4/'+'update';
+    requete(param);
+  }
+
+});
+
+tasks.controller('addMemberController', function addMemberController($scope, $http) {
+	$scope.pageTest = '';
+	$scope.ajouterMembre = function(list_id){
+    //alert("fjdskl");
+		console.log(list_id);
+		$http.get(baseUrl+'/Members/add_member/'+ /*$scope.*/list_id)
+			.success(function (data, status, headers, config) {
+				$scope.pageTest = data;
+			});
+	};
+});
+
+tasks.controller('delMemberController', function delMemberController($scope, $http) {
+	$scope.pageTest = '';
+	$scope.supprimerMembre = function(list_id){
+    //alert("fjdskl");
+		console.log(list_id);
+		$http.get(baseUrl+'/Members/suppr_members/'+ /*$scope.*/list_id)
+			.success(function (data, status, headers, config) {
+				$scope.pageTest = data;
+			});
+	};
+});
+
+tasks.controller('addTaskController', function addTaskController($scope, $http) {
+	$scope.pageTest = '';
+	$scope.ajouterTache = function(list_id){
+    //alert("fjdskl");
+		console.log(list_id);
+		$http.get(baseUrl+'/Tasks/add_task/'+ /*$scope.*/list_id)
+			.success(function (data, status, headers, config) {
+				$scope.pageTest = data;
+			});
+	};
+});

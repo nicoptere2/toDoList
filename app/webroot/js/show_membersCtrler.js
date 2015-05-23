@@ -33,12 +33,12 @@ members.directive('bindUnsafeHtml', ['$compile', function ($compile) {
             }
         );
     };
-}]);
+}]); 
 
 members.controller('addMemberController', function addMemberController($scope, $http) {
 	$scope.pageTest = '';
 	$scope.ajouterMembre = function(list_id){
-    alert("fjdskl");
+    //alert("fjdskl");
 		console.log(list_id);
 		$http.get(baseUrl+'/Members/add_member/'+ /*$scope.*/list_id)
 			.success(function (data, status, headers, config) {

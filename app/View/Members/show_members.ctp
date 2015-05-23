@@ -1,4 +1,4 @@
-<div id="membres" ng-app="Member">
+<div id="tasks" ng-app="Tasks">
     <table class="table" ng-controller="memberController">
         <tbody>
             <?php $i=0; ?>
@@ -44,7 +44,7 @@
         </tbody>
     </table>
         
-    <div id="members" ng-controller="addMemberController" ng-init="list_id=<?php echo $list['id'] ?>" >
+    <div id="tasks" ng-controller="addMemberController" ng-init="list_id=<?php echo $list['id'] ?>" >
         <table style="width:100%">
             <tr>
                 <td>
@@ -61,15 +61,16 @@
                     </div>
                 </td>
                 <td>
-                    <div class="dropdown dropdown-right" ng-controller="addMemberController" align="right">
+                    <div class="dropdown dropdown-right" ng-controller="delMemberController" align="right">
                         <div class="dropup">
-                            <button  id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button  ng-click="supprimerMembre(<?php echo $idToDo; ?>)" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                                 <div bind-unsafe-html="pageTest">
                                     TEST
                                 </div>
+
 
                             </ul>
                         </div>
@@ -83,4 +84,4 @@
 <script type="text/javascript">
     var userId = <?php  echo AuthComponent::user('id'); ?>;
 </script> 
-<?php echo $this->Html->script('memberCtrler') ?>
+<?php echo $this->Html->script('tasksCtrler') ?>

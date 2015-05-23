@@ -1,5 +1,25 @@
 <div id="tasks" ng-app="Tasks" ng-controller="tasksController" ng-init="list_id=<?php echo $list['id'] ?>" >
-	<h2><?php echo $list['name'] ?> - <span class="created"> <?php echo $this->Date->date($list['created']) ?> </span></h2>
+	<table style="width:100%">
+            <tr>
+                <td>
+                	<h2><?php echo $list['name'] ?> - <span class="created"> <?php echo $this->Date->date($list['created']) ?></span></h2>
+                </td>
+				<td>
+        <div class="dropdown dropdown-right" ng-controller="addTaskController" align="right">
+    	<div class="dropdown">
+    		<button ng-click="ajouterTache(<?php echo $idToDo; ?>)" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    		</button>
+    		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+    			<div bind-unsafe-html="pageTest">
+
+    			</div>
+
+    		</ul>
+    	</div>
+    	</div>
+    	</td>
+    </table>
 	<ul class="list-group" ng-model="tasks" ng-init="
 			tasks=<?php echo htmlentities(json_encode($tasks)) ?>
 			">
@@ -93,17 +113,7 @@
 <?php echo $this->Html->script('tasksCtrler') ?>
 <script type="text/javascript">
 	var userId = <?php  echo AuthComponent::user('id'); ?>;
-</script> 	
-        <?php
-        echo $this->Html->link('ajouter des éléments', array('controller' => 'Tasks',
-                                                  'action' => 'add_task',$idToDo
-                                                  ));
-        
- 		echo '<br>';
-        echo $this->Html->link('supprimer des utilisateurs', array('controller' => 'Members',
-                                                  'action' => 'suppr_members',$idToDo
-                                                  ));
-        ?>
+</script> 
 
         <a ng-href="{{base}}/ToDos/quit_todos/<?php echo $idToDo ?>" onclick="return confirm('Voulez-Vous quitter cette liste ?\n Cette action est irreversible.')">
                 <span class="glyphicon glyphicon-minus">quitter</span>
