@@ -67,6 +67,9 @@ tasks.controller('tasksController', function tasksController($scope, $http, $tim
 
 		var action = '';
 
+		if($scope.tasks[key].quantity < 1)
+			return false;
+
 
 		$scope.tasks[key].Checked.some(function (element, index, array){
 			if(element.User.id == userId){
