@@ -61,9 +61,14 @@
                     </div>
                 </td>
                 <td>
+
                     <div class="dropdown dropdown-right" ng-controller="delMemberController" align="right">
                         <div class="dropup">
-                            <button  ng-click="supprimerMembre(<?php echo $idToDo; ?>)" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button  ng-click="supprimerMembre(<?php echo $idToDo; ?>)" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            <?php if($ownerShip == false){
+                                echo "disabled";
+                                }?>
+                            >
                                 <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">

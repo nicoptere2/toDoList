@@ -16,7 +16,7 @@
     
     <?php
     //debug($tableau);
-    echo $this->Form->input('nom d\'utilisateur', array('label' => 'pseudo', 'placeholder' => 'pseudo','list' => 'friends')); ?>
+    echo $this->Form->input('nom d\'utilisateur', array('label' => 'nom d\'utilisateur ', 'placeholder' => 'nom d\'utilisateur','list' => 'friends')); ?>
     <?php echo $this->Form->end('Valider');
 ?>
 </div>

@@ -60,7 +60,7 @@ class DATABASE_CONFIG {
 		'persistent' => false,
 		'host' => 'localhost',
 		'login' => 'root',
-		'password' => 'toor',
+		'password' => '',
 		'database' => 'todolist',
 		'prefix' => '',
 		//'encoding' => 'utf8',

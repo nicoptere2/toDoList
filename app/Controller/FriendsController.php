@@ -25,8 +25,10 @@ class FriendsController  extends AppController {
 		//debug($tableau);
 
 		if(!empty($tableau)){
-				$this->set(array ('tableau' => $tableau));
-			}
+			$this->set(array ('tableau' => $tableau));
+		}else{
+			$this->set(array ('tableau' => ''));
+		}
 
 	}
 

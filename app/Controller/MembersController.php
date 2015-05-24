@@ -193,8 +193,8 @@ class MembersController  extends AppController {
 			$this->set(array ('tableau' => ''));
 		}
 		//debug($tableau);
-		if($this->request->is('post')){
-			$member = $this->User->find('first', array('conditions' => array('User.username' => $this->request->data['Member']['pseudo'])));
+		if($this->request->is('post')){ 
+			$member = $this->User->find('first', array('conditions' => array('User.username' => $this->request->data['Member']['nom d\'utilisateur'])));
 			$addItem = $this->request->data['Member']['item'];
 			$addUser = $this->request->data['Member']['user'];
 			$right = 1;
