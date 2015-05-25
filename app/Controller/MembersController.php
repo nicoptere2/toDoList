@@ -154,7 +154,7 @@ class MembersController  extends AppController {
 		//debug($members);
     	$myself = $this->Member->find('first', 
             array('conditions' => array( 'Member.user_id' => $id, 'Member.to_do_id' => $to_do_id)));
-    	debug($myself['Member']['right_id']);
+    	//debug($myself['Member']['right_id']);
     	$this->set('right', $myself['Member']['right_id']);
 	}
 
@@ -208,7 +208,7 @@ class MembersController  extends AppController {
 			if($addUser == 1 && $addItem == 1){
 				$right = 5;
 			}
-			debug($addItem);
+			//debug($addItem);
 			//debug($member);
 			if(!empty($member)){
 				//debug($member_id);
@@ -217,13 +217,13 @@ class MembersController  extends AppController {
 				//debug($friends);
 				$ok = false;
 				foreach ($friends as $key => $value) {
-					debug($value['Friend']['friend_id']);
-					debug($member_id);
+					//debug($value['Friend']['friend_id']);
+					//debug($member_id);
 					if($member_id == $value['Friend']['friend_id'])
 						$ok = true;
 				}
 				if($ok == false){
-					debug($ok);
+					//debug($ok);
 					$this->Session->setFlash('Cet utilisateur n\'est pas dans votre liste d\'amis', 'flash_danger');
 					$this->redirect('/ToDos/tasks/'.$to_do_id);
 				}
@@ -289,13 +289,13 @@ class MembersController  extends AppController {
 			$member = $this->User->find('first', array('conditions' => array('User.username' => $this->request->data['Member']['pseudo'])));
 			//debug($this->request->data['Member']['pseudo']);
 			//debug($member);
-			debug($to_do_id);
+			//debug($to_do_id);
 			if(!empty($member)){
 			//debug($member_id);
 				$member_id = $member['User']['id'];
-				debug($member_id);
+				//debug($member_id);
 				$delete = $this->Member->find('first', array('conditions' => array('user_id' => $member_id, 'to_do_id' => $to_do_id)));
-				debug($delete['Member']['id']);
+				//debug($delete['Member']['id']);
 				if($this->Member->delete($delete['Member']['id'])){
 					$this->Session->setFlash('membre supprimé', 'flash_info');
                     $this->redirect('/ToDos/tasks/'.$to_do_id);

@@ -85,8 +85,14 @@
 						<span>{{qteCompleted}} / {{qte}}</span>
 					</div>
 				</div>
-
-                                <a ng-href="{{base}}/Tasks/delete_task/<?php echo $idToDo ?>/{{value.Task.id}}" class="btn-delete" onclick="return confirm('Voulez-Vous supprimer l\'élément {{value.Task.id}} ?\n Cette action est irreversible.')">
+                                <a 
+                                <?php 
+                                if($right == 2 || $right == 3 || $right == 5){ ?>
+                                ng-href="{{base}}/Tasks/delete_task/<?php echo $idToDo ?>/{{value.Task.id}}"
+                                onclick="return confirm('Voulez-Vous supprimer l\'élément {{value.Task.id}} ?\n Cette action est irreversible.')"
+                                <?php } ?>
+                                class="btn-delete"
+                                >
 					<span class="glyphicon glyphicon-minus"></span>
 				</a>
             </label>
