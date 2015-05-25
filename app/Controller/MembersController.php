@@ -154,7 +154,8 @@ class MembersController  extends AppController {
 		//debug($members);
     	$myself = $this->Member->find('first', 
             array('conditions' => array( 'Member.user_id' => $id, 'Member.to_do_id' => $to_do_id)));
-    	//debug($myself);
+    	debug($myself['Member']['right_id']);
+    	$this->set('right', $myself['Member']['right_id']);
 	}
 
 	public function add_member($to_do_id){

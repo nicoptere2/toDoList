@@ -50,7 +50,10 @@
                 <td>
                     <div class="dropdown" ng-controller="addMemberController" align="left">
                         <div class="dropup">
-                            <button  ng-click="ajouterMembre(<?php echo $idToDo; ?>)" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button  ng-click="ajouterMembre(<?php echo $idToDo; ?>)" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                <?php if($right == 1 ||$right == 3){echo "disabled";} ?>
+
+                            >
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
