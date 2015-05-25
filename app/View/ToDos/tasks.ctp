@@ -5,9 +5,14 @@
                 	<h2><?php echo $list['name'] ?> - <span class="created"> <?php echo $this->Date->date($list['created']) ?></span></h2>
                 </td>
 				<td>
+		
         <div class="dropdown dropdown-right" ng-controller="addTaskController" align="right">
     	<div class="dropdown">
-    		<button ng-click="ajouterTache(<?php echo $idToDo; ?>)" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    		<button ng-click="ajouterTache(<?php echo $idToDo; ?>)" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+    		<?php if($right == 1 ||$right == 4){echo "disabled";}
+		?>
+
+    		>
     			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     		</button>
     		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">

@@ -115,6 +115,12 @@ class ToDosController  extends AppController {
 			unset($tasks[$key]['ToDo']);
 		}
 
+		$right = $this->Member->find('first', array('conditions' => 
+			array('Member.user_id' => AuthComponent::user('id'))));
+		//debug($right['Member']['right_id']) ;
+
+		$this->set('right',$right['Member']['right_id']);
+
 		$this->set('idToDo',$list_id);
 
 

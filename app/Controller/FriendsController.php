@@ -41,6 +41,13 @@ class FriendsController  extends AppController {
 			$user = $this->User->find('first', array('conditions' => 
 				array('User.username' => $this->request->data['Friend']['nom d\'utilisateur'])));
 
+			debug($id);
+			debug($user['User']);
+			if($user['User']['id'] == $id){
+				$this->Session->setFlash('Vous ne pouvez pas vous ajouter vous même', 'flash_danger');
+						$this->redirect('/Friends/show_friends/');
+			}
+
 			//debug($user['User']['id']);
 			if(empty($user)){
 				$this->Session->setFlash('Cet utilisateur n\'existe pas', 'flash_danger');
