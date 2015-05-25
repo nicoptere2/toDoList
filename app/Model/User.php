@@ -9,7 +9,25 @@ class User extends AppModel {
 							'Friend' => array('className' => 'Friend', 'foreignKey' => 'friend_id'),
 							'SocialProfile' => 	array('className' => 'SocialProfile')
 							);
-
+        
+        public $validate = array(
+                             'username' => array(
+                                            'rule'  => 'notEmpty',
+                                            'message' => 'Entrer un pseudo !'
+                                             ),
+                             'password' => array(
+                                            'rule' => 'notEmpty',
+                                            'message' => 'Entrer un mdp !'
+                                              ),
+                             'mail'     => array(
+                                            'rule'  => 'mail',
+                                            'message' => 'Entrer un email !'
+                                                ),
+                             'age'      => array(
+                                            'rule' => 'notEmpty',
+                                             'message' => 'Entrer votre âge !'
+                                              )
+                             );
 	
 	public $avatarUploadDir = 'img/avatars';
 	    

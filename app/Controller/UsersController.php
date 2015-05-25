@@ -39,6 +39,10 @@ class UsersController extends AppController {
                 $this->Session->setFlash('<strong>Bievenu(e) '.$this->Cookie->read('User.username').'</strong> Vous vous etes Identifié avec succes', 'flash_success');
                 $this->redirect('/');
             }
+            else {
+                $this->Session->setFlash('<strong>Désolé</strong> utilisateur inexistant ou mot de passe incorrecte', 'flash_warning');
+            //    $this->redirect('/');
+            }
             
         }
     }
@@ -316,8 +320,8 @@ class UsersController extends AppController {
         $this->set('d',$d);
 
         //verifie si l'utilisteur a entre qqchose
-        if($this->request->is('post')){
-
+        if($this->request->is('post')){           
+            
             //  verifie si l'utilisteur existe dans la base
             $user = $this->User->findByUsername($this->request->data['User']['username']);
             if(empty($user)){       //si il existe pas on l'enregistre 
@@ -339,18 +343,47 @@ class UsersController extends AppController {
                    //$this->redirect('/Users/inscription');
                 }
                 else{
+                    $age = $user['User']['age'];
+                    
                     if($pass==$rePass){
-                        $this->User->create($this->request->data, TRUE);
-                        if($this->User->save(array(
-                                    'username' => $user['User']['username'],
-                                    'password' => $this->Auth->password($pass),
-                                    'email'    => $user['User']['email'],
-                                    'age'      => $user['User']['age']
-                              ))){
+                        
+                        //  verifie si l'email existe dans la base
+                        $email = $this->User->findByEmail($this->request->data['User']['email']);
+                        if(!empty($email)){       //si il existe on l'enregistre pas
+                            $this->Session->setFlash('email existant', 'flash_danger');
+                            $d = array(
+                            'username' => $user['User']['username'],
+                            'password' => $this->Auth->password($pass),
+                            're_password' =>$this->Auth->password($pass),
+                            'email' => $user['User']['email'],
+                            'age' => $user['User']['age']);
+                            $this->set('d',$d); 
+                        }                            
+                        //verification de l'âge
+                        else if($age<5 || $age>150){
+                            $this->Session->setFlash('Entrer votre âge', 'flash_danger');
+                            $d = array(
+                            'username' => $user['User']['username'],
+                            'password' => $this->Auth->password($pass),
+                            're_password' =>$this->Auth->password($pass),
+                            'email' => $user['User']['email'],
+                            'age' => '');
+                            $this->set('d',$d);                                       
+            
+                        }
+                        else{
+                            $this->User->create($this->request->data, TRUE);
+                            if($this->User->save(array(
+                                        'username' => $user['User']['username'],
+                                        'password' => $this->Auth->password($pass),
+                                        'email'    => $user['User']['email'],
+                                        'age'      => $user['User']['age']
+                                  ))){
 
-                            $this->Auth->login();        
-                            return $this->redirect('/');
-                        }      
+                                $this->Auth->login();        
+                                return $this->redirect('/');
+                            }  
+                        }
 
                     }
                     else{

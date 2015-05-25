@@ -89,7 +89,7 @@
                                 <?php 
                                 if($right == 2 || $right == 3 || $right == 5){ ?>
                                 ng-href="{{base}}/Tasks/delete_task/<?php echo $idToDo ?>/{{value.Task.id}}"
-                                onclick="return confirm('Voulez-Vous supprimer l\'élément {{value.Task.id}} ?\n Cette action est irreversible.')"
+                                onclick="return confirm('Voulez-Vous supprimer l\'élément ?\n Cette action est irreversible.')"
                                 <?php } ?>
                                 class="btn-delete"
                                 >
